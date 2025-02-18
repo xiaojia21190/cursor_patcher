@@ -34,7 +34,7 @@ class AlistMultiButtonCard extends ConsumerWidget {
               runSpacing: 10.0,
               spacing: 10.0,
               children: [
-                // FilledButton.tonal(onPressed: alistState.isRunning ? null : () => alistNotifier.startAlist(), child: Text(t.alistOperation.startAlist)),
+                // FilledButton.tonal(onPressed: () => alistNotifier.startAlist(), child: Text(t.alistOperation.startAlist)),
                 // FilledButton.tonal(onPressed: alistState.isRunning ? () => alistNotifier.endAlist() : null, child: Text(t.alistOperation.endAlist)),
                 // FilledButton.tonal(onPressed: alistState.isRunning ? openGUI : null, child: Text(t.alistOperation.openGUI)),
                 // FilledButton.tonal(onPressed: () => alistNotifier.genRandomPwd(), child: Text(t.alistOperation.genRandomPwd)),

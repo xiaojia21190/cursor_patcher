@@ -8,6 +8,7 @@ import 'package:cursor_patcher/utils/init.dart';
 import 'package:cursor_patcher/utils/native/tray_helper.dart';
 import 'package:cursor_patcher/utils/native/tray_manager.dart';
 import 'package:cursor_patcher/utils/native/window_watcher.dart';
+import 'package:cursor_patcher/widgets/pages/first_lanuch.dart';
 import 'package:cursor_patcher/widgets/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -53,7 +54,7 @@ class MyApp extends ConsumerWidget {
           themeMode: settings.themeMode,
           theme: CursorPatcherTheme(settings.themeColor).lightThemeData,
           darkTheme: CursorPatcherTheme(settings.themeColor).darkThemeData,
-          home: const Home(),
+          home: const FirstLaunchPage(),
         ),
       ),
     );

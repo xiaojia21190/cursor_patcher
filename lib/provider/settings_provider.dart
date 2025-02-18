@@ -15,7 +15,6 @@ class SettingsNotifier extends Notifier<SettingsState> {
     _persistenceService = ref.watch(persistenceProvider);
     return SettingsState(
       locale: _persistenceService.getLocale(),
-      autoStartAlist: _persistenceService.isAutoStartAlist(),
       minimizeToTray: _persistenceService.isMinimizeToTray(),
       autoStartLaunchMinimized: _persistenceService.isAutoStartLaunchMinimized(),
       autoStart: _persistenceService.isAutoStart(),
@@ -24,12 +23,8 @@ class SettingsNotifier extends Notifier<SettingsState> {
       themeMode: _persistenceService.getThemeMode(),
       themeColor: _persistenceService.getThemeColor(),
       saveWindowPlacement: _persistenceService.getSaveWindowPlacement(),
-      alistArgs: _persistenceService.getAlistArgs(),
       proxy: _persistenceService.getProxy(),
-      rcloneArgs: _persistenceService.getRcloneArgs(),
       isFirstRun: _persistenceService.isFirstRun(),
-      autoStartRclone: _persistenceService.isAutoStartRclone(),
-      startAfterAlist: _persistenceService.isStartAfterAlist(),
       webdavAccount: _persistenceService.getWebdavAccount(),
     );
   }
@@ -108,15 +103,5 @@ class SettingsNotifier extends Notifier<SettingsState> {
   Future<void> setSaveWindowPlacement(bool value) async {
     await _persistenceService.setSaveWindowPlacement(value);
     state = state.copyWith(saveWindowPlacement: value);
-  }
-
-  Future<void> setAlistArgs(List<String> value) async {
-    await _persistenceService.setAlistArgs(value);
-    state = state.copyWith(alistArgs: value);
-  }
-
-  Future<void> setRcloneArgs(List<String> value) async {
-    await _persistenceService.setRcloneArgs(value);
-    state = state.copyWith(rcloneArgs: value);
   }
 }

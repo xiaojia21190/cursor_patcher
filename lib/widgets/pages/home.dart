@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:cursor_patcher/utils/init.dart';
-import 'package:cursor_patcher/widgets/pages/alist_helper_page.dart';
+import 'package:cursor_patcher/widgets/pages/cursor_patch_page.dart';
 import 'package:cursor_patcher/widgets/responsive_builder.dart';
 import 'package:cursor_patcher/widgets/pages/settings_page.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,6 @@ class Home extends ConsumerStatefulWidget {
 
 enum HomeTab {
   home(Icons.home_filled),
-  rclone(Icons.storage_outlined),
   settings(Icons.settings);
 
   final IconData icon;
@@ -39,8 +38,6 @@ enum HomeTab {
     switch (this) {
       case HomeTab.home:
         return t.tabs.home;
-      case HomeTab.rclone:
-        return t.tabs.mount;
       case HomeTab.settings:
         return t.tabs.settings;
     }

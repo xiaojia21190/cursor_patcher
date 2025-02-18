@@ -1,3 +1,4 @@
+import 'package:cursor_patcher/model/cursor_token.dart';
 import 'package:cursor_patcher/provider/window_dimensions_provider.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ final persistenceProvider = Provider<PersistenceService>((ref) {
 });
 
 // Version of the storage
-const currentcursor_patcherVersion = 'v0.2.0';
+const currentcursorPatcherVersion = 'v0.0.1';
 const _version = 'ah_current_version';
 
 // App Window Offset and Size info
@@ -39,6 +40,8 @@ const _startAfterAlist = 'ah_start_after_alist';
 const _webdavAccount = 'ah_webdav_account';
 const _vdisks = 'ah_vdisks';
 
+const _token = 'ah_token';
+
 /// This service abstracts the persistence layer.
 class PersistenceService {
   final SharedPreferences _prefs;
@@ -56,8 +59,8 @@ class PersistenceService {
       LocaleSettings.setLocaleRaw(persistedLocale);
     }
 
-    if (prefs.getString(_version) == null || prefs.getString(_version) != currentcursor_patcherVersion) {
-      await prefs.setString(_version, currentcursor_patcherVersion);
+    if (prefs.getString(_version) == null || prefs.getString(_version) != currentcursorPatcherVersion) {
+      await prefs.setString(_version, currentcursorPatcherVersion);
     }
     return PersistenceService._(prefs);
   }
@@ -95,8 +98,8 @@ class PersistenceService {
     return _prefs.getBool(_isFirstRun) ?? true;
   }
 
-  String getcursor_patcherVersion() {
-    return _prefs.getString(_version) ?? currentcursor_patcherVersion;
+  String getCursorPatcherVersion() {
+    return _prefs.getString(_version) ?? currentcursorPatcherVersion;
   }
 
   Future<void> setWindowOffsetX(double x) async {
@@ -266,5 +269,13 @@ class PersistenceService {
 
   Future<void> setProxy(String? proxy) async {
     await _prefs.setString(_proxy, proxy ?? '');
+  }
+
+  Future<void> saveToken(String token) async {
+    await _prefs.setString(_token, token);
+  }
+
+  String getToken() {
+    return _prefs.getString(_token) ?? '';
   }
 }
