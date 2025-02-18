@@ -18,7 +18,7 @@ Future<void> initTray() async {
   if (!Platform.isWindows && !Platform.isMacOS && !Platform.isLinux) {
     return;
   }
-  String iconPath = Platform.isWindows ? 'assets/alisthelper.ico' : 'assets/alisthelper.png';
+  String iconPath = Platform.isWindows ? 'assets/cursor_patcher.ico' : 'assets/cursor_patcher.png';
   await tm.trayManager.setIcon(iconPath);
 
   final items = [

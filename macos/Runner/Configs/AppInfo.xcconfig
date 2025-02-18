@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = alisthelper
+PRODUCT_NAME = cursor_patcher
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = dev.xmarmalade.alisthelper.alisthelper
+PRODUCT_BUNDLE_IDENTIFIER = dev.xmarmalade.cursor_patcher.cursor_patcher
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2023 dev.xmarmalade.alisthelper. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2023 dev.xmarmalade.cursor_patcher. All rights reserved.

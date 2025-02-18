@@ -1,193 +1,193 @@
 {
-    "locale": "English",
-    "alistOperation": {
-        "startAlist": "Start",
-        "endAlist": "End",
-        "openGUI": "Open Web GUI",
-        "genRandomPwd": "Reset Pwd",
-        "getVersion": "Version Info"
-    },
-    "rcloneOperation": {
-        "startRclone": "Start",
-        "endRclone": "End",
-        "getRcloneInfo": "Version Info",
-        "viewLogs": "View Log",
-        "noVdisks": "No vdisks set in config file.",
-        "deleteVdisk": "Are you sure you want to delete ${name}? this action is irreversible!",
-        "createVdisk": {
-            "title": "Create Remote Disk",
-            "description": "Create a remote disk, if you don't understand the options here, please seek help.",
-            "name": "Name",
-            "nameHint": "Name of the disk",
-            "path": "Path", 
-            "pathHint": "Path after the dav/ ",
-            "mountPoint": "Mount Point",
-            "mountPointHint": "Mount point of the disk on your system",
-            "extraFlags": "Extra Flags",
-            "extraFlagsHint": "Extra flags for rclone mount",
-            "enableAutoMount": "Enable Auto Mount",
-            "enableAutoMountHint": "Auto mount this disk after rclone starts"
-        }
-    },
-    "firstLaunch": {
-        "intro": "Welcome to use Alist Helper, let's get started!",
-        "about": "Click here to learn more about Alist Helper!",
-        "chooseTheme": "First, let's choose your preferred theme here!",
-        "chooseDirectory": "Second, you have to get an alist and tell the Alist Helper where it is!",
-        "autoInstall": "AlistHelper now supports automatic installation of ${name}, try it out!",
-        "getAlist": "Want to use a specific version of alist or install it manually? Click here!",
-        "finish": "Finish! You can change these settings in settings!"
-    },
-    "tabs": {
-        "home": "Home",
-        "mount": "Mount",
-        "settings": "Settings"
-    },
-    "home": {
-        "options": "Options",
-        "logs": "Logs",
-        "manage": "Manage"
-    },
-    "languageSettings": {
-        "language": "Language",
-        "system": "System"
-    },
-    "button": {
-        "ok": "OK",
-        "cancel": "Cancel",
-        "yes": "Yes",
-        "no": "No",
-        "select": "Select",
-        "edit": "Edit",
-        "save": "Save",
-        "upgrade": "Upgrade",
-        "add": "Add",
-        "docs": "Docs",
-        "sponsor": "Sponsor"
-    },
-    "tray": {
-        "open": "Open",
-        "hide": "Hide",
-        "quit": "Quit",
-        "openGUI":"Open Web GUI",
-        "startAlist": "Start Alist",
-        "endAlist": "End Alist",
-        "tooltip": "Alist Helper",
-        "workingTooltip": "Alist Helper (Alist Working)"
-    },
-    "settings": {
-        "interfaceSettings": {
-            "title": "Interface",
-            "themeMode": "Theme mode",
-            "themeColor": "Theme color",
-            "language": "Choose Language"
-        },
-        "theme": {
-            "light": "Light",
-            "dark": "Dark",
-            "system": "Auto"
-        },
-        "alistHelperSettings": {
-            "title": "Alist Helper Options",
-            "saveWindowPlacement": {
-                "title": "Save window placement",
-                "description": "This will allow Alist Helper save window placement."
-            },
-            "minimizeToTray": {
-                "title": "Allow minimize to tray",
-                "description": "This will allow Alist Helper to minimize to tray."
-            },
-            "autoStart": {
-                "title": "Allow auto start",
-                "description": "This will allow Alist Helper auto start."
-            },
-            "autoStartLaunchMinimized": {
-                "title": "Allow silent auto start",
-                "description": "This will allow Alist Helper auto start silently."
-            }
-        },
-        "alistSettings": {
-            "title": "Alist Options",
-            "autoStartAlist": {
-                "title": "Allow alist auto start",
-                "description": "This will auto start alist when Alist Helper starts."
-            },
-            "autoStartLaunchMinimized": {
-                "title": "Allow silent auto start",
-                "description": "This will allow Alist Helper auto start silently."
-            },
-            "workingDirectory": {
-                "title": "Working Directory",
-                "description": "Set Working Directory",
-                "hint": "It's a Directory, not a File!",
-                "chooseFrom": "Choose a directory",
-                "notFound": "No ${exec} found in directory.",
-                "found": "Found ${exec} in directory."
-            },
-            "argumentsList": {
-                "title": "Arguments List",
-                "description": "Edit startup arguments for alist",
-                "descriptionForRclone": "Edit startup arguments for rclone. If you don't understand the options here, please seek help.",
-                "editArguments": "Edit Arguments",
-                "addArgument": "Add Argument",
-                "removeAll": "Remove all",
-                "remove": "Remove"
-            },
-            "proxy": {
-                "title": "Http Proxy",
-                "description": "Set your http proxy",
-                "hint": "If left blank, it will not be enabled",
-                "success": "Proxy address set successfully",
-                "error": "Invalid proxy address"
-            }
-        },
-        "rcloneSettings": {
-            "title": "Rclone Options",
-            "rcloneDirNotSet": "You can mount your web drives on your computer using rclone. However, the Rclone Directory has not been set yet. Please go to the settings and configure the Rclone Directory to proceed.",
-            "rcloneWebdavNotSet": "You can mount your web drives on your computer using rclone. However, the WebDav account for accessing alist has not been set yet. Please go to the settings and configure the WebDav account to proceed.",
-            "autoStartAlist": {
-                "title": "Allow rclone auto start",
-                "description": "This will auto start rclone when Alist Helper starts."
-            },
-            "startAfterAlist": {
-                "title": "Requires to start after alist starts",
-                "description": "This will require rclone to start after alist starts."
-            },
-            "account": {
-                "title": "WebDav Account",
-                "description": "Set WebDav account",
-                "name": "Account Name",
-                "pass": "Password"
-            }
-        },
-        "others": {
-            "title": "Others",
-            "checkForUpdates": "Check for updates",
-            "about": "About"
-        }
-    },
-    "upgrade": {
-        "clickToCheck": "Click the button next to check for updates",
-        "checkFirst": "Check for updates first",
-        "canUpgrade": "A new version is available, do you want to upgrade?",
-        "noUpgrade": "You are using the latest version.",
-        "upgrade": "Upgrade",
-        "selectPackage": "Select the update package you want to download.",
-        "networkError": "Loading... If it hasn't loaded for a long time, please check your network and try again.",
-        "alistVersion": {
-            "title": "Alist Version",
-            "currentVersion": "Current Alist Version",
-            "latestVersion": "Latest Alist Version"
-        },
-        "alistHelperVersion": {
-            "title": "Alist Helper Version",
-            "currentVersion": "Current Alist Helper Version",
-            "latestVersion": "Latest Alist Helper Version"
-        },
-        "rcloneVersion": {
-            "title": "Rclone Version",
-            "currentVersion": "Current Rclone Version",
-            "latestVersion": "Latest Rclone Version"
-        }
+  "locale": "English",
+  "alistOperation": {
+    "startAlist": "Start",
+    "endAlist": "End",
+    "openGUI": "Open Web GUI",
+    "genRandomPwd": "Reset Pwd",
+    "getVersion": "Version Info"
+  },
+  "rcloneOperation": {
+    "startRclone": "Start",
+    "endRclone": "End",
+    "getRcloneInfo": "Version Info",
+    "viewLogs": "View Log",
+    "noVdisks": "No vdisks set in config file.",
+    "deleteVdisk": "Are you sure you want to delete ${name}? this action is irreversible!",
+    "createVdisk": {
+      "title": "Create Remote Disk",
+      "description": "Create a remote disk, if you don't understand the options here, please seek help.",
+      "name": "Name",
+      "nameHint": "Name of the disk",
+      "path": "Path",
+      "pathHint": "Path after the dav/ ",
+      "mountPoint": "Mount Point",
+      "mountPointHint": "Mount point of the disk on your system",
+      "extraFlags": "Extra Flags",
+      "extraFlagsHint": "Extra flags for rclone mount",
+      "enableAutoMount": "Enable Auto Mount",
+      "enableAutoMountHint": "Auto mount this disk after rclone starts"
     }
+  },
+  "firstLaunch": {
+    "intro": "Welcome to use Alist Helper, let's get started!",
+    "about": "Click here to learn more about Alist Helper!",
+    "chooseTheme": "First, let's choose your preferred theme here!",
+    "chooseDirectory": "Second, you have to get an alist and tell the Alist Helper where it is!",
+    "autoInstall": "cursor_patcher now supports automatic installation of ${name}, try it out!",
+    "getAlist": "Want to use a specific version of alist or install it manually? Click here!",
+    "finish": "Finish! You can change these settings in settings!"
+  },
+  "tabs": {
+    "home": "Home",
+    "mount": "Mount",
+    "settings": "Settings"
+  },
+  "home": {
+    "options": "Options",
+    "logs": "Logs",
+    "manage": "Manage"
+  },
+  "languageSettings": {
+    "language": "Language",
+    "system": "System"
+  },
+  "button": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "yes": "Yes",
+    "no": "No",
+    "select": "Select",
+    "edit": "Edit",
+    "save": "Save",
+    "upgrade": "Upgrade",
+    "add": "Add",
+    "docs": "Docs",
+    "sponsor": "Sponsor"
+  },
+  "tray": {
+    "open": "Open",
+    "hide": "Hide",
+    "quit": "Quit",
+    "openGUI": "Open Web GUI",
+    "startAlist": "Start Alist",
+    "endAlist": "End Alist",
+    "tooltip": "Alist Helper",
+    "workingTooltip": "Alist Helper (Alist Working)"
+  },
+  "settings": {
+    "interfaceSettings": {
+      "title": "Interface",
+      "themeMode": "Theme mode",
+      "themeColor": "Theme color",
+      "language": "Choose Language"
+    },
+    "theme": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "Auto"
+    },
+    "cursor_patcherSettings": {
+      "title": "Alist Helper Options",
+      "saveWindowPlacement": {
+        "title": "Save window placement",
+        "description": "This will allow Alist Helper save window placement."
+      },
+      "minimizeToTray": {
+        "title": "Allow minimize to tray",
+        "description": "This will allow Alist Helper to minimize to tray."
+      },
+      "autoStart": {
+        "title": "Allow auto start",
+        "description": "This will allow Alist Helper auto start."
+      },
+      "autoStartLaunchMinimized": {
+        "title": "Allow silent auto start",
+        "description": "This will allow Alist Helper auto start silently."
+      }
+    },
+    "alistSettings": {
+      "title": "Alist Options",
+      "autoStartAlist": {
+        "title": "Allow alist auto start",
+        "description": "This will auto start alist when Alist Helper starts."
+      },
+      "autoStartLaunchMinimized": {
+        "title": "Allow silent auto start",
+        "description": "This will allow Alist Helper auto start silently."
+      },
+      "workingDirectory": {
+        "title": "Working Directory",
+        "description": "Set Working Directory",
+        "hint": "It's a Directory, not a File!",
+        "chooseFrom": "Choose a directory",
+        "notFound": "No ${exec} found in directory.",
+        "found": "Found ${exec} in directory."
+      },
+      "argumentsList": {
+        "title": "Arguments List",
+        "description": "Edit startup arguments for alist",
+        "descriptionForRclone": "Edit startup arguments for rclone. If you don't understand the options here, please seek help.",
+        "editArguments": "Edit Arguments",
+        "addArgument": "Add Argument",
+        "removeAll": "Remove all",
+        "remove": "Remove"
+      },
+      "proxy": {
+        "title": "Http Proxy",
+        "description": "Set your http proxy",
+        "hint": "If left blank, it will not be enabled",
+        "success": "Proxy address set successfully",
+        "error": "Invalid proxy address"
+      }
+    },
+    "rcloneSettings": {
+      "title": "Rclone Options",
+      "rcloneDirNotSet": "You can mount your web drives on your computer using rclone. However, the Rclone Directory has not been set yet. Please go to the settings and configure the Rclone Directory to proceed.",
+      "rcloneWebdavNotSet": "You can mount your web drives on your computer using rclone. However, the WebDav account for accessing alist has not been set yet. Please go to the settings and configure the WebDav account to proceed.",
+      "autoStartAlist": {
+        "title": "Allow rclone auto start",
+        "description": "This will auto start rclone when Alist Helper starts."
+      },
+      "startAfterAlist": {
+        "title": "Requires to start after alist starts",
+        "description": "This will require rclone to start after alist starts."
+      },
+      "account": {
+        "title": "WebDav Account",
+        "description": "Set WebDav account",
+        "name": "Account Name",
+        "pass": "Password"
+      }
+    },
+    "others": {
+      "title": "Others",
+      "checkForUpdates": "Check for updates",
+      "about": "About"
+    }
+  },
+  "upgrade": {
+    "clickToCheck": "Click the button next to check for updates",
+    "checkFirst": "Check for updates first",
+    "canUpgrade": "A new version is available, do you want to upgrade?",
+    "noUpgrade": "You are using the latest version.",
+    "upgrade": "Upgrade",
+    "selectPackage": "Select the update package you want to download.",
+    "networkError": "Loading... If it hasn't loaded for a long time, please check your network and try again.",
+    "alistVersion": {
+      "title": "Alist Version",
+      "currentVersion": "Current Alist Version",
+      "latestVersion": "Latest Alist Version"
+    },
+    "cursor_patcherVersion": {
+      "title": "Alist Helper Version",
+      "currentVersion": "Current Alist Helper Version",
+      "latestVersion": "Latest Alist Helper Version"
+    },
+    "rcloneVersion": {
+      "title": "Rclone Version",
+      "currentVersion": "Current Rclone Version",
+      "latestVersion": "Latest Rclone Version"
+    }
+  }
 }

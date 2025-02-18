@@ -10,7 +10,7 @@ final persistenceProvider = Provider<PersistenceService>((ref) {
 });
 
 // Version of the storage
-const currentAlistHelperVersion = 'v0.2.0';
+const currentcursor_patcherVersion = 'v0.2.0';
 const _version = 'ah_current_version';
 
 // App Window Offset and Size info
@@ -56,8 +56,8 @@ class PersistenceService {
       LocaleSettings.setLocaleRaw(persistedLocale);
     }
 
-    if (prefs.getString(_version) == null || prefs.getString(_version) != currentAlistHelperVersion) {
-      await prefs.setString(_version, currentAlistHelperVersion);
+    if (prefs.getString(_version) == null || prefs.getString(_version) != currentcursor_patcherVersion) {
+      await prefs.setString(_version, currentcursor_patcherVersion);
     }
     return PersistenceService._(prefs);
   }
@@ -95,8 +95,8 @@ class PersistenceService {
     return _prefs.getBool(_isFirstRun) ?? true;
   }
 
-  String getAlistHelperVersion() {
-    return _prefs.getString(_version) ?? currentAlistHelperVersion;
+  String getcursor_patcherVersion() {
+    return _prefs.getString(_version) ?? currentcursor_patcherVersion;
   }
 
   Future<void> setWindowOffsetX(double x) async {

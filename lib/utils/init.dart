@@ -76,8 +76,8 @@ Future<void> postInit(WidgetRef ref) async {
   // if (!ref.watch(settingsProvider).isFirstRun) {
   //   alistNotifier.getAlistCurrentVersion(addToOutput: false);
   // }
-  // final alistHelperNotifier = ref.watch(ahProvider.notifier);
-  // alistHelperNotifier.getAlistHelperCurrentVersion();
+  // final cursor_patcherNotifier = ref.watch(ahProvider.notifier);
+  // cursor_patcherNotifier.getcursor_patcherCurrentVersion();
 
   // if (ref.watch(settingsProvider).autoStartAlist &&
   //     !ref.watch(alistProvider).isRunning) {

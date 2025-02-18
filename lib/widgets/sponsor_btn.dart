@@ -15,7 +15,7 @@ class SponsorBtn extends StatelessWidget {
       trailing: TextButton.icon(
         onPressed: () {
           final locale = Localizations.localeOf(context).toString();
-          final url = locale == 'zh_Hans_CN' ? 'https://github.com/Xmarmalade/alisthelper/wiki/sponsor_cn' : 'https://github.com/Xmarmalade/alisthelper/wiki/sponsor';
+          final url = locale == 'zh_Hans_CN' ? 'https://github.com/Xmarmalade/cursor_patcher/wiki/sponsor_cn' : 'https://github.com/Xmarmalade/cursor_patcher/wiki/sponsor';
           launchUrl(Uri.parse(url));
         },
         label: Text(t.button.sponsor),

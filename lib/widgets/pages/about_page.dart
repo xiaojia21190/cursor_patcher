@@ -31,7 +31,7 @@ class AboutPage extends StatelessWidget {
       body: ListView(
         children: [
           Column(
-            children: [const SizedBox(height: 20), Image.asset('assets/alisthelper.png', height: 180, width: 180), const SizedBox(height: 20), const Text('Alist Helper', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold), textAlign: TextAlign.center), const SizedBox(height: 20)],
+            children: [const SizedBox(height: 20), Image.asset('assets/cursor_patcher.png', height: 180, width: 180), const SizedBox(height: 20), const Text('Alist Helper', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold), textAlign: TextAlign.center), const SizedBox(height: 20)],
           ),
           const SizedBox(height: 20),
           Text(
@@ -45,7 +45,7 @@ class AboutPage extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () async {
-                    await launchUrl(Uri.parse('https://github.com/Xmarmalade/alisthelper'), mode: LaunchMode.externalApplication);
+                    await launchUrl(Uri.parse('https://github.com/Xmarmalade/cursor_patcher'), mode: LaunchMode.externalApplication);
                   },
                   child: const Text('Source Code (Github)'),
                 ),
@@ -62,7 +62,7 @@ class AboutPage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => LicensePage(
-                                  applicationIcon: Image.asset('assets/alisthelper.png', height: 100, width: 100),
+                                  applicationIcon: Image.asset('assets/cursor_patcher.png', height: 100, width: 100),
                                 )));
                   },
                   child: const Text('License'),
