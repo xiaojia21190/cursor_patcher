@@ -2,7 +2,7 @@ import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:cusor_patcher/model/cursor_helper.dart';
 import 'package:cusor_patcher/provider/cursor_provider.dart';
-// import 'package:cusor_patcher/widgets/logs_viewer.dart';
+import 'package:cusor_patcher/widgets/logs_viewe.dart';
 import 'package:cusor_patcher/widgets/responsive_builder.dart';
 
 import 'package:flutter/material.dart';
@@ -155,6 +155,7 @@ class _CursorPatcherPageState extends ConsumerState<CursorPatcherPage> {
                                       onTap: () async {
                                         try {
                                           await cursor.replaceToken(snapshot.data?.authCode ?? '');
+                                          _showLogsDialog(context, ref);
                                         } catch (e) {
                                           CherryToast.error(
                                             title: Text("替换失败", style: TextStyle(color: Colors.black)),
@@ -213,6 +214,40 @@ class _CursorPatcherPageState extends ConsumerState<CursorPatcherPage> {
         const SizedBox(height: 4),
         Text(value, style: TextStyle(fontSize: 24, color: color, fontWeight: FontWeight.bold)),
       ],
+    );
+  }
+
+  // 添加显示日志弹窗的方法
+  void _showLogsDialog(BuildContext context, WidgetRef ref) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        child: Container(
+          width: 600,
+          height: 400,
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  const Text('操作日志', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ],
+              ),
+              const Divider(),
+              Expanded(
+                child: LogsViewer(
+                  output: ref.watch(cursorProvider).output,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
