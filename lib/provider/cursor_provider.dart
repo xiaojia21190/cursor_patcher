@@ -33,7 +33,7 @@ class Cursor extends _$Cursor {
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body) as Map<String, dynamic>;
       final helper = CursorHelper.fromJson(jsonData['data']);
-      state = helper;
+      state = state.copyWith(authCode: helper.authCode, maxDailyLimit: helper.maxDailyLimit, todayRemaining: helper.todayRemaining, totalUsed: helper.totalUsed);
       return helper;
     } else {
       throw Exception('Failed to get cursor helper');
@@ -44,7 +44,7 @@ class Cursor extends _$Cursor {
   Future<void> refreshAuthCode() async {
     final helper = await getCursorHelper();
     debugPrint(helper.toString());
-    state = helper;
+    state = state.copyWith(authCode: helper.authCode, maxDailyLimit: helper.maxDailyLimit, todayRemaining: helper.todayRemaining, totalUsed: helper.totalUsed);
   }
 
   //重置激活码
@@ -55,7 +55,7 @@ class Cursor extends _$Cursor {
     });
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body) as Map<String, dynamic>;
-      String authCode = jsonData['auth_code'];
+      String authCode = jsonData["data"]['auth_code'];
       state = state.copyWith(authCode: authCode);
     } else {
       //显示错误
