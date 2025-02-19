@@ -64,54 +64,75 @@ class Cursor extends _$Cursor {
   }
 
   Future<void> replaceToken(String authCode) async {
-    debugPrint('提示：本脚本请不要再 Cursor 中执行');
-    final cursorAppPaths = await getCursorAppPaths();
-    final filesExist = await checkFilesExist(cursorAppPaths.$1, cursorAppPaths.$2);
-    if (!filesExist) {
-      debugPrint('请检查是否正确安装 Cursor');
-    } else {
-      final packageJson = jsonDecode(File(cursorAppPaths.$1).readAsStringSync()) as Map<String, dynamic>;
-      final currentVersion = packageJson["version"];
-      debugPrint('当前 Cursor 版本: $currentVersion');
-
-      debugPrint("开始退出 Cursor..");
-      final exitCursorResult = await exitCursor();
-      if (!exitCursorResult) {
-        debugPrint("退出 Cursor 失败");
-        return;
-      }
-      debugPrint("所有 Cursor 进程已正常关闭");
-
-      final needPatch = await checkVersion(currentVersion, minVersion: AppConstants.minPatchVersion);
-      if (!needPatch) {
-        debugPrint('当前版本无需 Patch，继续执行 Token 更新...');
+    try {
+      debugPrint('提示：本脚本请不要再 Cursor 中执行');
+      addOutput("提示：本脚本请不要再 Cursor 中执");
+      final cursorAppPaths = await getCursorAppPaths();
+      final filesExist = await checkFilesExist(cursorAppPaths.$1, cursorAppPaths.$2);
+      if (!filesExist) {
+        debugPrint('请检查是否正确安装 Cursor');
+        addOutput("请检查是否正确安装 Cursor");
+        throw Exception('请检查是否正确安装 Cursor');
       } else {
-        debugPrint("开始 Patch Cursor 机器码..");
-        final patchMainJsResult = await patchMainJs(cursorAppPaths.$2);
-        if (patchMainJsResult) {
-          debugPrint("Cursor 机器码已成功 Patch");
+        final packageJson = jsonDecode(File(cursorAppPaths.$1).readAsStringSync()) as Map<String, dynamic>;
+        final currentVersion = packageJson["version"];
+        debugPrint('当前 Cursor 版本: $currentVersion');
+        addOutput('当前 Cursor 版本: $currentVersion');
+
+        debugPrint("开始退出 Cursor..");
+        addOutput("开始退出 Cursor..");
+        final exitCursorResult = await exitCursor();
+        if (!exitCursorResult) {
+          debugPrint("退出 Cursor 失败");
+          addOutput("退出 Cursor 失败");
+          throw Exception('退出 Cursor 失败');
+        }
+        debugPrint("所有 Cursor 进程已正常关闭");
+        addOutput("所有 Cursor 进程已正常关闭");
+
+        final needPatch = await checkVersion(currentVersion, minVersion: AppConstants.minPatchVersion);
+        if (!needPatch) {
+          debugPrint('当前版本无需 Patch，继续执行 Token 更新...');
+          addOutput('当前版本无需 Patch，继续执行 Token 更新...');
+        } else {
+          debugPrint("开始 Patch Cursor 机器码..");
+          addOutput("开始 Patch Cursor 机器码..");
+          final patchMainJsResult = await patchMainJs(cursorAppPaths.$2);
+          if (patchMainJsResult) {
+            debugPrint("Cursor 机器码已成功 Patch");
+            addOutput("Cursor 机器码已成功 Patch");
+          }
+        }
+        // final tokenData = await fetchTokenData(currentVersion, authCode);
+        TokenData tokenData = TokenData(
+            email: "j3libbybeahan@qq.com",
+            token:
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhdXRoMHx1c2VyXzAxSk03M1pFTVIwRFJLWVlHRE04NVkxSlA1IiwidGltZSI6IjE3Mzk3MDA4NDEiLCJyYW5kb21uZXNzIjoiMjVhYmZkOTQtNmYwMy00NTIwIiwiZXhwIjo0MzMxNzAwODQxLCJpc3MiOiJodHRwczovL2F1dGhlbnRpY2F0aW9uLmN1cnNvci5zaCIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwgb2ZmbGluZV9hY2Nlc3MiLCJhdWQiOiJodHRwczovL2N1cnNvci5jb20ifQ.aJ_ArOay9wjxGXeHRfb3A1yNjVlwr-TRjVnr2oEpjiU",
+            machineId: "53369816f140d70eacb387ea808f164b5f0f494f2ffc102aa8c3321c685843b9",
+            macMachineId: "734b842d5b17ef2a65e624d2fdd4c5de9c8a81e8f2931e061d801e58421ce669",
+            devDeviceId: "2d0de385-ed43-4831-b15b-42206b864402");
+        debugPrint('即将退出 Cursor 并修改配置，请确保所有工作已保存。');
+        addOutput('即将退出 Cursor 并修改配置，请确保所有工作已保存。');
+
+        debugPrint("开始替换 Token..");
+        addOutput("开始替换 Token..");
+        final resetCursorIdResult = await resetCursorId(tokenData);
+        if (resetCursorIdResult) {
+          debugPrint("Cursor 机器码已成功修改");
+          addOutput("Cursor 机器码已成功修改");
+          await updateAuth(email: tokenData.email, accessToken: tokenData.token);
+          debugPrint("成功更新 Cursor 认证信息! 邮箱: ${tokenData.email}");
+          addOutput("成功更新 Cursor 认证信息! 邮箱: ${tokenData.email}");
+          debugPrint("所有操作已完成，现在可以重新打开Cursor体验了");
+          addOutput("所有操作已完成，现在可以重新打开Cursor体验了");
+          debugPrint("请注意：建议禁用 Cursor 自动更新!!!");
+          addOutput("请注意：建议禁用 Cursor 自动更新!!!");
+          debugPrint("从 0.45.xx 开始每次更新都需要重新执行此脚本");
+          addOutput("从 0.45.xx 开始每次更新都需要重新执行此脚本");
         }
       }
-      // final tokenData = await fetchTokenData(currentVersion, authCode);
-      TokenData tokenData = TokenData(
-          email: "j3libbybeahan@qq.com",
-          token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhdXRoMHx1c2VyXzAxSk03M1pFTVIwRFJLWVlHRE04NVkxSlA1IiwidGltZSI6IjE3Mzk3MDA4NDEiLCJyYW5kb21uZXNzIjoiMjVhYmZkOTQtNmYwMy00NTIwIiwiZXhwIjo0MzMxNzAwODQxLCJpc3MiOiJodHRwczovL2F1dGhlbnRpY2F0aW9uLmN1cnNvci5zaCIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwgb2ZmbGluZV9hY2Nlc3MiLCJhdWQiOiJodHRwczovL2N1cnNvci5jb20ifQ.aJ_ArOay9wjxGXeHRfb3A1yNjVlwr-TRjVnr2oEpjiU",
-          machineId: "53369816f140d70eacb387ea808f164b5f0f494f2ffc102aa8c3321c685843b9",
-          macMachineId: "734b842d5b17ef2a65e624d2fdd4c5de9c8a81e8f2931e061d801e58421ce669",
-          devDeviceId: "2d0de385-ed43-4831-b15b-42206b864402");
-      debugPrint('即将退出 Cursor 并修改配置，请确保所有工作已保存。');
-
-      debugPrint("开始替换 Token..");
-      final resetCursorIdResult = await resetCursorId(tokenData);
-      if (resetCursorIdResult) {
-        debugPrint("Cursor 机器码已成功修改");
-        await updateAuth(email: tokenData.email, accessToken: tokenData.token);
-        debugPrint("成功更新 Cursor 认证信息! 邮箱: ${tokenData.email}");
-        debugPrint("所有操作已完成，现在可以重新打开Cursor体验了");
-        debugPrint("请注意：建议禁用 Cursor 自动更新!!!");
-        debugPrint("从 0.45.xx 开始每次更新都需要重新执行此脚本");
-      }
+    } catch (e) {
+      throw Exception('Failed to replace token');
     }
   }
 
@@ -297,6 +318,7 @@ class Cursor extends _$Cursor {
   //获得auth token
   Future<TokenData> fetchTokenData(String currentVersion, String authCode) async {
     debugPrint('正在获取 Token 数据...');
+    addOutput('正在获取 Token 数据...');
     final response = await http.get(
         Uri.parse(AppConstants.apiUrl).replace(queryParameters: {
           'accessCode': authCode,
@@ -306,6 +328,7 @@ class Cursor extends _$Cursor {
         headers: {"user-agent": "python-requests"});
     if (response.statusCode == 200) {
       debugPrint('成功获取 Token 数据');
+      addOutput('成功获取 Token 数据');
       final jsonData = jsonDecode(response.body) as Map<String, dynamic>;
       return TokenData.fromJson(jsonData["data"]);
     } else {
@@ -320,6 +343,7 @@ class Cursor extends _$Cursor {
 
       if (!file.existsSync()) {
         debugPrint('未找到文件: $storagePath');
+        addOutput('未找到文件: $storagePath');
         return false;
       }
 
@@ -343,9 +367,11 @@ class Cursor extends _$Cursor {
       await makeFileReadonly(storagePath);
 
       debugPrint('Cursor 机器码已成功修改');
+      addOutput('Cursor 机器码已成功修改');
       return true;
     } catch (e) {
       debugPrint('重置 Cursor 机器码时发生错误: ${e.toString()}');
+      addOutput('重置 Cursor 机器码时发生错误: ${e.toString()}');
       return false;
     }
   }
@@ -424,6 +450,7 @@ class Cursor extends _$Cursor {
             );
           }
           debugPrint("成功${exists ? '更新' : '插入'} ${key.split('/').last}");
+          addOutput("成功${exists ? '更新' : '插入'} ${key.split('/').last}");
         }
         return true;
       } finally {
@@ -431,6 +458,7 @@ class Cursor extends _$Cursor {
       }
     } catch (e) {
       debugPrint("数据库错误: ${e.toString()}");
+      addOutput("数据库错误: ${e.toString()}");
       return false;
     }
   }
@@ -455,6 +483,7 @@ class Cursor extends _$Cursor {
 
       if (!foundPatterns) {
         debugPrint('未发现需要修复的代码，可能已经修复或不支持当前版本');
+        addOutput('未发现需要修复的代码，可能已经修复或不支持当前版本');
         return true;
       }
 
@@ -471,9 +500,11 @@ class Cursor extends _$Cursor {
       await makeFileReadonly(mainPath);
 
       debugPrint('成功 Patch Cursor 机器码');
+      addOutput('成功 Patch Cursor 机器码');
       return true;
     } catch (e) {
       debugPrint('Patch Cursor 机器码时发生错误: $e');
+      addOutput('Patch Cursor 机器码时发生错误: $e');
       return false;
     }
   }
@@ -492,5 +523,19 @@ class Cursor extends _$Cursor {
     } else {
       await Process.run('chmod', ['-w', filePath]);
     }
+  }
+
+  void addOutput(String text) {
+    if (text.contains('\n') && text.contains('[')) {
+      List<String> lines = text.split('\n');
+      for (String line in lines) {
+        if (line.isNotEmpty) {
+          stdOut.add(line);
+        }
+      }
+    } else {
+      stdOut.add(text);
+    }
+    state = state.copyWith(output: stdOut);
   }
 }

@@ -1,11 +1,7 @@
-// import 'package:cusor_patcher/i18n/strings.g.dart';
-import 'dart:convert';
-
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:cusor_patcher/model/cursor_helper.dart';
 import 'package:cusor_patcher/provider/cursor_provider.dart';
-// import 'package:cusor_patcher/provider/settings_provider.dart';
 // import 'package:cusor_patcher/widgets/logs_viewer.dart';
 import 'package:cusor_patcher/widgets/responsive_builder.dart';
 
@@ -113,6 +109,11 @@ class _CursorPatcherPageState extends ConsumerState<CursorPatcherPage> {
                                             child: GestureDetector(
                                               onTap: () {
                                                 Clipboard.setData(ClipboardData(text: snapshot.data?.authCode ?? ''));
+                                                ScaffoldMessenger.of(context).showSnackBar(
+                                                  SnackBar(
+                                                    content: Text('Copied ${snapshot.data?.authCode} to clipboard!'),
+                                                  ),
+                                                );
                                               },
                                               child: Container(
                                                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

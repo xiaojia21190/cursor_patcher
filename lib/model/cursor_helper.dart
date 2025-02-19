@@ -9,6 +9,7 @@ class CursorHelper with _$CursorHelper {
     @JsonKey(name: 'today_remaining') int? todayRemaining,
     @JsonKey(name: 'max_daily_limit') int? maxDailyLimit,
     @JsonKey(name: 'total_used') int? totalUsed,
+    @Default([]) List<String> output,
   }) = _CursorHelper;
 
   factory CursorHelper.fromJson(Map<String, Object?> json) => _$CursorHelperFromJson(json);
