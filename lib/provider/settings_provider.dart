@@ -1,8 +1,8 @@
-import 'package:cursor_patcher/i18n/strings.g.dart';
-import 'package:cursor_patcher/utils/native/auto_start_helper.dart';
+import 'package:cusor_patcher/i18n/strings.g.dart';
+import 'package:cusor_patcher/utils/native/auto_start_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:cursor_patcher/model/settings_state.dart';
-import 'package:cursor_patcher/provider/persistence_provider.dart';
+import 'package:cusor_patcher/model/settings_state.dart';
+import 'package:cusor_patcher/provider/persistence_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final settingsProvider = NotifierProvider<SettingsNotifier, SettingsState>(SettingsNotifier.new);

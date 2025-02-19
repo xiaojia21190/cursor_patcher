@@ -1,20 +1,24 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:cursor_patcher/model/token_data.dart';
+import 'package:cusor_patcher/model/token_data.dart';
 import 'package:path/path.dart' as path;
 
-import 'package:cursor_patcher/utils/constants.dart';
-import 'package:cursor_patcher/model/cursor_helper.dart';
-import 'package:cursor_patcher/provider/persistence_provider.dart';
+import 'package:cusor_patcher/utils/constants.dart';
+import 'package:cusor_patcher/model/cursor_helper.dart';
+import 'package:cusor_patcher/provider/persistence_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sqlite3/sqlite3.dart';
+import 'package:logger/logger.dart';
 
 part 'cursor_provider.g.dart';
 
 @riverpod
 class Cursor extends _$Cursor {
+  List<String> stdOut = [];
+  Logger logger = Logger();
+
   @override
   CursorHelper build() {
     // 内部获得
@@ -88,7 +92,14 @@ class Cursor extends _$Cursor {
           debugPrint("Cursor 机器码已成功 Patch");
         }
       }
-      final tokenData = await fetchTokenData(currentVersion, authCode);
+      // final tokenData = await fetchTokenData(currentVersion, authCode);
+      TokenData tokenData = TokenData(
+          email: "j3libbybeahan@qq.com",
+          token:
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhdXRoMHx1c2VyXzAxSk03M1pFTVIwRFJLWVlHRE04NVkxSlA1IiwidGltZSI6IjE3Mzk3MDA4NDEiLCJyYW5kb21uZXNzIjoiMjVhYmZkOTQtNmYwMy00NTIwIiwiZXhwIjo0MzMxNzAwODQxLCJpc3MiOiJodHRwczovL2F1dGhlbnRpY2F0aW9uLmN1cnNvci5zaCIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwgb2ZmbGluZV9hY2Nlc3MiLCJhdWQiOiJodHRwczovL2N1cnNvci5jb20ifQ.aJ_ArOay9wjxGXeHRfb3A1yNjVlwr-TRjVnr2oEpjiU",
+          machineId: "53369816f140d70eacb387ea808f164b5f0f494f2ffc102aa8c3321c685843b9",
+          macMachineId: "734b842d5b17ef2a65e624d2fdd4c5de9c8a81e8f2931e061d801e58421ce669",
+          devDeviceId: "2d0de385-ed43-4831-b15b-42206b864402");
       debugPrint('即将退出 Cursor 并修改配置，请确保所有工作已保存。');
 
       debugPrint("开始替换 Token..");
@@ -292,9 +303,9 @@ class Cursor extends _$Cursor {
           'cursorVersion': currentVersion,
           'scriptVersion': AppConstants.scriptVersion,
         }),
-        headers: {'Authorization': 'python-requests'});
-    debugPrint('成功获取 Token 数据');
+        headers: {"user-agent": "python-requests"});
     if (response.statusCode == 200) {
+      debugPrint('成功获取 Token 数据');
       final jsonData = jsonDecode(response.body) as Map<String, dynamic>;
       return TokenData.fromJson(jsonData["data"]);
     } else {
@@ -313,9 +324,7 @@ class Cursor extends _$Cursor {
       }
 
       // 修改文件权限为可写
-      if (Platform.isLinux || Platform.isMacOS) {
-        await Process.run('chmod', ['+w', storagePath]);
-      }
+      await makeFileWritable(storagePath);
 
       // 读取并更新数据
       final content = await file.readAsString();
@@ -331,9 +340,7 @@ class Cursor extends _$Cursor {
       await file.writeAsString(jsonEncode(data), flush: true);
 
       // 恢复文件权限为只读
-      if (Platform.isLinux || Platform.isMacOS) {
-        await Process.run('chmod', ['-w', storagePath]);
-      }
+      await makeFileReadonly(storagePath);
 
       debugPrint('Cursor 机器码已成功修改');
       return true;
@@ -346,13 +353,13 @@ class Cursor extends _$Cursor {
   Future<String> getStoragePath() async {
     if (Platform.isWindows) {
       final appData = Platform.environment['APPDATA'];
-      return path.join(appData!, 'cursor', 'storage.json');
+      return path.join(appData!, 'cursor', 'User', 'globalStorage', 'storage.json');
     } else if (Platform.isMacOS) {
       final home = Platform.environment['HOME'];
-      return path.join(home!, 'Library', 'Application Support', 'cursor', 'storage.json');
+      return path.join(home!, 'Library', 'Application Support', 'cursor', 'User', 'globalStorage', 'storage.json');
     } else {
       final home = Platform.environment['HOME'];
-      return path.join(home!, '.config', 'cursor', 'storage.json');
+      return path.join(home!, '.config', 'cursor', 'User', 'globalStorage', 'storage.json');
     }
   }
 
@@ -457,21 +464,33 @@ class Cursor extends _$Cursor {
       }
 
       // 修改文件权限并写入
-      if (Platform.isLinux || Platform.isMacOS) {
-        await Process.run('chmod', ['+w', mainPath]);
-      }
+      await makeFileWritable(mainPath);
 
       await file.writeAsString(content);
 
-      if (Platform.isLinux || Platform.isMacOS) {
-        await Process.run('chmod', ['-w', mainPath]);
-      }
+      await makeFileReadonly(mainPath);
 
       debugPrint('成功 Patch Cursor 机器码');
       return true;
     } catch (e) {
       debugPrint('Patch Cursor 机器码时发生错误: $e');
       return false;
+    }
+  }
+
+  Future<void> makeFileWritable(String filePath) async {
+    if (Platform.isWindows) {
+      await Process.run('attrib', ['-R', filePath]);
+    } else {
+      await Process.run('chmod', ['+w', filePath]);
+    }
+  }
+
+  Future<void> makeFileReadonly(String filePath) async {
+    if (Platform.isWindows) {
+      await Process.run('attrib', ['+R', filePath]);
+    } else {
+      await Process.run('chmod', ['-w', filePath]);
     }
   }
 }

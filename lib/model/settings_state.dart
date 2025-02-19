@@ -1,4 +1,4 @@
-import 'package:cursor_patcher/i18n/strings.g.dart';
+import 'package:cusor_patcher/i18n/strings.g.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

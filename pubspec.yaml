@@ -1,4 +1,4 @@
-name: cursor_patcher
+name: cusor_patcher
 description: A Cursor patcher application.
 publish_to: "none"
 version: 1.0.0+1
@@ -50,6 +50,7 @@ dependencies:
   cherry_toast: ^1.12.0
   path: ^1.8.3
   sqlite3: ^2.1.0
+  sqlite3_flutter_libs: ^0.5.30
 
 dev_dependencies:
   flutter_test:

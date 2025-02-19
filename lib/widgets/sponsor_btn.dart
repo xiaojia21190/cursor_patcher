@@ -1,4 +1,4 @@
-import 'package:cursor_patcher/i18n/strings.g.dart';
+import 'package:cusor_patcher/i18n/strings.g.dart';
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -15,7 +15,7 @@ class SponsorBtn extends StatelessWidget {
       trailing: TextButton.icon(
         onPressed: () {
           final locale = Localizations.localeOf(context).toString();
-          final url = locale == 'zh_Hans_CN' ? 'https://github.com/Xmarmalade/cursor_patcher/wiki/sponsor_cn' : 'https://github.com/Xmarmalade/cursor_patcher/wiki/sponsor';
+          final url = locale == 'zh_Hans_CN' ? 'https://github.com/Xmarmalade/cusor_patcher/wiki/sponsor_cn' : 'https://github.com/Xmarmalade/cusor_patcher/wiki/sponsor';
           launchUrl(Uri.parse(url));
         },
         label: Text(t.button.sponsor),

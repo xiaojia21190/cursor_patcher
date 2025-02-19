@@ -1,11 +1,11 @@
 import 'dart:math';
 
-import 'package:cursor_patcher/utils/init.dart';
-import 'package:cursor_patcher/widgets/pages/cursor_patch_page.dart';
-import 'package:cursor_patcher/widgets/responsive_builder.dart';
-import 'package:cursor_patcher/widgets/pages/settings_page.dart';
+import 'package:cusor_patcher/utils/init.dart';
+import 'package:cusor_patcher/widgets/pages/cursor_patch_page.dart';
+import 'package:cusor_patcher/widgets/responsive_builder.dart';
+import 'package:cusor_patcher/widgets/pages/settings_page.dart';
 import 'package:flutter/material.dart';
-import 'package:cursor_patcher/i18n/strings.g.dart';
+import 'package:cusor_patcher/i18n/strings.g.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CursorIcon extends StatelessWidget {

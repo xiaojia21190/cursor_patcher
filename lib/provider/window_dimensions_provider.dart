@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:cursor_patcher/provider/persistence_provider.dart';
+import 'package:cusor_patcher/provider/persistence_provider.dart';
 import 'package:screen_retriever/screen_retriever.dart';
 import 'package:window_manager/window_manager.dart';
 

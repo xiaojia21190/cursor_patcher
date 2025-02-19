@@ -1,9 +1,9 @@
-import 'package:cursor_patcher/provider/window_dimensions_provider.dart';
+import 'package:cusor_patcher/provider/window_dimensions_provider.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cursor_patcher/i18n/strings.g.dart';
+import 'package:cusor_patcher/i18n/strings.g.dart';
 
 final persistenceProvider = Provider<PersistenceService>((ref) {
   throw UnimplementedError('persistenceProvider not initialized');

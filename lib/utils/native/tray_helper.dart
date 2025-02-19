@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:cursor_patcher/i18n/strings.g.dart';
+import 'package:cusor_patcher/i18n/strings.g.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tray_manager/tray_manager.dart' as tm;
 import 'package:url_launcher/url_launcher.dart';
@@ -18,7 +18,7 @@ Future<void> initTray() async {
   if (!Platform.isWindows && !Platform.isMacOS && !Platform.isLinux) {
     return;
   }
-  String iconPath = Platform.isWindows ? 'assets/cursor_patcher.ico' : 'assets/cursor_patcher.png';
+  String iconPath = Platform.isWindows ? 'assets/cusor_patcher.ico' : 'assets/cusor_patcher.png';
   await tm.trayManager.setIcon(iconPath);
 
   final items = [

@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "dev.xmarmalade.cursor_patcher" "\0"
-            VALUE "FileDescription", "cursor_patcher" "\0"
+            VALUE "CompanyName", "dev.xmarmalade.cusor_patcher" "\0"
+            VALUE "FileDescription", "cusor_patcher" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "cursor_patcher" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2023 dev.xmarmalade.cursor_patcher. All rights reserved." "\0"
-            VALUE "OriginalFilename", "cursor_patcher.exe" "\0"
-            VALUE "ProductName", "cursor_patcher" "\0"
+            VALUE "InternalName", "cusor_patcher" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2023 dev.xmarmalade.cusor_patcher. All rights reserved." "\0"
+            VALUE "OriginalFilename", "cusor_patcher.exe" "\0"
+            VALUE "ProductName", "cusor_patcher" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

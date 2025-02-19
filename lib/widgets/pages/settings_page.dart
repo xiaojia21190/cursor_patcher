@@ -1,11 +1,11 @@
-import 'package:cursor_patcher/i18n/strings.g.dart';
-import 'package:cursor_patcher/provider/settings_provider.dart';
-import 'package:cursor_patcher/widgets/pages/about_page.dart';
-import 'package:cursor_patcher/widgets/pages/language_page.dart';
-import 'package:cursor_patcher/widgets/responsive_builder.dart';
-import 'package:cursor_patcher/widgets/theme_tile.dart';
-import 'package:cursor_patcher/widgets/toggle_tile.dart';
-import 'package:cursor_patcher/widgets/working_directory_tile.dart';
+import 'package:cusor_patcher/i18n/strings.g.dart';
+import 'package:cusor_patcher/provider/settings_provider.dart';
+import 'package:cusor_patcher/widgets/pages/about_page.dart';
+import 'package:cusor_patcher/widgets/pages/language_page.dart';
+import 'package:cusor_patcher/widgets/responsive_builder.dart';
+import 'package:cusor_patcher/widgets/theme_tile.dart';
+import 'package:cusor_patcher/widgets/toggle_tile.dart';
+import 'package:cusor_patcher/widgets/working_directory_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -69,30 +69,30 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
             Card(
               margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: Column(children: [
-                // ListTile(title: Text(t.settings.cursor_patcherSettings.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18))),
+                // ListTile(title: Text(t.settings.cusor_patcherSettings.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18))),
                 // CustomToggleTile(
                 //   value: settings.saveWindowPlacement,
                 //   onToggled: (value) => settingsNotifier.setSaveWindowPlacement(value),
-                //   title: t.settings.cursor_patcherSettings.saveWindowPlacement.title,
-                //   subtitle: t.settings.cursor_patcherSettings.saveWindowPlacement.description,
+                //   title: t.settings.cusor_patcherSettings.saveWindowPlacement.title,
+                //   subtitle: t.settings.cusor_patcherSettings.saveWindowPlacement.description,
                 // ),
                 // CustomToggleTile(
                 //   value: settings.minimizeToTray,
                 //   onToggled: (value) => settingsNotifier.setMinimizeToTray(value),
-                //   title: t.settings.cursor_patcherSettings.minimizeToTray.title,
-                //   subtitle: t.settings.cursor_patcherSettings.minimizeToTray.description,
+                //   title: t.settings.cusor_patcherSettings.minimizeToTray.title,
+                //   subtitle: t.settings.cusor_patcherSettings.minimizeToTray.description,
                 // ),
                 // CustomToggleTile(
                 //   value: settings.autoStart,
                 //   onToggled: (value) => ref.watch(settingsProvider.notifier).setAutoStart(value),
-                //   title: t.settings.cursor_patcherSettings.autoStart.title,
-                //   subtitle: t.settings.cursor_patcherSettings.autoStart.description,
+                //   title: t.settings.cusor_patcherSettings.autoStart.title,
+                //   subtitle: t.settings.cusor_patcherSettings.autoStart.description,
                 // ),
                 // CustomToggleTile(
                 //   value: settings.autoStartLaunchMinimized,
                 //   onToggled: (value) => settingsNotifier.setAutoStartLaunchMinimized(value),
-                //   title: t.settings.cursor_patcherSettings.autoStartLaunchMinimized.title,
-                //   subtitle: t.settings.cursor_patcherSettings.autoStartLaunchMinimized.description,
+                //   title: t.settings.cusor_patcherSettings.autoStartLaunchMinimized.title,
+                //   subtitle: t.settings.cusor_patcherSettings.autoStartLaunchMinimized.description,
                 // ),
                 // Container(height: 10)
               ]),

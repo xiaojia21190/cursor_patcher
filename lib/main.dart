@@ -1,15 +1,15 @@
 import 'dart:io';
 
-import 'package:cursor_patcher/i18n/strings.g.dart';
-import 'package:cursor_patcher/provider/persistence_provider.dart';
-import 'package:cursor_patcher/provider/settings_provider.dart';
-import 'package:cursor_patcher/theme.dart';
-import 'package:cursor_patcher/utils/init.dart';
-import 'package:cursor_patcher/utils/native/tray_helper.dart';
-import 'package:cursor_patcher/utils/native/tray_manager.dart';
-import 'package:cursor_patcher/utils/native/window_watcher.dart';
-import 'package:cursor_patcher/widgets/pages/first_lanuch.dart';
-import 'package:cursor_patcher/widgets/pages/home.dart';
+import 'package:cusor_patcher/i18n/strings.g.dart';
+import 'package:cusor_patcher/provider/persistence_provider.dart';
+import 'package:cusor_patcher/provider/settings_provider.dart';
+import 'package:cusor_patcher/theme.dart';
+import 'package:cusor_patcher/utils/init.dart';
+import 'package:cusor_patcher/utils/native/tray_helper.dart';
+import 'package:cusor_patcher/utils/native/tray_manager.dart';
+import 'package:cusor_patcher/utils/native/window_watcher.dart';
+import 'package:cusor_patcher/widgets/pages/first_lanuch.dart';
+import 'package:cusor_patcher/widgets/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

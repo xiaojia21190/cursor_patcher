@@ -87,7 +87,7 @@
       "dark": "暗色",
       "system": "跟隨系統"
     },
-    "cursor_patcherSettings": {
+    "cusor_patcherSettings": {
       "title": "Alist Helper 選項",
       "saveWindowPlacement": {
         "title": "儲存視窗位置",
@@ -179,7 +179,7 @@
       "currentVersion": "目前 Alist 版本",
       "latestVersion": "最新 Alist 版本"
     },
-    "cursor_patcherVersion": {
+    "cusor_patcherVersion": {
       "title": "Alist Helper 版本",
       "currentVersion": "目前 Alist Helper 版本",
       "latestVersion": "最新 Alist Helper 版本"

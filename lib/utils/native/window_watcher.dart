@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:cursor_patcher/provider/window_dimensions_provider.dart';
+import 'package:cusor_patcher/provider/window_dimensions_provider.dart';
 import 'package:window_manager/window_manager.dart';
 
 class WindowWatcher extends ConsumerStatefulWidget {

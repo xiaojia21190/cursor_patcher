@@ -9,7 +9,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
                       _In_ wchar_t *command_line, _In_ int show_command)
 // Making the app single-instanced https://leanflutter.org/blog/making-the-app-single-instanced
 {
-  HWND hwnd = ::FindWindow(L"FLUTTER_RUNNER_WIN32_WINDOW", L"cursor_patcher");
+  HWND hwnd = ::FindWindow(L"FLUTTER_RUNNER_WIN32_WINDOW", L"cusor_patcher");
   if (hwnd != NULL)
   {
     ::ShowWindow(hwnd, SW_NORMAL);
@@ -38,7 +38,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
   FlutterWindow window(project);
   Win32Window::Point origin(10, 10);
   Win32Window::Size size(1280, 720);
-  if (!window.Create(L"cursor_patcher", origin, size))
+  if (!window.Create(L"cusor_patcher", origin, size))
   {
     return EXIT_FAILURE;
   }

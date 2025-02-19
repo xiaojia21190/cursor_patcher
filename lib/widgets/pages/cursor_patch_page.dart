@@ -1,13 +1,13 @@
-// import 'package:cursor_patcher/i18n/strings.g.dart';
+// import 'package:cusor_patcher/i18n/strings.g.dart';
 import 'dart:convert';
 
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
-import 'package:cursor_patcher/model/cursor_helper.dart';
-import 'package:cursor_patcher/provider/cursor_provider.dart';
-// import 'package:cursor_patcher/provider/settings_provider.dart';
-// import 'package:cursor_patcher/widgets/logs_viewer.dart';
-import 'package:cursor_patcher/widgets/responsive_builder.dart';
+import 'package:cusor_patcher/model/cursor_helper.dart';
+import 'package:cusor_patcher/provider/cursor_provider.dart';
+// import 'package:cusor_patcher/provider/settings_provider.dart';
+// import 'package:cusor_patcher/widgets/logs_viewer.dart';
+import 'package:cusor_patcher/widgets/responsive_builder.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

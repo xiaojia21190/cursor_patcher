@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:cursor_patcher/i18n/strings.g.dart';
-import 'package:cursor_patcher/provider/settings_provider.dart';
+import 'package:cusor_patcher/i18n/strings.g.dart';
+import 'package:cusor_patcher/provider/settings_provider.dart';
 
 class LanguagePage extends ConsumerWidget {
   const LanguagePage({super.key});
