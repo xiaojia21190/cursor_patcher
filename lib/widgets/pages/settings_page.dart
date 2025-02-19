@@ -4,8 +4,6 @@ import 'package:cusor_patcher/widgets/pages/about_page.dart';
 import 'package:cusor_patcher/widgets/pages/language_page.dart';
 import 'package:cusor_patcher/widgets/responsive_builder.dart';
 import 'package:cusor_patcher/widgets/theme_tile.dart';
-import 'package:cusor_patcher/widgets/toggle_tile.dart';
-import 'package:cusor_patcher/widgets/working_directory_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
