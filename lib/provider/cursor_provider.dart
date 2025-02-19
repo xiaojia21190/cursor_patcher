@@ -88,15 +88,9 @@ class Cursor extends _$Cursor {
           debugPrint("Cursor 机器码已成功 Patch");
         }
       }
-      // final tokenData = await fetchTokenData(currentVersion, authCode);
+      final tokenData = await fetchTokenData(currentVersion, authCode);
       debugPrint('即将退出 Cursor 并修改配置，请确保所有工作已保存。');
-      final tokenData = TokenData(
-        token: '123',
-        macMachineId: '123',
-        machineId: '123',
-        devDeviceId: '123',
-        email: '123',
-      );
+
       debugPrint("开始替换 Token..");
       final resetCursorIdResult = await resetCursorId(tokenData);
       if (resetCursorIdResult) {
@@ -292,11 +286,13 @@ class Cursor extends _$Cursor {
   //获得auth token
   Future<TokenData> fetchTokenData(String currentVersion, String authCode) async {
     debugPrint('正在获取 Token 数据...');
-    final response = await http.get(Uri.parse(AppConstants.apiUrl).replace(queryParameters: {
-      'accessCode': authCode,
-      'cursorVersion': currentVersion,
-      'scriptVersion': AppConstants.scriptVersion,
-    }));
+    final response = await http.get(
+        Uri.parse(AppConstants.apiUrl).replace(queryParameters: {
+          'accessCode': authCode,
+          'cursorVersion': currentVersion,
+          'scriptVersion': AppConstants.scriptVersion,
+        }),
+        headers: {'Authorization': 'python-requests'});
     debugPrint('成功获取 Token 数据');
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body) as Map<String, dynamic>;
