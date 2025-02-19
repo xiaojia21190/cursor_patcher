@@ -13,6 +13,7 @@ import 'package:cursor_patcher/widgets/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 Future<void> main(List<String> args) async {
   final persistenceService = await preInit(args);
@@ -22,6 +23,25 @@ Future<void> main(List<String> args) async {
     // appArgumentsProvider.overrideWith((ref) => args),
   ], child: TranslationProvider(child: const MyApp())));
 }
+
+final GoRouter _router = GoRouter(
+  routes: <RouteBase>[
+    GoRoute(
+      path: '/',
+      builder: (BuildContext context, GoRouterState state) {
+        return const FirstLaunchPage();
+      },
+      routes: <RouteBase>[
+        GoRoute(
+          path: 'home',
+          builder: (BuildContext context, GoRouterState state) {
+            return const Home();
+          },
+        ),
+      ],
+    ),
+  ],
+);
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
@@ -46,7 +66,7 @@ class MyApp extends ConsumerWidget {
             debugPrint(e.toString());
           }
         },
-        child: MaterialApp(
+        child: MaterialApp.router(
           title: 'Cursor Patcher',
           locale: TranslationProvider.of(context).flutterLocale,
           supportedLocales: AppLocaleUtils.supportedLocales,
@@ -54,7 +74,7 @@ class MyApp extends ConsumerWidget {
           themeMode: settings.themeMode,
           theme: CursorPatcherTheme(settings.themeColor).lightThemeData,
           darkTheme: CursorPatcherTheme(settings.themeColor).darkThemeData,
-          home: const FirstLaunchPage(),
+          routerConfig: _router,
         ),
       ),
     );

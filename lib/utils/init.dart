@@ -14,7 +14,11 @@ import 'package:window_manager/window_manager.dart';
 Future<PersistenceService> preInit(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // 确保PersistenceService完全初始化
   final persistenceService = await PersistenceService.initialize();
+  // if (persistenceService) {
+  //   throw Exception('Failed to initialize PersistenceService');
+  // }
 
   // Register default plural resolver
   for (final locale in AppLocale.values) {

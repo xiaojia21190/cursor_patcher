@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cursor_patcher/provider/persistence_provider.dart';
+import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/gestures.dart';
 
 class FirstLaunchPage extends ConsumerStatefulWidget {
   const FirstLaunchPage({super.key});
@@ -16,9 +19,13 @@ class _FirstLaunchPageState extends ConsumerState<FirstLaunchPage> {
   @override
   void initState() {
     super.initState();
-    if (ref.read(persistenceProvider).getToken().isNotEmpty) {
-      Navigator.of(context).pushReplacementNamed('/home');
-    }
+    Future.microtask(() async {
+      final token = ref.read(persistenceProvider).getToken();
+      debugPrint('token: $token');
+      if (token.isNotEmpty && mounted) {
+        context.go('/home');
+      }
+    });
   }
 
   @override
@@ -41,10 +48,28 @@ class _FirstLaunchPageState extends ConsumerState<FirstLaunchPage> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    '您需要先获取Cursor Token才能使用本应用。\n'
-                    '请访问 https://cursor.ccopilot.org/index.html 获取Token。',
+                  RichText(
                     textAlign: TextAlign.center,
+                    text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: [
+                        //删除下划线
+                        const TextSpan(text: '您需要先获取cursor.ccopilot的token才能使用本应用。\n请访问 ', style: TextStyle(fontSize: 16, decoration: TextDecoration.none)),
+                        TextSpan(
+                          text: 'https://cursor.ccopilot.org/index.html',
+                          style: const TextStyle(
+                            color: Colors.blue,
+                            fontSize: 16,
+                            decoration: TextDecoration.none,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => launchUrl(
+                                  Uri.parse('https://cursor.ccopilot.org/index.html'),
+                                ),
+                        ),
+                        const TextSpan(text: ' 在localStorage中获取token。', style: TextStyle(fontSize: 16, decoration: TextDecoration.none)),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 24),
                   TextField(
@@ -57,6 +82,9 @@ class _FirstLaunchPageState extends ConsumerState<FirstLaunchPage> {
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 40),
+                    ),
                     onPressed: _isLoading ? null : _saveToken,
                     child: _isLoading ? const CircularProgressIndicator() : const Text('确认'),
                   ),
@@ -89,7 +117,7 @@ class _FirstLaunchPageState extends ConsumerState<FirstLaunchPage> {
 
       // 导航到主页面
       if (mounted) {
-        Navigator.of(context).pushReplacementNamed('/home');
+        context.go('/home');
       }
     } catch (e) {
       if (mounted) {

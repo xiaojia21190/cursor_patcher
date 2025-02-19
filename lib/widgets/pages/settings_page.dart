@@ -1,6 +1,5 @@
 import 'package:cursor_patcher/i18n/strings.g.dart';
 import 'package:cursor_patcher/provider/settings_provider.dart';
-import 'package:cursor_patcher/widgets/alist_args_tile.dart';
 import 'package:cursor_patcher/widgets/pages/about_page.dart';
 import 'package:cursor_patcher/widgets/pages/language_page.dart';
 import 'package:cursor_patcher/widgets/responsive_builder.dart';
@@ -98,42 +97,22 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
                 // Container(height: 10)
               ]),
             ),
-            Card(
-              margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-              child: Column(children: [
-                ListTile(title: Text(t.settings.alistSettings.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18))),
-                CustomToggleTile(
-                  value: settings.autoStartAlist,
-                  onToggled: (value) => settingsNotifier.setAutoStartAlist(value),
-                  title: t.settings.alistSettings.autoStartAlist.title,
-                  subtitle: t.settings.alistSettings.autoStartAlist.description,
-                ),
-                WorkingDirectoryTile(),
-                // ProxyTile(),
-                AlistArgsTile(),
-                Container(height: 10)
-              ]),
-            ),
-            Card(
-              margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-              child: Column(children: [
-                ListTile(title: Text(t.settings.rcloneSettings.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18))),
-                CustomToggleTile(
-                  value: settings.autoStartRclone,
-                  onToggled: (value) => settingsNotifier.setAutoStartRclone(value),
-                  title: t.settings.rcloneSettings.autoStartAlist.title,
-                  subtitle: t.settings.rcloneSettings.autoStartAlist.description,
-                ),
-                CustomToggleTile(
-                  value: settings.startAfterAlist,
-                  onToggled: (value) => settingsNotifier.setStartAfterAlist(value),
-                  title: t.settings.rcloneSettings.startAfterAlist.title,
-                  subtitle: t.settings.rcloneSettings.startAfterAlist.description,
-                ),
-                RcloneDirectoryTile(),
-                Container(height: 10)
-              ]),
-            ),
+            // Card(
+            //   margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+            //   child: Column(children: [
+            //     ListTile(title: Text(t.settings.alistSettings.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18))),
+            //     CustomToggleTile(
+            //       value: settings.autoStartAlist,
+            //       onToggled: (value) => settingsNotifier.setAutoStartAlist(value),
+            //       title: t.settings.alistSettings.autoStartAlist.title,
+            //       subtitle: t.settings.alistSettings.autoStartAlist.description,
+            //     ),
+            //     WorkingDirectoryTile(),
+            //     // ProxyTile(),
+            //     AlistArgsTile(),
+            //     Container(height: 10)
+            //   ]),
+            // ),
             Card(
               margin: const EdgeInsets.fromLTRB(20, 10, 20, 20),
               child: Column(children: [

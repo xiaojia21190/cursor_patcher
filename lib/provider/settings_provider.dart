@@ -34,16 +34,6 @@ class SettingsNotifier extends Notifier<SettingsState> {
     state = state.copyWith(webdavAccount: value);
   }
 
-  Future<void> setAutoStartRclone(bool value) async {
-    await _persistenceService.setAutoStartRclone(value);
-    state = state.copyWith(autoStartRclone: value);
-  }
-
-  Future<void> setStartAfterAlist(bool value) async {
-    await _persistenceService.setStartAfterAlist(value);
-    state = state.copyWith(startAfterAlist: value);
-  }
-
   Future<void> setFirstRun(bool value) async {
     await _persistenceService.setFirstRun(value);
     state = state.copyWith(isFirstRun: value);
@@ -57,11 +47,6 @@ class SettingsNotifier extends Notifier<SettingsState> {
   Future<void> setLocale(AppLocale? locale) async {
     await _persistenceService.setLocale(locale);
     state = state.copyWith(locale: locale);
-  }
-
-  Future<void> setAutoStartAlist(bool value) async {
-    await _persistenceService.setAutoStartAlist(value);
-    state = state.copyWith(autoStartAlist: value);
   }
 
   Future<void> setThemeColor(Color value) async {

@@ -1,4 +1,3 @@
-import 'package:cursor_patcher/model/cursor_token.dart';
 import 'package:cursor_patcher/provider/window_dimensions_provider.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cursor_patcher/i18n/strings.g.dart';
 
 final persistenceProvider = Provider<PersistenceService>((ref) {
-  throw Exception('persistenceProvider not initialized');
+  throw UnimplementedError('persistenceProvider not initialized');
 });
 
 // Version of the storage
