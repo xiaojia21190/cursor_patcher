@@ -38,9 +38,7 @@ class _CursorPatcherPageState extends ConsumerState<CursorPatcherPage> {
             : AppBar(
                 title: const Text('Cursor Patcher', style: TextStyle(fontWeight: FontWeight.bold)),
               )),
-        body: SingleChildScrollView(child: Container(
-            // constraints: const BoxConstraints(maxWidth: 800),
-            child: Consumer(
+        body: SingleChildScrollView(child: Consumer(
           builder: (context, ref, child) {
             final cursor = ref.watch(cursorProvider);
             return cursor.authCode != null
@@ -215,11 +213,13 @@ class _CursorPatcherPageState extends ConsumerState<CursorPatcherPage> {
                       ),
                     ],
                   )
-                : Center(
-                    child: CircularProgressIndicator(),
+                : Expanded(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   );
           },
-        ))));
+        )));
   }
 
   Widget _buildUsageInfo({
