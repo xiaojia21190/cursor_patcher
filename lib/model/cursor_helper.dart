@@ -11,6 +11,7 @@ class CursorHelper with _$CursorHelper {
     @JsonKey(name: 'total_used') int? totalUsed,
     @Default("") String token,
     @Default([]) List<String> output,
+    @Default([]) List<String> cursorVersion,
   }) = _CursorHelper;
 
   factory CursorHelper.fromJson(Map<String, Object?> json) => _$CursorHelperFromJson(json);

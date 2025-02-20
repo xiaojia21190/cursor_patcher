@@ -4,6 +4,7 @@ import 'package:cusor_patcher/provider/cursor_provider.dart';
 import 'package:cusor_patcher/provider/persistence_provider.dart';
 import 'package:cusor_patcher/widgets/logs_viewe.dart';
 import 'package:cusor_patcher/widgets/responsive_builder.dart';
+import 'package:cusor_patcher/widgets/dialogs/cursor_version_dialog.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -144,24 +145,28 @@ class _CursorPatcherPageState extends ConsumerState<CursorPatcherPage> {
                                                   Text('快捷操作', style: Theme.of(context).textTheme.titleLarge),
                                                 ],
                                               ),
-                                              //替换token
-                                              TextButton(
-                                                onPressed: () async {
-                                                  await ref.watch(persistenceProvider).saveToken("");
-                                                  await cursorProviderNotifier.replaceAuthToken();
-                                                  context.go('/');
-                                                },
-                                                child: Row(
-                                                  children: [
-                                                    const SizedBox(width: 8),
-                                                    Text('点击替换Token', style: Theme.of(context).textTheme.titleLarge),
-                                                  ],
-                                                ),
-                                              ),
                                             ],
                                           ),
                                         ),
                                         const Divider(height: 1),
+                                        ListTile(
+                                          leading: const Icon(Icons.refresh),
+                                          title: const Text('切换账号'),
+                                          onTap: () async {
+                                            try {
+                                              await ref.watch(persistenceProvider).saveToken("");
+                                              await cursorProviderNotifier.replaceAuthToken();
+                                              context.go('/');
+                                            } catch (e) {
+                                              CherryToast.error(
+                                                title: Text("切换账号失败", style: TextStyle(color: Colors.black)),
+                                                animationType: AnimationType.fromRight,
+                                                animationDuration: Duration(milliseconds: 1000),
+                                                autoDismiss: true,
+                                              ).show(context);
+                                            }
+                                          },
+                                        ),
                                         //一键替换
                                         ListTile(
                                           leading: const Icon(Icons.flash_on),
@@ -201,7 +206,10 @@ class _CursorPatcherPageState extends ConsumerState<CursorPatcherPage> {
                                           leading: const Icon(Icons.history),
                                           title: const Text('Cursor 历史版本下载'),
                                           onTap: () {
-                                            // TODO: 实现历史版本下载
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => const CursorVersionDialog(),
+                                            );
                                           },
                                         ),
                                       ],

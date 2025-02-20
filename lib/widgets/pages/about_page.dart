@@ -30,12 +30,12 @@ class AboutPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          Column(
-            children: [const SizedBox(height: 20), Image.asset('assets/cusor_patcher.png', height: 180, width: 180), const SizedBox(height: 20), const Text('Cursor Patcher', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold), textAlign: TextAlign.center), const SizedBox(height: 20)],
-          ),
+          // Column(
+          //   children: [const SizedBox(height: 20), Image.asset('assets/cusor_patcher.png', height: 180, width: 180), const SizedBox(height: 20), const Text('Cursor Patcher', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold), textAlign: TextAlign.center), const SizedBox(height: 20)],
+          // ),
           const SizedBox(height: 20),
           Text(
-            '© ${DateTime.now().year} Xmarmalade',
+            '© ${DateTime.now().year} YY',
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 10),

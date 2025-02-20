@@ -549,4 +549,14 @@ class Cursor extends _$Cursor {
     }
     state = state.copyWith(output: stdOut);
   }
+
+  //getVersion   https://cursor.ccopilot.org/api/version/versions.txt?v=20250209
+  Future<void> getVersion() async {
+    final response = await http.get(Uri.parse('https://cursor.ccopilot.org/api/version/versions.txt?v=20250209'));
+    if (response.statusCode == 200) {
+      state = state.copyWith(cursorVersion: response.body.split('\n'));
+    } else {
+      throw Exception('Failed to get versions');
+    }
+  }
 }
