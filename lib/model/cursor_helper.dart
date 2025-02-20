@@ -12,6 +12,7 @@ class CursorHelper with _$CursorHelper {
     @Default("") String token,
     @Default([]) List<String> output,
     @Default([]) List<String> cursorVersion,
+    @Default([]) List<String> filterCursorVersion,
   }) = _CursorHelper;
 
   factory CursorHelper.fromJson(Map<String, Object?> json) => _$CursorHelperFromJson(json);

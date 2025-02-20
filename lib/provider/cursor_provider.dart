@@ -554,9 +554,18 @@ class Cursor extends _$Cursor {
   Future<void> getVersion() async {
     final response = await http.get(Uri.parse('https://cursor.ccopilot.org/api/version/versions.txt?v=20250209'));
     if (response.statusCode == 200) {
-      state = state.copyWith(cursorVersion: response.body.split('\n'));
+      state = state.copyWith(cursorVersion: response.body.split('\n'), filterCursorVersion: response.body.split('\n'));
     } else {
       throw Exception('Failed to get versions');
     }
+  }
+
+  Future<void> getFilterVersion(String searchText) async {
+    if (searchText.isEmpty) {
+      state = state.copyWith(filterCursorVersion: state.cursorVersion);
+      return;
+    }
+    debugPrint(state.cursorVersion.where((version) => version.split(",")[0].toLowerCase().contains(searchText.toLowerCase())).toString());
+    state = state.copyWith(filterCursorVersion: state.cursorVersion.where((version) => version.split(",")[0].toLowerCase().contains(searchText.toLowerCase())).toList());
   }
 }

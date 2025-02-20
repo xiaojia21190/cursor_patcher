@@ -12,10 +12,6 @@ class CursorVersionDialog extends ConsumerStatefulWidget {
 
 class _CursorVersionDialogState extends ConsumerState<CursorVersionDialog> {
   final TextEditingController _searchController = TextEditingController();
-  String _searchText = '';
-
-  final List<String> _versions = [];
-
   @override
   void initState() {
     super.initState();
@@ -23,15 +19,9 @@ class _CursorVersionDialogState extends ConsumerState<CursorVersionDialog> {
 
   @override
   void dispose() {
+    _searchController.clear();
     _searchController.dispose();
     super.dispose();
-  }
-
-  List<String> get _filteredVersions {
-    if (_searchText.isEmpty) {
-      return _versions;
-    }
-    return _versions.where((version) => version.toLowerCase().contains(_searchText.toLowerCase())).toList();
   }
 
   @override
@@ -69,10 +59,8 @@ class _CursorVersionDialogState extends ConsumerState<CursorVersionDialog> {
                 ),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16),
               ),
-              onChanged: (value) {
-                setState(() {
-                  _searchText = value;
-                });
+              onChanged: (value) async {
+                await ref.watch(cursorProvider.notifier).getFilterVersion(value);
               },
             ),
 
@@ -82,12 +70,12 @@ class _CursorVersionDialogState extends ConsumerState<CursorVersionDialog> {
             // 版本列表
             Consumer(builder: (context, ref, child) {
               final cursor = ref.watch(cursorProvider);
-              return cursor.cursorVersion.isNotEmpty
+              return cursor.filterCursorVersion.isNotEmpty
                   ? Expanded(
                       child: ListView.builder(
-                        itemCount: cursor.cursorVersion.length,
+                        itemCount: cursor.filterCursorVersion.length,
                         itemBuilder: (context, index) {
-                          final version = cursor.cursorVersion[index];
+                          final version = cursor.filterCursorVersion[index];
                           final version1 = version.split(',')[0].toString();
                           final version2 = version.split(',')[1];
                           return ExpansionTile(
@@ -118,7 +106,7 @@ class _CursorVersionDialogState extends ConsumerState<CursorVersionDialog> {
                         },
                       ),
                     )
-                  : const Center(child: CircularProgressIndicator());
+                  : Expanded(child: const Center(child: CircularProgressIndicator()));
             }),
           ],
         ),
