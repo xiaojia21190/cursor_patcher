@@ -54,6 +54,7 @@ class _HomeState extends ConsumerState<Home> {
     return ResponsiveBuilder(
       builder: (sizingInformation) {
         return Scaffold(
+          backgroundColor: Colors.amber,
           body: SafeArea(
             child: Row(
               children: [

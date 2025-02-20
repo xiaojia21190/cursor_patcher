@@ -1,9 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:cusor_patcher/i18n/strings.g.dart';
-import 'package:cusor_patcher/utils/native/auto_start_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:cusor_patcher/model/settings_state.dart';
 import 'package:cusor_patcher/provider/persistence_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 
 final settingsProvider = NotifierProvider<SettingsNotifier, SettingsState>(SettingsNotifier.new);
 
@@ -17,15 +20,13 @@ class SettingsNotifier extends Notifier<SettingsState> {
       locale: _persistenceService.getLocale(),
       minimizeToTray: _persistenceService.isMinimizeToTray(),
       autoStartLaunchMinimized: _persistenceService.isAutoStartLaunchMinimized(),
-      autoStart: _persistenceService.isAutoStart(),
-      workingDirectory: _persistenceService.getWorkingDirectory(),
-      rcloneDirectory: _persistenceService.getRcloneDirectory(),
       themeMode: _persistenceService.getThemeMode(),
       themeColor: _persistenceService.getThemeColor(),
       saveWindowPlacement: _persistenceService.getSaveWindowPlacement(),
       proxy: _persistenceService.getProxy(),
       isFirstRun: _persistenceService.isFirstRun(),
       webdavAccount: _persistenceService.getWebdavAccount(),
+      currentVersion: _persistenceService.getCursorPatcherVersion(),
     );
   }
 
@@ -69,24 +70,27 @@ class SettingsNotifier extends Notifier<SettingsState> {
     state = state.copyWith(autoStartLaunchMinimized: value);
   }
 
-  Future<void> setAutoStart(bool value) async {
-    await _persistenceService.setAutoStart(value);
-    initAutoStartAndOpenSettings(value);
-    state = state.copyWith(autoStart: value);
-  }
-
-  Future<void> setWorkingDirectory(String value) async {
-    await _persistenceService.setWorkingDirectory(value);
-    state = state.copyWith(workingDirectory: value);
-  }
-
-  Future<void> setRcloneDirectory(String value) async {
-    await _persistenceService.setRcloneDirectory(value);
-    state = state.copyWith(rcloneDirectory: value);
-  }
-
   Future<void> setSaveWindowPlacement(bool value) async {
     await _persistenceService.setSaveWindowPlacement(value);
     state = state.copyWith(saveWindowPlacement: value);
+  }
+
+  Future<void> fetchLatestVersion() async {
+    final response = await http.get(Uri.parse('https://api.github.com/repos/xiaojia21190/cursor_patcher/releases/latest'));
+    final json = jsonDecode(response.body) as Map<String, dynamic>;
+    try {
+      String latest = json['tag_name'];
+      List assets = json['assets'];
+      String platformKey = Platform.isWindows ? 'windows' : (Platform.isMacOS ? 'macos' : 'linux');
+      List<Map> assetsForSpecificPlatform = [];
+      for (Map asset in assets) {
+        if (asset['name'].contains(platformKey)) {
+          assetsForSpecificPlatform.add(asset);
+        }
+      }
+      state = state.copyWith(latestVersion: latest, newReleaseAssets: assetsForSpecificPlatform);
+    } catch (e) {
+      throw Exception('$e\nFailed to get latest version when fetching: ${json.toString()}');
+    }
   }
 }

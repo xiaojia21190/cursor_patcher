@@ -30,11 +30,11 @@
     }
   },
   "firstLaunch": {
-    "intro": "欢迎使用 Alist Helper,让我们开始吧!",
-    "about": "点击此处了解更多关于 Alist Helper 的信息!",
+    "intro": "欢迎使用 Cursor Patcher,让我们开始吧!",
+    "about": "点击此处了解更多关于 Cursor Patcher 的信息!",
     "chooseTheme": "首先,让我们在这里选择您喜欢的主题!",
-    "chooseDirectory": "第二步,您需要安装 alist 并告诉 Alist Helper 它在哪里。",
-    "autoInstall": "Alist Helper现已支持自动安装 ${name},点击这里安装。",
+    "chooseDirectory": "第二步,您需要安装 alist 并告诉 Cursor Patcher 它在哪里。",
+    "autoInstall": "Cursor Patcher现已支持自动安装 ${name},点击这里安装。",
     "getAlist": "想要使用特定版本的alist或是手动安装?点击这里了解。",
     "finish": "完成!您可以在设置中更改这些设置!"
   },
@@ -72,8 +72,8 @@
     "openGUI": "打开 Web GUI",
     "startAlist": "启动 Alist 服务",
     "endAlist": "关闭 Alist 服务",
-    "tooltip": "Alist Helper",
-    "workingTooltip": "Alist Helper (Alist 运行中)"
+    "tooltip": "Cursor Patcher",
+    "workingTooltip": "Cursor Patcher (Alist 运行中)"
   },
   "settings": {
     "interfaceSettings": {
@@ -88,33 +88,33 @@
       "system": "跟随系统"
     },
     "cusor_patcherSettings": {
-      "title": "Alist Helper 选项",
+      "title": "Cursor Patcher 选项",
       "saveWindowPlacement": {
         "title": "保存窗口位置",
-        "description": "这将允许 Alist Helper 保存窗口位置。"
+        "description": "这将允许 Cursor Patcher 保存窗口位置。"
       },
       "minimizeToTray": {
         "title": "允许最小化到托盘",
-        "description": "这将允许 Alist Helper 最小化到托盘。"
+        "description": "这将允许 Cursor Patcher 最小化到托盘。"
       },
       "autoStart": {
         "title": "允许自动启动",
-        "description": "这将允许 Alist Helper 自动启动。"
+        "description": "这将允许 Cursor Patcher 自动启动。"
       },
       "autoStartLaunchMinimized": {
         "title": "允许静默自动启动",
-        "description": "这将允许 Alist Helper 静默自动启动。"
+        "description": "这将允许 Cursor Patcher 静默自动启动。"
       }
     },
     "alistSettings": {
       "title": "Alist 选项",
       "autoStartAlist": {
         "title": "允许 alist 自动启动",
-        "description": "这将在 Alist Helper 启动时自动启动 alist。"
+        "description": "这将在 Cursor Patcher 启动时自动启动 alist。"
       },
       "autoStartLaunchMinimized": {
         "title": "允许静默自动启动",
-        "description": "这将允许 Alist Helper 静默自动启动。"
+        "description": "这将允许 Cursor Patcher 静默自动启动。"
       },
       "workingDirectory": {
         "title": "工作目录",
@@ -147,7 +147,7 @@
       "rcloneWebdavNotSet": "您可以使用 rclone 将您的网络驱动器挂载到计算机上。但是，尚未设置用于访问 alist 的 WebDav 帐户。请转到设置并配置 WebDav 帐户以继续。",
       "autoStartAlist": {
         "title": "允许 rclone 自动启动",
-        "description": "这将在 Alist Helper 启动时自动启动 rclone。"
+        "description": "这将在 Cursor Patcher 启动时自动启动 rclone。"
       },
       "startAfterAlist": {
         "title": "要求在 alist 启动后启动",
@@ -180,9 +180,9 @@
       "latestVersion": "最新 Alist 版本"
     },
     "cusor_patcherVersion": {
-      "title": "Alist Helper 版本",
-      "currentVersion": "当前 Alist Helper 版本",
-      "latestVersion": "最新 Alist Helper 版本"
+      "title": "Cursor Patcher 版本",
+      "currentVersion": "当前 Cursor Patcher 版本",
+      "latestVersion": "最新 Cursor Patcher 版本"
     },
     "rcloneVersion": {
       "title": "Rclone 版本",

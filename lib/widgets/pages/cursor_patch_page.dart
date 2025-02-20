@@ -1,16 +1,14 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
-import 'package:cusor_patcher/model/cursor_helper.dart';
 import 'package:cusor_patcher/provider/cursor_provider.dart';
+import 'package:cusor_patcher/provider/persistence_provider.dart';
 import 'package:cusor_patcher/widgets/logs_viewe.dart';
 import 'package:cusor_patcher/widgets/responsive_builder.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path/path.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:go_router/go_router.dart';
 
 class CursorPatcherPage extends ConsumerStatefulWidget {
   final SizingInformation sizingInformation;
@@ -32,9 +30,7 @@ class _CursorPatcherPageState extends ConsumerState<CursorPatcherPage> {
     // final settings = ref.watch(settingsProvider);
 
     final cursorProviderNotifier = ref.watch(cursorProvider.notifier);
-
     cursorProviderNotifier.getCursorHelper();
-
     return Scaffold(
         appBar: (widget.sizingInformation.isDesktop
             ? null
@@ -139,10 +135,29 @@ class _CursorPatcherPageState extends ConsumerState<CursorPatcherPage> {
                                         Padding(
                                           padding: const EdgeInsets.all(16),
                                           child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
-                                              const Icon(Icons.flash_on),
-                                              const SizedBox(width: 8),
-                                              Text('快捷操作', style: Theme.of(context).textTheme.titleLarge),
+                                              Row(
+                                                children: [
+                                                  const Icon(Icons.flash_on),
+                                                  const SizedBox(width: 8),
+                                                  Text('快捷操作', style: Theme.of(context).textTheme.titleLarge),
+                                                ],
+                                              ),
+                                              //替换token
+                                              TextButton(
+                                                onPressed: () async {
+                                                  await ref.watch(persistenceProvider).saveToken("");
+                                                  await cursorProviderNotifier.replaceAuthToken();
+                                                  context.go('/');
+                                                },
+                                                child: Row(
+                                                  children: [
+                                                    const SizedBox(width: 8),
+                                                    Text('点击替换Token', style: Theme.of(context).textTheme.titleLarge),
+                                                  ],
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ),

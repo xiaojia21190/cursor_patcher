@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final _body = '''
-          Alist Helper is an open source app to manage alist.
+          Cursor Patcher is an open source app to patch Cursor Editor.
 
           Free. No tracking*. No ads.
 
-          Currently, this app is available on Windows and macOS.
+          Currently, this app is available on Windows and macOS and Linux.
 
-          Adaptation plans for more platforms are in progress, if you need faster development speed, please consider donating to me.
+          This tool helps remove machine code verification in Cursor Editor, making it more accessible.
 
           *The operating system may still gather usage data.
           '''
@@ -31,7 +31,7 @@ class AboutPage extends StatelessWidget {
       body: ListView(
         children: [
           Column(
-            children: [const SizedBox(height: 20), Image.asset('assets/cusor_patcher.png', height: 180, width: 180), const SizedBox(height: 20), const Text('Alist Helper', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold), textAlign: TextAlign.center), const SizedBox(height: 20)],
+            children: [const SizedBox(height: 20), Image.asset('assets/cusor_patcher.png', height: 180, width: 180), const SizedBox(height: 20), const Text('Cursor Patcher', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold), textAlign: TextAlign.center), const SizedBox(height: 20)],
           ),
           const SizedBox(height: 20),
           Text(
@@ -45,15 +45,15 @@ class AboutPage extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () async {
-                    await launchUrl(Uri.parse('https://github.com/Xmarmalade/cusor_patcher'), mode: LaunchMode.externalApplication);
+                    await launchUrl(Uri.parse('https://github.com/xiaojia21190/cusor_patcher'), mode: LaunchMode.externalApplication);
                   },
                   child: const Text('Source Code (Github)'),
                 ),
                 TextButton(
                   onPressed: () async {
-                    await launchUrl(Uri.parse('https://alist.nn.ci/'));
+                    await launchUrl(Uri.parse('https://cursor.com/'));
                   },
-                  child: const Text('Alist'),
+                  child: const Text('cursor Website'),
                 ),
                 TextButton(
                   onPressed: () {

@@ -24,17 +24,10 @@ const _saveWindowPlacement = 'ah_save_window_placement';
 const _localeKey = 'ah_locale';
 const _autoStartLaunchMinimized = 'ah_auto_start_launch_minimized';
 const _minimizeToTray = 'ah_minimize_to_tray';
-const _autoStart = 'ah_auto_start';
-const _workingDirectory = 'ah_working_directory';
 const _themeMode = 'ah_theme_mode';
 const _themeColor = 'ah_theme_color';
-const _alistArgs = 'ah_alist_args';
-const _autoStartAlist = 'ah_auto_start_alist';
 const _proxy = 'ah_proxy';
-const _rcloneDirectory = 'ah_rclone_directory';
-const _rcloneArgs = 'ah_rclone_args';
 const _isFirstRun = 'ah_is_first_run';
-const _autoStartRclone = 'ah_enable_rclone';
 const _startAfterAlist = 'ah_start_after_alist';
 const _webdavAccount = 'ah_webdav_account';
 const _vdisks = 'ah_vdisks';
@@ -170,46 +163,6 @@ class PersistenceService {
     await _prefs.setBool(_autoStartLaunchMinimized, launchMinimized);
   }
 
-  String getWorkingDirectory() {
-    return _prefs.getString(_workingDirectory) ?? r'';
-  }
-
-  Future<void> setWorkingDirectory(String path) async {
-    await _prefs.setString(_workingDirectory, path);
-  }
-
-  String getRcloneDirectory() {
-    return _prefs.getString(_rcloneDirectory) ?? r'';
-  }
-
-  Future<void> setRcloneDirectory(String path) async {
-    await _prefs.setString(_rcloneDirectory, path);
-  }
-
-  Future<void> setRcloneArgs(List<String> value) async {
-    await _prefs.setStringList(_rcloneArgs, value);
-  }
-
-  List<String> getRcloneArgs() {
-    return _prefs.getStringList(_rcloneArgs) ?? ['rcd', '--rc-user', 'admin', '--rc-pass', 'admin', '--rc-web-gui-no-open-browser'];
-  }
-
-  Future<void> setAutoStartRclone(bool value) async {
-    await _prefs.setBool(_autoStartRclone, value);
-  }
-
-  bool isAutoStartRclone() {
-    return _prefs.getBool(_autoStartRclone) ?? false;
-  }
-
-  bool isAutoStart() {
-    return _prefs.getBool(_autoStart) ?? false;
-  }
-
-  Future<void> setAutoStart(bool autoStart) async {
-    await _prefs.setBool(_autoStart, autoStart);
-  }
-
   ThemeMode getThemeMode() {
     final themeModeIndex = _prefs.getInt(_themeMode);
     if (themeModeIndex == null) {
@@ -244,22 +197,6 @@ class PersistenceService {
     } else {
       await _prefs.setString(_localeKey, locale.languageTag);
     }
-  }
-
-  List<String> getAlistArgs() {
-    return _prefs.getStringList(_alistArgs) ?? ['server'];
-  }
-
-  Future<void> setAlistArgs(List<String> args) async {
-    await _prefs.setStringList(_alistArgs, args);
-  }
-
-  bool isAutoStartAlist() {
-    return _prefs.getBool(_autoStartAlist) ?? false;
-  }
-
-  Future<void> setAutoStartAlist(bool autoStart) async {
-    await _prefs.setBool(_autoStartAlist, autoStart);
   }
 
   String getProxy() {

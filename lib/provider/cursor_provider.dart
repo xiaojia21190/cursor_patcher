@@ -18,20 +18,31 @@ part 'cursor_provider.g.dart';
 class Cursor extends _$Cursor {
   List<String> stdOut = [];
   Logger logger = Logger();
+  late PersistenceService _persistenceService;
 
   @override
   CursorHelper build() {
+    _persistenceService = ref.watch(persistenceProvider);
     // 内部获得
-    return const CursorHelper();
+    return CursorHelper(
+      token: _persistenceService.getToken(),
+    );
   }
 
-  Future<CursorHelper> getCursorHelper() async {
-    final token = ref.read(persistenceProvider).getToken();
+  Future<void> replaceAuthToken() async {
+    state = state.copyWith(token: "");
+  }
+
+  Future<CursorHelper> getCursorHelper({defaultToken}) async {
+    final token = defaultToken ?? ref.read(persistenceProvider).getToken();
     final response = await http.get(Uri.parse('https://cursor.ccopilot.org/api/users/get_auth_code.php'), headers: {
       'Authorization': 'Bearer $token',
     });
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body) as Map<String, dynamic>;
+      if (jsonData['data'] == null) {
+        throw Exception('Failed to get cursor helper');
+      }
       final helper = CursorHelper.fromJson(jsonData['data']);
       state = state.copyWith(authCode: helper.authCode, maxDailyLimit: helper.maxDailyLimit, todayRemaining: helper.todayRemaining, totalUsed: helper.totalUsed);
       return helper;

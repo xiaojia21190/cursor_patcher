@@ -1,9 +1,11 @@
+import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cusor_patcher/i18n/strings.g.dart';
 import 'package:cusor_patcher/provider/settings_provider.dart';
 import 'package:cusor_patcher/widgets/pages/about_page.dart';
 import 'package:cusor_patcher/widgets/pages/language_page.dart';
 import 'package:cusor_patcher/widgets/responsive_builder.dart';
 import 'package:cusor_patcher/widgets/theme_tile.dart';
+import 'package:cusor_patcher/widgets/toggle_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -67,50 +69,28 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
             Card(
               margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: Column(children: [
-                // ListTile(title: Text(t.settings.cusor_patcherSettings.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18))),
-                // CustomToggleTile(
-                //   value: settings.saveWindowPlacement,
-                //   onToggled: (value) => settingsNotifier.setSaveWindowPlacement(value),
-                //   title: t.settings.cusor_patcherSettings.saveWindowPlacement.title,
-                //   subtitle: t.settings.cusor_patcherSettings.saveWindowPlacement.description,
-                // ),
-                // CustomToggleTile(
-                //   value: settings.minimizeToTray,
-                //   onToggled: (value) => settingsNotifier.setMinimizeToTray(value),
-                //   title: t.settings.cusor_patcherSettings.minimizeToTray.title,
-                //   subtitle: t.settings.cusor_patcherSettings.minimizeToTray.description,
-                // ),
-                // CustomToggleTile(
-                //   value: settings.autoStart,
-                //   onToggled: (value) => ref.watch(settingsProvider.notifier).setAutoStart(value),
-                //   title: t.settings.cusor_patcherSettings.autoStart.title,
-                //   subtitle: t.settings.cusor_patcherSettings.autoStart.description,
-                // ),
-                // CustomToggleTile(
-                //   value: settings.autoStartLaunchMinimized,
-                //   onToggled: (value) => settingsNotifier.setAutoStartLaunchMinimized(value),
-                //   title: t.settings.cusor_patcherSettings.autoStartLaunchMinimized.title,
-                //   subtitle: t.settings.cusor_patcherSettings.autoStartLaunchMinimized.description,
-                // ),
-                // Container(height: 10)
+                ListTile(title: Text(t.settings.cusor_patcherSettings.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18))),
+                CustomToggleTile(
+                  value: settings.saveWindowPlacement,
+                  onToggled: (value) => settingsNotifier.setSaveWindowPlacement(value),
+                  title: t.settings.cusor_patcherSettings.saveWindowPlacement.title,
+                  subtitle: t.settings.cusor_patcherSettings.saveWindowPlacement.description,
+                ),
+                CustomToggleTile(
+                  value: settings.minimizeToTray,
+                  onToggled: (value) => settingsNotifier.setMinimizeToTray(value),
+                  title: t.settings.cusor_patcherSettings.minimizeToTray.title,
+                  subtitle: t.settings.cusor_patcherSettings.minimizeToTray.description,
+                ),
+                CustomToggleTile(
+                  value: settings.autoStartLaunchMinimized,
+                  onToggled: (value) => settingsNotifier.setAutoStartLaunchMinimized(value),
+                  title: t.settings.cusor_patcherSettings.autoStartLaunchMinimized.title,
+                  subtitle: t.settings.cusor_patcherSettings.autoStartLaunchMinimized.description,
+                ),
+                Container(height: 10)
               ]),
             ),
-            // Card(
-            //   margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-            //   child: Column(children: [
-            //     ListTile(title: Text(t.settings.alistSettings.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18))),
-            //     CustomToggleTile(
-            //       value: settings.autoStartAlist,
-            //       onToggled: (value) => settingsNotifier.setAutoStartAlist(value),
-            //       title: t.settings.alistSettings.autoStartAlist.title,
-            //       subtitle: t.settings.alistSettings.autoStartAlist.description,
-            //     ),
-            //     WorkingDirectoryTile(),
-            //     // ProxyTile(),
-            //     AlistArgsTile(),
-            //     Container(height: 10)
-            //   ]),
-            // ),
             Card(
               margin: const EdgeInsets.fromLTRB(20, 10, 20, 20),
               child: Column(children: [
@@ -120,6 +100,10 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
                 ListTile(
                   title: Text(t.settings.others.checkForUpdates),
                   onTap: () {
+                    //TODO: implement update page
+                    CherryToast.info(
+                      title: Text("待更新"),
+                    );
                     // Navigator.push(context, MaterialPageRoute(builder: (context) => const UpgradePage()));
                   },
                 ),

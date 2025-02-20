@@ -1,3 +1,4 @@
+import 'package:cusor_patcher/provider/cursor_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cusor_patcher/provider/persistence_provider.dart';
@@ -30,71 +31,70 @@ class _FirstLaunchPageState extends ConsumerState<FirstLaunchPage> {
 
   @override
   Widget build(BuildContext context) {
-    final persistence = ref.read(persistenceProvider);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('欢迎使用'),
-      ),
-      body: persistence.getToken().isEmpty
-          ? Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Text(
-                    '请输入您的Cursor Token',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 16),
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      style: DefaultTextStyle.of(context).style,
-                      children: [
-                        //删除下划线
-                        const TextSpan(text: '您需要先获取cursor.ccopilot的token才能使用本应用。\n请访问 ', style: TextStyle(fontSize: 16, decoration: TextDecoration.none)),
-                        TextSpan(
-                          text: 'https://cursor.ccopilot.org/index.html',
-                          style: const TextStyle(
-                            color: Colors.blue,
-                            fontSize: 16,
-                            decoration: TextDecoration.none,
-                          ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () => launchUrl(
-                                  Uri.parse('https://cursor.ccopilot.org/index.html'),
-                                ),
+        appBar: AppBar(
+          title: const Text('欢迎使用'),
+        ),
+        body: Consumer(builder: (context, ref, child) {
+          final cursor = ref.watch(cursorProvider);
+          return cursor.token.isEmpty
+              ? Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Text(
+                        '请输入您的Cursor Token',
+                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 16),
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          style: DefaultTextStyle.of(context).style,
+                          children: [
+                            //删除下划线
+                            const TextSpan(text: '您需要先获取cursor.ccopilot的token才能使用本应用。\n请访问 ', style: TextStyle(fontSize: 16, decoration: TextDecoration.none)),
+                            TextSpan(
+                              text: 'https://cursor.ccopilot.org/index.html',
+                              style: const TextStyle(
+                                color: Colors.blue,
+                                fontSize: 16,
+                                decoration: TextDecoration.none,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () => launchUrl(
+                                      Uri.parse('https://cursor.ccopilot.org/index.html'),
+                                    ),
+                            ),
+                            const TextSpan(text: ' 在localStorage中获取token。', style: TextStyle(fontSize: 16, decoration: TextDecoration.none)),
+                          ],
                         ),
-                        const TextSpan(text: ' 在localStorage中获取token。', style: TextStyle(fontSize: 16, decoration: TextDecoration.none)),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 24),
+                      TextField(
+                        controller: _tokenController,
+                        decoration: const InputDecoration(
+                          labelText: 'Token',
+                          border: OutlineInputBorder(),
+                          hintText: '请输入您的Token',
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(double.infinity, 60),
+                        ),
+                        onPressed: _isLoading ? null : _saveToken,
+                        child: _isLoading ? const CircularProgressIndicator() : const Text('确认'),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 24),
-                  TextField(
-                    controller: _tokenController,
-                    decoration: const InputDecoration(
-                      labelText: 'Token',
-                      border: OutlineInputBorder(),
-                      hintText: '请输入您的Token',
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 40),
-                    ),
-                    onPressed: _isLoading ? null : _saveToken,
-                    child: _isLoading ? const CircularProgressIndicator() : const Text('确认'),
-                  ),
-                ],
-              ),
-            )
-          : const Center(
-              child: Text('Cursor Patcher 已启动'),
-            ),
-    );
+                )
+              : const Center(child: CircularProgressIndicator());
+        }));
   }
 
   Future<void> _saveToken() async {
@@ -110,10 +110,8 @@ class _FirstLaunchPageState extends ConsumerState<FirstLaunchPage> {
     });
 
     try {
-      final persistence = ref.read(persistenceProvider);
-
-      // 保存token到持久化存储
-      await persistence.saveToken(_tokenController.text);
+      await ref.watch(cursorProvider.notifier).getCursorHelper(defaultToken: _tokenController.text);
+      await ref.watch(persistenceProvider).saveToken(_tokenController.text);
 
       // 导航到主页面
       if (mounted) {
