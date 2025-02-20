@@ -155,14 +155,6 @@ class PersistenceService {
     await _prefs.setBool(_minimizeToTray, minimizeToTray);
   }
 
-  bool isAutoStartLaunchMinimized() {
-    return _prefs.getBool(_autoStartLaunchMinimized) ?? true;
-  }
-
-  Future<void> setAutoStartLaunchMinimized(bool launchMinimized) async {
-    await _prefs.setBool(_autoStartLaunchMinimized, launchMinimized);
-  }
-
   ThemeMode getThemeMode() {
     final themeModeIndex = _prefs.getInt(_themeMode);
     if (themeModeIndex == null) {

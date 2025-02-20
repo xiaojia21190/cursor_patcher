@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:cusor_patcher/utils/init.dart';
 import 'package:cusor_patcher/widgets/pages/cursor_patch_page.dart';
 import 'package:cusor_patcher/widgets/responsive_builder.dart';
 import 'package:cusor_patcher/widgets/pages/settings_page.dart';
@@ -106,10 +105,6 @@ class _HomeState extends ConsumerState<Home> {
     super.initState();
     _pageController = PageController(initialPage: HomeTab.home.index);
     _currentTab = HomeTab.home;
-
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      // await postInit(ref);
-    });
   }
 
   void _goToPage(int index) {

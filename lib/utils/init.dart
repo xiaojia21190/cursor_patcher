@@ -5,7 +5,6 @@ import 'package:cusor_patcher/provider/persistence_provider.dart';
 import 'package:cusor_patcher/provider/window_dimensions_provider.dart';
 import 'package:cusor_patcher/utils/native/tray_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
 
 /// Pre-initializes the app.
@@ -57,49 +56,21 @@ Future<PersistenceService> preInit(List<String> args) async {
     await WindowManager.instance.ensureInitialized();
     await WindowDimensionsController(persistenceService).initDimensionsConfiguration();
 
-    //
+    // WindowOptions windowOptions = WindowOptions(
+    //   center: true,
+    //   backgroundColor: Colors.white, // 尝试一个非透明的颜色
+    //   skipTaskbar: false,
+    //   title: "My Flutter App", // 设置标题
+    // );
 
-    //If the app is launched with the autostart argument, it will not be minimized by default.
-    //https://github.com/leanflutter/window_manager#hidden-at-launch
-    bool isAutoStart = args.contains('autostart');
-    bool isAutoStartLaunchMinimized = persistenceService.isAutoStartLaunchMinimized();
-    if (!isAutoStart || !isAutoStartLaunchMinimized) {
-      await WindowManager.instance.show();
-    }
-    if (isAutoStartLaunchMinimized && Platform.isMacOS) {
-      await hideToTray();
-    }
+    // windowManager.waitUntilReadyToShow(windowOptions, () async {
+    //   try {
+    await WindowManager.instance.show();
+    await WindowManager.instance.focus();
+    //   } catch (e) {
+    //     print('Error showing/focusing window: $e');
+    //   }
+    // });
   }
   return persistenceService;
-}
-
-/// Post-initializes the app.
-/// Starts the Alist if the [Settings.autoStartAlist] is true.
-Future<void> postInit(WidgetRef ref) async {
-  // final alistNotifier = ref.watch(alistProvider.notifier);
-  // if (!ref.watch(settingsProvider).isFirstRun) {
-  //   alistNotifier.getAlistCurrentVersion(addToOutput: false);
-  // }
-  // final cusor_patcherNotifier = ref.watch(ahProvider.notifier);
-  // cusor_patcherNotifier.getcusor_patcherCurrentVersion();
-
-  // if (ref.watch(settingsProvider).autoStartAlist &&
-  //     !ref.watch(alistProvider).isRunning) {
-  //   var alistNotifier = ref.watch(alistProvider.notifier);
-  //   alistNotifier.startAlist();
-  // }
-
-  // if (ref.watch(settingsProvider).autoStartRclone) {
-  //   if (ref.watch(settingsProvider).startAfterAlist) {
-  //     //wait 3 second
-  //     await Future.delayed(const Duration(seconds: 3));
-  //     if (ref.watch(alistProvider).isRunning) {
-  //       var rcloneNotifier = ref.watch(rcloneProvider.notifier);
-  //       rcloneNotifier.startRclone();
-  //     }
-  //   } else {
-  //     var rcloneNotifier = ref.watch(rcloneProvider.notifier);
-  //     rcloneNotifier.startRclone();
-  //   }
-  // }
 }

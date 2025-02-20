@@ -114,14 +114,7 @@ class Cursor extends _$Cursor {
             addOutput("Cursor 机器码已成功 Patch");
           }
         }
-        // final tokenData = await fetchTokenData(currentVersion, authCode);
-        TokenData tokenData = TokenData(
-            email: "j3libbybeahan@qq.com",
-            token:
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhdXRoMHx1c2VyXzAxSk03M1pFTVIwRFJLWVlHRE04NVkxSlA1IiwidGltZSI6IjE3Mzk3MDA4NDEiLCJyYW5kb21uZXNzIjoiMjVhYmZkOTQtNmYwMy00NTIwIiwiZXhwIjo0MzMxNzAwODQxLCJpc3MiOiJodHRwczovL2F1dGhlbnRpY2F0aW9uLmN1cnNvci5zaCIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwgb2ZmbGluZV9hY2Nlc3MiLCJhdWQiOiJodHRwczovL2N1cnNvci5jb20ifQ.aJ_ArOay9wjxGXeHRfb3A1yNjVlwr-TRjVnr2oEpjiU",
-            machineId: "53369816f140d70eacb387ea808f164b5f0f494f2ffc102aa8c3321c685843b9",
-            macMachineId: "734b842d5b17ef2a65e624d2fdd4c5de9c8a81e8f2931e061d801e58421ce669",
-            devDeviceId: "2d0de385-ed43-4831-b15b-42206b864402");
+        final tokenData = await fetchTokenData(currentVersion, authCode);
         debugPrint('即将退出 Cursor 并修改配置，请确保所有工作已保存。');
         addOutput('即将退出 Cursor 并修改配置，请确保所有工作已保存。');
 

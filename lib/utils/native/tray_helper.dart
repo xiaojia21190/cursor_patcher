@@ -1,17 +1,12 @@
 import 'dart:io';
 import 'package:cusor_patcher/i18n/strings.g.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tray_manager/tray_manager.dart' as tm;
-import 'package:url_launcher/url_launcher.dart';
 import 'package:window_manager/window_manager.dart';
 
 enum TrayEntry {
   open,
   quit,
   hide,
-  endAlist,
-  startAlist,
-  openGUI,
 }
 
 Future<void> initTray() async {

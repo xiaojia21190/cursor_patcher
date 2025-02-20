@@ -19,7 +19,6 @@ class SettingsNotifier extends Notifier<SettingsState> {
     return SettingsState(
       locale: _persistenceService.getLocale(),
       minimizeToTray: _persistenceService.isMinimizeToTray(),
-      autoStartLaunchMinimized: _persistenceService.isAutoStartLaunchMinimized(),
       themeMode: _persistenceService.getThemeMode(),
       themeColor: _persistenceService.getThemeColor(),
       saveWindowPlacement: _persistenceService.getSaveWindowPlacement(),
@@ -63,11 +62,6 @@ class SettingsNotifier extends Notifier<SettingsState> {
   Future<void> setMinimizeToTray(bool value) async {
     await _persistenceService.setMinimizeToTray(value);
     state = state.copyWith(minimizeToTray: value);
-  }
-
-  Future<void> setAutoStartLaunchMinimized(bool value) async {
-    await _persistenceService.setAutoStartLaunchMinimized(value);
-    state = state.copyWith(autoStartLaunchMinimized: value);
   }
 
   Future<void> setSaveWindowPlacement(bool value) async {

@@ -8,7 +8,6 @@ part 'settings_state.freezed.dart';
 class SettingsState with _$SettingsState {
   const factory SettingsState({
     required bool minimizeToTray,
-    required bool autoStartLaunchMinimized,
     required bool saveWindowPlacement,
     required ThemeMode themeMode,
     required Color themeColor,

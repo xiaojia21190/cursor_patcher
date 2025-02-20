@@ -80,12 +80,6 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
                 title: t.settings.cusor_patcherSettings.minimizeToTray.title,
                 subtitle: t.settings.cusor_patcherSettings.minimizeToTray.description,
               ),
-              CustomToggleTile(
-                value: settings.autoStartLaunchMinimized,
-                onToggled: (value) => settingsNotifier.setAutoStartLaunchMinimized(value),
-                title: t.settings.cusor_patcherSettings.autoStartLaunchMinimized.title,
-                subtitle: t.settings.cusor_patcherSettings.autoStartLaunchMinimized.description,
-              ),
               Container(height: 10)
             ]),
           ),
