@@ -72,6 +72,7 @@ flutter_launcher_icons:
   macos:
     generate: true
 
+
 flutter:
   uses-material-design: true
 

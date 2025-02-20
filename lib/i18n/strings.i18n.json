@@ -1,10 +1,10 @@
 {
   "locale": "English",
   "firstLaunch": {
-    "intro": "Welcome to use Alist Helper, let's get started!",
-    "about": "Click here to learn more about Alist Helper!",
+    "intro": "Welcome to use Cursor Patcher, let's get started!",
+    "about": "Click here to learn more about Cursor Patcher!",
     "chooseTheme": "First, let's choose your preferred theme here!",
-    "chooseDirectory": "Second, you have to get an alist and tell the Alist Helper where it is!",
+    "chooseDirectory": "Second, you have to get an alist and tell the Cursor Patcher where it is!",
     "autoInstall": "cusor_patcher now supports automatic installation of ${name}, try it out!",
     "getAlist": "Want to use a specific version of alist or install it manually? Click here!",
     "finish": "Finish! You can change these settings in settings!"
@@ -55,22 +55,22 @@
       "system": "Auto"
     },
     "cusor_patcherSettings": {
-      "title": "Alist Helper Options",
+      "title": "Cursor Patcher Options",
       "saveWindowPlacement": {
         "title": "Save window placement",
-        "description": "This will allow Alist Helper save window placement."
+        "description": "This will allow Cursor Patcher save window placement."
       },
       "minimizeToTray": {
         "title": "Allow minimize to tray",
-        "description": "This will allow Alist Helper to minimize to tray."
+        "description": "This will allow Cursor Patcher to minimize to tray."
       },
       "autoStart": {
         "title": "Allow auto start",
-        "description": "This will allow Alist Helper auto start."
+        "description": "This will allow Cursor Patcher auto start."
       },
       "autoStartLaunchMinimized": {
         "title": "Allow silent auto start",
-        "description": "This will allow Alist Helper auto start silently."
+        "description": "This will allow Cursor Patcher auto start silently."
       }
     },
     "others": {

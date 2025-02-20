@@ -215,7 +215,9 @@ class _CursorPatcherPageState extends ConsumerState<CursorPatcherPage> {
                       ),
                     ],
                   )
-                : CircularProgressIndicator();
+                : Center(
+                    child: CircularProgressIndicator(),
+                  );
           },
         ))));
   }
