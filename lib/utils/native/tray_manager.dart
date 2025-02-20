@@ -54,21 +54,8 @@ class _TrayWatcherState extends ConsumerState<TrayWatcher> with TrayListener {
       case TrayEntry.open:
         await showFromTray();
         break;
-      case TrayEntry.quit:
-        // await AlistNotifier.endAlistProcess();
-        // await RcloneNotifier.endRcloneProcess();
-        exit(0);
-      case TrayEntry.startAlist:
-        // await startAlist(ref);
-        break;
-      case TrayEntry.endAlist:
-        // await endAlist(ref);
-        break;
       case TrayEntry.hide:
         await hideToTray();
-        break;
-      case TrayEntry.openGUI:
-        // await openGUI(ref);
         break;
       default:
     }

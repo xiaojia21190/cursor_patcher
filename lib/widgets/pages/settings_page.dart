@@ -45,79 +45,76 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
     final settingsNotifier = ref.read(settingsProvider.notifier);
 
     return Center(
-      child: Container(
-        constraints: const BoxConstraints(maxWidth: 800),
-        child: ListView(
-          children: [
-            Card(
-              margin: const EdgeInsets.fromLTRB(20, 20, 20, 10),
-              child: Column(children: [
-                ListTile(title: Text(t.settings.interfaceSettings.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18))),
-                ChangeThemeModeTile(),
-                ChangeThemeColorTile(),
-                ListTile(
-                  title: Text(t.settings.interfaceSettings.language),
-                  leading: Icon(
-                    Icons.language_rounded,
-                    color: settings.themeColor,
-                  ),
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const LanguagePage())),
+      child: ListView(
+        children: [
+          Card(
+            margin: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+            child: Column(children: [
+              ListTile(title: Text(t.settings.interfaceSettings.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18))),
+              ChangeThemeModeTile(),
+              ChangeThemeColorTile(),
+              ListTile(
+                title: Text(t.settings.interfaceSettings.language),
+                leading: Icon(
+                  Icons.language_rounded,
+                  color: settings.themeColor,
                 ),
-                Container(height: 10)
-              ]),
-            ),
-            Card(
-              margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-              child: Column(children: [
-                ListTile(title: Text(t.settings.cusor_patcherSettings.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18))),
-                CustomToggleTile(
-                  value: settings.saveWindowPlacement,
-                  onToggled: (value) => settingsNotifier.setSaveWindowPlacement(value),
-                  title: t.settings.cusor_patcherSettings.saveWindowPlacement.title,
-                  subtitle: t.settings.cusor_patcherSettings.saveWindowPlacement.description,
-                ),
-                CustomToggleTile(
-                  value: settings.minimizeToTray,
-                  onToggled: (value) => settingsNotifier.setMinimizeToTray(value),
-                  title: t.settings.cusor_patcherSettings.minimizeToTray.title,
-                  subtitle: t.settings.cusor_patcherSettings.minimizeToTray.description,
-                ),
-                CustomToggleTile(
-                  value: settings.autoStartLaunchMinimized,
-                  onToggled: (value) => settingsNotifier.setAutoStartLaunchMinimized(value),
-                  title: t.settings.cusor_patcherSettings.autoStartLaunchMinimized.title,
-                  subtitle: t.settings.cusor_patcherSettings.autoStartLaunchMinimized.description,
-                ),
-                Container(height: 10)
-              ]),
-            ),
-            Card(
-              margin: const EdgeInsets.fromLTRB(20, 10, 20, 20),
-              child: Column(children: [
-                ListTile(
-                  title: Text(t.settings.others.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
-                ),
-                ListTile(
-                  title: Text(t.settings.others.checkForUpdates),
-                  onTap: () {
-                    //TODO: implement update page
-                    CherryToast.info(
-                      title: Text("待更新"),
-                    );
-                    // Navigator.push(context, MaterialPageRoute(builder: (context) => const UpgradePage()));
-                  },
-                ),
-                ListTile(
-                  title: Text(t.settings.others.about),
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutPage()));
-                  },
-                ),
-                Container(height: 10)
-              ]),
-            ),
-          ],
-        ),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const LanguagePage())),
+              ),
+              Container(height: 10)
+            ]),
+          ),
+          Card(
+            margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+            child: Column(children: [
+              ListTile(title: Text(t.settings.cusor_patcherSettings.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18))),
+              CustomToggleTile(
+                value: settings.saveWindowPlacement,
+                onToggled: (value) => settingsNotifier.setSaveWindowPlacement(value),
+                title: t.settings.cusor_patcherSettings.saveWindowPlacement.title,
+                subtitle: t.settings.cusor_patcherSettings.saveWindowPlacement.description,
+              ),
+              CustomToggleTile(
+                value: settings.minimizeToTray,
+                onToggled: (value) => settingsNotifier.setMinimizeToTray(value),
+                title: t.settings.cusor_patcherSettings.minimizeToTray.title,
+                subtitle: t.settings.cusor_patcherSettings.minimizeToTray.description,
+              ),
+              CustomToggleTile(
+                value: settings.autoStartLaunchMinimized,
+                onToggled: (value) => settingsNotifier.setAutoStartLaunchMinimized(value),
+                title: t.settings.cusor_patcherSettings.autoStartLaunchMinimized.title,
+                subtitle: t.settings.cusor_patcherSettings.autoStartLaunchMinimized.description,
+              ),
+              Container(height: 10)
+            ]),
+          ),
+          Card(
+            margin: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+            child: Column(children: [
+              ListTile(
+                title: Text(t.settings.others.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18)),
+              ),
+              ListTile(
+                title: Text(t.settings.others.checkForUpdates),
+                onTap: () {
+                  //TODO: implement update page
+                  CherryToast.info(
+                    title: Text("待更新"),
+                  );
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => const UpgradePage()));
+                },
+              ),
+              ListTile(
+                title: Text(t.settings.others.about),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutPage()));
+                },
+              ),
+              Container(height: 10)
+            ]),
+          ),
+        ],
       ),
     );
   }

@@ -20,7 +20,6 @@ Future<void> main(List<String> args) async {
 
   runApp(ProviderScope(overrides: [
     persistenceProvider.overrideWithValue(persistenceService),
-    // appArgumentsProvider.overrideWith((ref) => args),
   ], child: TranslationProvider(child: const MyApp())));
 }
 
@@ -49,8 +48,6 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(settingsProvider);
-    // final alistNotifier = ref.watch(alistProvider.notifier);
-    // final rcloneNotifier = ref.watch(rcloneProvider.notifier);
     return TrayWatcher(
       child: WindowWatcher(
         onClose: () async {
@@ -58,8 +55,6 @@ class MyApp extends ConsumerWidget {
             if (ref.watch(settingsProvider).minimizeToTray) {
               await hideToTray();
             } else {
-              // await alistNotifier.endAlist();
-              // await rcloneNotifier.endRclone();
               exit(0);
             }
           } catch (e) {
