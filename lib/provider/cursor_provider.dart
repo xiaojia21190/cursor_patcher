@@ -77,6 +77,7 @@ class Cursor extends _$Cursor {
 
   Future<void> replaceToken(String authCode) async {
     try {
+      state = state.copyWith(output: []);
       debugPrint('提示：本脚本请不要再 Cursor 中执行');
       addOutput("提示：本脚本请不要再 Cursor 中执");
       final cursorAppPaths = await getCursorAppPaths();
