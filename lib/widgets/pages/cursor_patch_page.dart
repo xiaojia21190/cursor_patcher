@@ -202,6 +202,22 @@ class _CursorPatcherPageState extends ConsumerState<CursorPatcherPage> {
                                 },
                               ),
                               ListTile(
+                                leading: const Icon(Icons.update_disabled),
+                                title: const Text('禁用自动更新'),
+                                onTap: () async {
+                                  try {
+                                    await cursorProviderNotifier.disableAutoUpdate();
+                                  } catch (e) {
+                                    CherryToast.error(
+                                      title: Text("操作失败: $e", style: TextStyle(color: Colors.black)),
+                                      animationType: AnimationType.fromRight,
+                                      animationDuration: Duration(milliseconds: 1000),
+                                      autoDismiss: true,
+                                    ).show(context);
+                                  }
+                                },
+                              ),
+                              ListTile(
                                 leading: const Icon(Icons.history),
                                 title: const Text('Cursor 历史版本下载'),
                                 onTap: () {

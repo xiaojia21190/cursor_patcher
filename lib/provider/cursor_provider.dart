@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:cusor_patcher/model/token_data.dart';
 import 'package:path/path.dart' as path;
+import 'package:cherry_toast/cherry_toast.dart';
 
 import 'package:cusor_patcher/utils/constants.dart';
 import 'package:cusor_patcher/model/cursor_helper.dart';
@@ -560,5 +561,73 @@ class Cursor extends _$Cursor {
     }
     debugPrint(state.cursorVersion.where((version) => version.split(",")[0].toLowerCase().contains(searchText.toLowerCase())).toString());
     state = state.copyWith(filterCursorVersion: state.cursorVersion.where((version) => version.split(",")[0].toLowerCase().contains(searchText.toLowerCase())).toList());
+  }
+
+  Future<String> getUpdateConfigPath() async {
+    if (Platform.isWindows) {
+      final appData = Platform.environment['APPDATA'];
+      return path.join(appData!, 'Programs', 'Cursor', 'resources', 'app-update.yml');
+    } else if (Platform.isMacOS) {
+      return 'Applications/Cursor.app/Contents/Resources/app-update.yml';
+    } else {
+      final home = Platform.environment['HOME'];
+      return path.join(home!, '.config', 'Programs', 'Cursor', 'Resources', 'app-update.yml');
+    }
+  }
+
+  Future<bool> checkAutoUpdateFileExist() async {
+    final updatePath = await getUpdateConfigPath();
+    return File(updatePath).existsSync();
+  }
+
+  Future<bool> checkAutoUpdateFileEmpty() async {
+    final updatePath = await getUpdateConfigPath();
+    final file = File(updatePath);
+    if (!file.existsSync()) return true;
+    return await file.length() == 0;
+  }
+
+  Future<void> disableAutoUpdate() async {
+    try {
+      if (!await checkAutoUpdateFileEmpty()) {
+        throw Exception('更新配置文件不为空，无法禁用自动更新');
+      }
+      state = state.copyWith(output: []);
+      final updatePath = await getUpdateConfigPath();
+      final file = File(updatePath);
+
+      if (!file.existsSync()) {
+        debugPrint("无法获取更新配置文件路径");
+        addOutput("无法获取更新配置文件路径");
+        return;
+      }
+
+      if (await checkAutoUpdateFileEmpty()) {
+        debugPrint("更新配置文件已经为空，无需重复操作");
+        addOutput("更新配置文件已经为空，无需重复操作");
+        return;
+      }
+
+      // 创建备份
+      final backupPath = '$updatePath.bak';
+      if (!File(backupPath).existsSync()) {
+        await File(updatePath).copy(backupPath);
+        debugPrint("已创建配置文件备份: $backupPath");
+        addOutput("已创建配置文件备份: $backupPath");
+      }
+
+      // 清空文件内容
+      await makeFileWritable(updatePath);
+      await file.writeAsString('');
+      await makeFileReadonly(updatePath);
+
+      debugPrint("已成功禁用自动更新");
+      addOutput("已成功禁用自动更新");
+      return;
+    } catch (e) {
+      debugPrint("禁用自动更新时发生错误: $e");
+      addOutput("禁用自动更新时发生错误: $e");
+      return;
+    }
   }
 }
