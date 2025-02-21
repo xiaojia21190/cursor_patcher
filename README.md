@@ -1,5 +1,9 @@
 # cusor_patcher
 
+
+### 安装包
+  buildout 文件夹下的 cusor_patcher.exe
+
 ### Run
 
 Fork the repository and install [Flutter](https://flutter.dev).
