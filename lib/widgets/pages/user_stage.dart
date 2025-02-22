@@ -1,13 +1,17 @@
+import 'package:cusor_patcher/model/user_stage.dart';
 import 'package:cusor_patcher/provider/userStage_provider.dart';
+import 'package:cusor_patcher/widgets/responsive_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UserStagePage extends ConsumerWidget {
-  const UserStagePage({super.key});
+  final SizingInformation sizingInformation;
+  const UserStagePage({super.key, required this.sizingInformation});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userStage = ref.watch(userStageHelperProvider);
+    final userStageHelper = ref.watch(userStageHelperProvider.notifier);
+    Future<UserStage> userStage = userStageHelper.getCursorAccountInfo();
 
     return Scaffold(
       body: switch (userStage) {
@@ -85,7 +89,7 @@ class UserStagePage extends ConsumerWidget {
             ),
           ),
         AsyncError() => const Text('Oops, something unexpected happened'),
-        _ => const CircularProgressIndicator(),
+        _ => const Center(child: CircularProgressIndicator()),
       },
     );
   }

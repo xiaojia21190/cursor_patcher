@@ -14,7 +14,7 @@ part 'userStage_provider.g.dart';
 class UserStageHelper extends _$UserStageHelper {
   @override
   Future<UserStage> build() async {
-    return await getCursorAccountInfo();
+    return UserStage();
   }
 
   Future<String> getDbPath() async {
@@ -41,14 +41,14 @@ class UserStageHelper extends _$UserStageHelper {
 
       try {
         final result = db.select(
-          'SELECT 1 FROM itemTable WHERE key = ?',
-          ['cursorAuth/accessToken"'],
+          'SELECT * FROM itemTable WHERE key = ?',
+          ['cursorAuth/accessToken'],
         );
         final exists = result.isNotEmpty;
 
         if (exists) {
           //https://www.cursor.com/api/auth/me
-          final response = await http.get(Uri.parse('https://www.cursor.com/api/auth/me'), headers: {
+          final response = await http.post(Uri.parse('https://www.cursor.com/api/auth/me'), headers: {
             'cookie': 'WorkosCursorSessionToken=${result.first['value']}',
           });
           final userInfo = jsonDecode(response.body) as Map<String, dynamic>;
