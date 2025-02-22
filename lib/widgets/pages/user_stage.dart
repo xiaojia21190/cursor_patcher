@@ -1,4 +1,3 @@
-import 'package:cusor_patcher/model/user_stage.dart';
 import 'package:cusor_patcher/provider/userStage_provider.dart';
 import 'package:cusor_patcher/widgets/responsive_builder.dart';
 import 'package:flutter/material.dart';
@@ -11,138 +10,205 @@ class UserStagePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userStageHelper = ref.watch(userStageHelperProvider.notifier);
-    Future<UserStage> userStage = userStageHelper.getCursorAccountInfo();
+    userStageHelper.getCursorAccountInfo();
 
     return Scaffold(
-      body: switch (userStage) {
-        AsyncData(:final value) => Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Card(
-                        color: Theme.of(context).cardColor.withAlpha((0.8 * 255).round()),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Basic Information',
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              _buildInfoRow('Name', value.name ?? ''),
-                              const SizedBox(height: 12),
-                              _buildInfoRow('Email', value.email ?? ''),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundImage: NetworkImage(value.picture ?? ''),
-                    ),
-                  ],
+                Icon(
+                  Icons.account_circle,
+                  size: 32,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
-                const SizedBox(height: 20),
-                Card(
-                  color: Theme.of(context).cardColor.withAlpha((0.8 * 255).round()),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Usage',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        const Text(
-                          'Usage (Last 30 days)',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        const SizedBox(height: 16),
-                        _buildUsageBar(
-                          'Premium models',
-                          value.maxRequestUsage ?? 0,
-                          value.maxRequestUsage ?? 0,
-                          Colors.blue,
-                        ),
-                      ],
-                    ),
-                  ),
+                const SizedBox(width: 12),
+                const Text(
+                  'Cursor 用户信息',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
-          ),
-        AsyncError() => const Text('Oops, something unexpected happened'),
-        _ => const Center(child: CircularProgressIndicator()),
-      },
+            const SizedBox(height: 20),
+            Expanded(
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                color: Theme.of(context).cardColor.withAlpha((0.8 * 255).round()),
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Consumer(builder: (context, ref, child) {
+                    final userStage = ref.watch(userStageHelperProvider);
+                    if (userStage.totalUsed == null) {
+                      return const Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(),
+                            SizedBox(height: 16),
+                            Text('加载中...'),
+                          ],
+                        ),
+                      );
+                    }
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildInfoSection(
+                          context,
+                          title: '使用情况',
+                          icon: Icons.analytics,
+                          children: [
+                            _buildInfoTile(
+                              context,
+                              icon: Icons.timer,
+                              label: '已使用',
+                              value: '${userStage.totalUsed}',
+                            ),
+                            _buildInfoTile(
+                              context,
+                              icon: Icons.access_time_filled,
+                              label: '剩余',
+                              value: '${userStage.totalAvailable}',
+                            ),
+                          ],
+                        ),
+                        const Divider(height: 32),
+                        _buildInfoSection(
+                          context,
+                          title: '账户信息',
+                          icon: Icons.person,
+                          children: [
+                            _buildInfoTile(
+                              context,
+                              icon: Icons.email,
+                              label: '邮箱',
+                              value: userStage.email ?? '未设置',
+                            ),
+                            _buildInfoTile(
+                              context,
+                              icon: Icons.star,
+                              label: '贡献者',
+                              value: userStage.contributor ?? '否',
+                            ),
+                          ],
+                        ),
+                        const Divider(height: 32),
+                        _buildInfoSection(
+                          context,
+                          title: '账户状态',
+                          icon: Icons.security,
+                          children: [
+                            _buildInfoTile(
+                              context,
+                              icon: Icons.info,
+                              label: '状态',
+                              value: userStage.status.toString() == '1' ? '正常' : '禁用',
+                              valueColor: userStage.status.toString() == '1' ? Colors.green : Colors.red,
+                            ),
+                            if (userStage.disableReason?.isNotEmpty == true)
+                              _buildInfoTile(
+                                context,
+                                icon: Icons.warning,
+                                label: '禁用原因',
+                                value: userStage.disableReason!,
+                                valueColor: Colors.red,
+                              ),
+                          ],
+                        ),
+                      ],
+                    );
+                  }),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
-  Widget _buildInfoRow(String label, String value) {
-    return Row(
-      children: [
-        SizedBox(
-          width: 100,
-          child: Text(
-            label,
-            style: const TextStyle(
-              color: Colors.grey,
-            ),
-          ),
-        ),
-        Expanded(
-          child: Text(
-            value,
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildUsageBar(String label, int used, int? total, Color color) {
+  Widget _buildInfoSection(
+    BuildContext context, {
+    required String title,
+    required IconData icon,
+    required List<Widget> children,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Text(label),
-            const Spacer(),
-            Text('$used / ${total ?? "∞"}'),
-            const SizedBox(width: 20),
+            Icon(
+              icon,
+              size: 20,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            const SizedBox(width: 8),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
           ],
         ),
-        const SizedBox(height: 8),
-        if (total != null)
-          LinearProgressIndicator(
-            value: used / total,
-            backgroundColor: Colors.grey.withOpacity(0.2),
-            valueColor: AlwaysStoppedAnimation<Color>(color),
-          ),
-        const SizedBox(height: 4),
-        Text(
-          'You\'ve used $used requests out of your ${total ?? "unlimited"} fast requests quota.',
-          style: const TextStyle(color: Colors.grey),
-        ),
+        const SizedBox(height: 16),
+        ...children,
       ],
+    );
+  }
+
+  Widget _buildInfoTile(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+    required String value,
+    Color? valueColor,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12.0),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(
+              icon,
+              size: 16,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Text(
+            '$label:',
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              value,
+              style: TextStyle(
+                fontSize: 16,
+                color: valueColor ?? Theme.of(context).textTheme.bodyLarge?.color,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
