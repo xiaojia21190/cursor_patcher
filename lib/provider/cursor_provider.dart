@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:cusor_patcher/model/token_data.dart';
+import 'package:cusor_patcher/model/user_stage.dart';
 import 'package:path/path.dart' as path;
-import 'package:cherry_toast/cherry_toast.dart';
 
 import 'package:cusor_patcher/utils/constants.dart';
 import 'package:cusor_patcher/model/cursor_helper.dart';

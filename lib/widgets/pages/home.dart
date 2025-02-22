@@ -27,6 +27,7 @@ class Home extends ConsumerStatefulWidget {
 
 enum HomeTab {
   home(Icons.home_filled),
+  usage(Icons.bar_chart),
   settings(Icons.settings);
 
   final IconData icon;
@@ -37,6 +38,8 @@ enum HomeTab {
     switch (this) {
       case HomeTab.home:
         return t.tabs.home;
+      case HomeTab.usage:
+        return t.tabs.usage;
       case HomeTab.settings:
         return t.tabs.settings;
     }

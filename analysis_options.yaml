@@ -15,6 +15,7 @@ analyzer:
     - "**/*.freezed.dart"
   errors:
     invalid_annotation_target: ignore
+    file_names: ignore
 
 linter:
   # The lint rules applied to this project can be customized in the
