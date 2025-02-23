@@ -418,13 +418,13 @@ class Cursor extends _$Cursor {
     final List<(String, String)> updates = [];
 
     if (email != null) {
-      updates.add(('email', email));
+      updates.add(('cursorAuth/cachedEmail', email));
     }
     if (accessToken != null) {
-      updates.add(('access_token', accessToken));
+      updates.add(('cursorAuth/accessToken', accessToken));
     }
     if (refreshToken != null) {
-      updates.add(('refresh_token', refreshToken));
+      updates.add(('cursorAuth/refreshToken', refreshToken));
     }
 
     if (updates.isEmpty) {
