@@ -3,6 +3,11 @@
 ### 使用的号池
  https://cursor.ccopilot.org/index.html
 
+ ## token获取方式
+ 打开 https://cursor.ccopilot.org/index.html  F12 找到 application localstorage 找到 token
+ ![image](https://github.com/user-attachments/assets/12c008cc-71d7-4f39-a098-c09e43fc1687)
+
+
 ### 安装包
   [cusor_patcher.zip](https://raw.githubusercontent.com/xiaojia21190/cursor_patcher/refs/heads/main/buildouput/cursor_patcher.zip)
 
