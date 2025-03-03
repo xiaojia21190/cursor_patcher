@@ -48,7 +48,9 @@ class Cursor extends _$Cursor {
       state = state.copyWith(authCode: helper.authCode, maxDailyLimit: helper.maxDailyLimit, todayRemaining: helper.todayRemaining, totalUsed: helper.totalUsed);
       return helper;
     } else {
-      throw Exception('Failed to get cursor helper');
+      ref.read(persistenceProvider).saveToken("");
+      replaceAuthToken();
+      return CursorHelper();
     }
   }
 

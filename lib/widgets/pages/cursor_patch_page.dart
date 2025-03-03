@@ -11,29 +11,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class CursorPatcherPage extends ConsumerStatefulWidget {
+class CursorPatcherPage extends ConsumerWidget {
+  const CursorPatcherPage({super.key, required this.sizingInformation});
   final SizingInformation sizingInformation;
 
-  const CursorPatcherPage({super.key, required this.sizingInformation});
-
   @override
-  ConsumerState<CursorPatcherPage> createState() => _CursorPatcherPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final cursorProviderNotifier = ref.read(cursorProvider.notifier);
+    cursorProviderNotifier.getCursorHelper().then((value) => {
+          if (value.authCode == null) {context.go('/')}
+        });
 
-class _CursorPatcherPageState extends ConsumerState<CursorPatcherPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // final settings = ref.watch(settingsProvider);
-
-    final cursorProviderNotifier = ref.watch(cursorProvider.notifier);
-    cursorProviderNotifier.getCursorHelper();
     return Scaffold(
-        appBar: (widget.sizingInformation.isDesktop
+        appBar: (sizingInformation.isDesktop
             ? null
             : AppBar(
                 title: const Text('Cursor Patcher', style: TextStyle(fontWeight: FontWeight.bold)),
