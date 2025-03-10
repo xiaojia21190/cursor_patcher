@@ -197,6 +197,7 @@ class CursorPatcherPage extends ConsumerWidget {
                                 onTap: () async {
                                   try {
                                     await cursorProviderNotifier.disableAutoUpdate();
+                                    _showLogsDialog(context, ref);
                                   } catch (e) {
                                     CherryToast.error(
                                       title: Text("操作失败: $e", style: TextStyle(color: Colors.black)),
@@ -247,6 +248,7 @@ class CursorPatcherPage extends ConsumerWidget {
 
   // 添加显示日志弹窗的方法
   void _showLogsDialog(BuildContext context, WidgetRef ref) {
+    print(ref.read(cursorProvider).output);
     showDialog(
       context: context,
       builder: (context) => Dialog(

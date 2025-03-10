@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:cusor_patcher/model/token_data.dart';
-import 'package:cusor_patcher/model/user_stage.dart';
 import 'package:path/path.dart' as path;
 
 import 'package:cusor_patcher/utils/constants.dart';
@@ -79,7 +78,7 @@ class Cursor extends _$Cursor {
 
   Future<void> replaceToken(String authCode) async {
     try {
-      state = state.copyWith(output: []);
+      addOutput("");
       debugPrint('提示：本脚本请不要再 Cursor 中执行');
       addOutput("提示：本脚本请不要再 Cursor 中执");
       final cursorAppPaths = await getCursorAppPaths();
@@ -534,6 +533,11 @@ class Cursor extends _$Cursor {
   }
 
   void addOutput(String text) {
+    if (text.isEmpty) {
+      stdOut = [];
+      state = state.copyWith(output: stdOut);
+      return;
+    }
     if (text.contains('\n') && text.contains('[')) {
       List<String> lines = text.split('\n');
       for (String line in lines) {
@@ -595,7 +599,7 @@ class Cursor extends _$Cursor {
       if (!await checkAutoUpdateFileEmpty()) {
         throw Exception('更新配置文件不为空，无法禁用自动更新');
       }
-      state = state.copyWith(output: []);
+      addOutput("");
       final updatePath = await getUpdateConfigPath();
       final file = File(updatePath);
 
