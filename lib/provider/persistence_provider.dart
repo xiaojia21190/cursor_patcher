@@ -22,7 +22,6 @@ const _saveWindowPlacement = 'ah_save_window_placement';
 
 // Settings
 const _localeKey = 'ah_locale';
-const _autoStartLaunchMinimized = 'ah_auto_start_launch_minimized';
 const _minimizeToTray = 'ah_minimize_to_tray';
 const _themeMode = 'ah_theme_mode';
 const _themeColor = 'ah_theme_color';
