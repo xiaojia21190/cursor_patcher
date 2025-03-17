@@ -51,6 +51,8 @@ dependencies:
   path: ^1.8.3
   sqlite3: ^2.1.0
   sqlite3_flutter_libs: ^0.5.30
+  crypto: ^3.0.6
+  uuid: ^4.5.1
 
 dev_dependencies:
   flutter_test:
@@ -71,7 +73,6 @@ flutter_launcher_icons:
     icon_size: 256 # min:48, max:256, default: 48
   macos:
     generate: true
-
 
 flutter:
   uses-material-design: true

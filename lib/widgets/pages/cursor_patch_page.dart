@@ -162,8 +162,8 @@ class CursorPatcherPage extends ConsumerWidget {
                                 title: const Text('一键替换'),
                                 onTap: () async {
                                   try {
-                                    cursorProviderNotifier.replaceToken(cursor.authCode ?? '');
                                     _showLogsDialog(context, ref);
+                                    cursorProviderNotifier.replaceToken(cursor.authCode ?? '');
                                   } catch (e) {
                                     CherryToast.error(
                                       title: Text("替换失败", style: TextStyle(color: Colors.black)),
@@ -196,8 +196,8 @@ class CursorPatcherPage extends ConsumerWidget {
                                 title: const Text('禁用自动更新'),
                                 onTap: () async {
                                   try {
-                                    cursorProviderNotifier.disableAutoUpdate();
                                     _showLogsDialog(context, ref);
+                                    cursorProviderNotifier.disableAutoUpdate();
                                   } catch (e) {
                                     CherryToast.error(
                                       title: Text("操作失败: $e", style: TextStyle(color: Colors.black)),

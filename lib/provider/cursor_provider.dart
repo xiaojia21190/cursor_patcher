@@ -11,6 +11,9 @@ import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:logger/logger.dart';
+import 'dart:math';
+import 'package:crypto/crypto.dart';
+import 'package:uuid/uuid.dart';
 
 part 'cursor_provider.g.dart';
 
@@ -140,6 +143,172 @@ class Cursor extends _$Cursor {
       }
     } catch (e) {
       throw Exception('Failed to replace token');
+    }
+  }
+
+  // 生成随机机器码参数
+  Future<Map<String, String>> generateRandomMachineIds() async {
+    try {
+      final random = Random.secure();
+
+      // 生成随机字节
+      List<int> genRandomBytes(int length) {
+        return List<int>.generate(length, (_) => random.nextInt(256));
+      }
+
+      // 生成machineId (SHA-256格式)
+      final machineIdBytes = genRandomBytes(32);
+      final machineIdDigest = sha256.convert(machineIdBytes);
+      final machineId = machineIdDigest.toString();
+
+      // 生成macMachineId (另一个SHA-256格式，但基于不同的随机数据)
+      final macMachineIdBytes = genRandomBytes(32);
+      final macMachineIdDigest = sha256.convert(macMachineIdBytes);
+      final macMachineId = macMachineIdDigest.toString();
+
+      // 生成devDeviceId (UUID格式)
+      final uuid = Uuid();
+      final devDeviceId = uuid.v4();
+
+      debugPrint('已生成随机机器码');
+      addOutput('已生成随机机器码');
+
+      return {
+        'machineId': machineId,
+        'macMachineId': macMachineId,
+        'devDeviceId': devDeviceId,
+      };
+    } catch (e) {
+      debugPrint('生成随机机器码时发生错误: $e');
+      addOutput('生成随机机器码时发生错误: $e');
+      // 返回一些默认值，避免出错
+      return {
+        'machineId': '',
+        'macMachineId': '',
+        'devDeviceId': '',
+      };
+    }
+  }
+
+  // 修改replaceCustomAccountInfo方法，自动生成机器码
+  Future<void> replaceCustomAccountInfo({
+    required String email,
+    required String token,
+  }) async {
+    try {
+      addOutput("");
+      debugPrint('准备替换自定义账户信息');
+      addOutput("准备替换自定义账户信息");
+
+      // 自动生成机器码
+      final machineIds = await generateRandomMachineIds();
+
+      final cursorAppPaths = await getCursorAppPaths();
+      final filesExist = await checkFilesExist(cursorAppPaths.$1, cursorAppPaths.$2);
+
+      if (!filesExist) {
+        debugPrint('请检查是否正确安装 Cursor');
+        addOutput("请检查是否正确安装 Cursor");
+        throw Exception('请检查是否正确安装 Cursor');
+      } else {
+        final packageJson = jsonDecode(File(cursorAppPaths.$1).readAsStringSync()) as Map<String, dynamic>;
+        final currentVersion = packageJson["version"];
+        debugPrint('当前 Cursor 版本: $currentVersion');
+        addOutput('当前 Cursor 版本: $currentVersion');
+
+        debugPrint("开始退出 Cursor..");
+        addOutput("开始退出 Cursor..");
+        final exitCursorResult = await exitCursor();
+        if (!exitCursorResult) {
+          debugPrint("退出 Cursor 失败");
+          addOutput("退出 Cursor 失败");
+          throw Exception('退出 Cursor 失败');
+        }
+        debugPrint("所有 Cursor 进程已正常关闭");
+        addOutput("所有 Cursor 进程已正常关闭");
+
+        final needPatch = await checkVersion(currentVersion, minVersion: AppConstants.minPatchVersion);
+        if (!needPatch) {
+          debugPrint('当前版本无需 Patch，继续执行自定义账户更新...');
+          addOutput('当前版本无需 Patch，继续执行自定义账户更新...');
+        } else {
+          debugPrint("开始 Patch Cursor 机器码..");
+          addOutput("开始 Patch Cursor 机器码..");
+          final patchMainJsResult = await patchMainJs(cursorAppPaths.$2);
+          if (patchMainJsResult) {
+            debugPrint("Cursor 机器码已成功 Patch");
+            addOutput("Cursor 机器码已成功 Patch");
+          }
+        }
+
+        debugPrint("开始替换机器码和账户信息..");
+        addOutput("开始替换机器码和账户信息..");
+
+        // 替换机器码
+        final resetCursorIdResult = await resetCustomCursorId(machineIds['machineId']!, machineIds['macMachineId']!, machineIds['devDeviceId']!);
+
+        if (resetCursorIdResult) {
+          debugPrint("Cursor 机器码已成功修改");
+          addOutput("Cursor 机器码已成功修改");
+
+          // 更新账户认证信息
+          await updateAuth(email: email, accessToken: token);
+          debugPrint("成功更新 Cursor 认证信息! 邮箱: $email");
+          addOutput("成功更新 Cursor 认证信息! 邮箱: $email");
+
+          debugPrint("所有操作已完成，现在可以重新打开Cursor体验了");
+          addOutput("所有操作已完成，现在可以重新打开Cursor体验了");
+          debugPrint("请注意：建议禁用 Cursor 自动更新!!!");
+          addOutput("请注意：建议禁用 Cursor 自动更新!!!");
+          debugPrint("从 0.45.xx 开始每次更新都需要重新执行此脚本");
+          addOutput("从 0.45.xx 开始每次更新都需要重新执行此脚本");
+        }
+      }
+    } catch (e) {
+      debugPrint('替换自定义账户信息失败: $e');
+      addOutput('替换自定义账户信息失败: $e');
+      throw Exception('替换自定义账户信息失败: $e');
+    }
+  }
+
+  // 添加一个新方法用于自定义ID的替换
+  Future<bool> resetCustomCursorId(String machineId, String macMachineId, String devDeviceId) async {
+    try {
+      final storagePath = await getStoragePath();
+      final file = File(storagePath);
+
+      if (!file.existsSync()) {
+        debugPrint('未找到文件: $storagePath');
+        addOutput('未找到文件: $storagePath');
+        return false;
+      }
+
+      // 修改文件权限为可写
+      await makeFileWritable(storagePath);
+
+      // 读取并更新数据
+      final content = await file.readAsString();
+      final data = jsonDecode(content) as Map<String, dynamic>;
+
+      data.addAll({
+        'telemetry.macMachineId': macMachineId,
+        'telemetry.machineId': machineId,
+        'telemetry.devDeviceId': devDeviceId,
+      });
+
+      // 写入更新后的数据
+      await file.writeAsString(jsonEncode(data), flush: true);
+
+      // 恢复文件权限为只读
+      await makeFileReadonly(storagePath);
+
+      debugPrint('自定义 Cursor 机器码已成功修改');
+      addOutput('自定义 Cursor 机器码已成功修改');
+      return true;
+    } catch (e) {
+      debugPrint('重置 Cursor 机器码时发生错误: ${e.toString()}');
+      addOutput('重置 Cursor 机器码时发生错误: ${e.toString()}');
+      return false;
     }
   }
 
