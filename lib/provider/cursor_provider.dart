@@ -730,6 +730,20 @@ class Cursor extends _$Cursor {
     }
   }
 
+  //getVersion   https://pool.ccursor.org/api/version/list.php
+  Future<void> getNewVersion() async {
+    final response = await http.get(Uri.parse('https://pool.ccursor.org/api/version/list.php'));
+    if (response.statusCode == 200) {
+      var res = response.body as List<Map<String, String>>;
+      var versions = [] as List<String>;
+      res.map((item) => {versions.add("${item['version']}_${item['build']}")});
+
+      state = state.copyWith(cursorVersion: versions, filterCursorVersion: versions);
+    } else {
+      throw Exception('Failed to get versions');
+    }
+  }
+
   Future<void> getFilterVersion(String searchText) async {
     if (searchText.isEmpty) {
       state = state.copyWith(filterCursorVersion: state.cursorVersion);

@@ -2,6 +2,7 @@ import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:cusor_patcher/provider/cursor_provider.dart';
 import 'package:cusor_patcher/provider/persistence_provider.dart';
+import 'package:cusor_patcher/widgets/dialogs/cursor_version_new_dialog.dart';
 import 'package:cusor_patcher/widgets/logs_viewe.dart';
 import 'package:cusor_patcher/widgets/responsive_builder.dart';
 import 'package:cusor_patcher/widgets/dialogs/cursor_version_dialog.dart';
@@ -206,6 +207,16 @@ class CursorPatcherPage extends ConsumerWidget {
                                       autoDismiss: true,
                                     ).show(context);
                                   }
+                                },
+                              ),
+                              ListTile(
+                                leading: const Icon(Icons.history),
+                                title: const Text('最新版 Cursor 下载'),
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => const CursorVersionNewDialog(),
+                                  );
                                 },
                               ),
                               ListTile(
