@@ -234,7 +234,18 @@ class CursorPatcherPage extends ConsumerWidget {
                         ),
                       ],
                     )
-                  : Center(child: CircularProgressIndicator());
+                  : SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      child: Center(
+                        child: Column(
+                          children: [
+                            CircularProgressIndicator(),
+                            Text('Loading...'),
+                          ],
+                        ),
+                      ),
+                    );
             },
           ),
         )));
@@ -259,7 +270,6 @@ class CursorPatcherPage extends ConsumerWidget {
 
   // 添加显示日志弹窗的方法
   void _showLogsDialog(BuildContext context, WidgetRef ref) {
-    print(ref.read(cursorProvider).output);
     showDialog(
       context: context,
       builder: (context) => Dialog(
@@ -280,11 +290,13 @@ class CursorPatcherPage extends ConsumerWidget {
                 ],
               ),
               const Divider(),
-              Expanded(
-                child: LogsViewer(
-                  output: ref.watch(cursorProvider).output,
-                ),
-              ),
+              Consumer(builder: (context, ref, child) {
+                return Expanded(
+                  child: LogsViewer(
+                    output: ref.watch(cursorProvider).output,
+                  ),
+                );
+              }),
             ],
           ),
         ),

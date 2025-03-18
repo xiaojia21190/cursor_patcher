@@ -128,8 +128,6 @@ class Cursor extends _$Cursor {
         addOutput("开始替换 Token..");
         final resetCursorIdResult = await resetCursorId(tokenData);
         if (resetCursorIdResult) {
-          debugPrint("Cursor 机器码已成功修改");
-          addOutput("Cursor 机器码已成功修改");
           await updateAuth(email: tokenData.email, accessToken: tokenData.token);
           debugPrint("成功更新 Cursor 认证信息! 邮箱: ${tokenData.email}");
           addOutput("成功更新 Cursor 认证信息! 邮箱: ${tokenData.email}");
@@ -325,6 +323,7 @@ class Cursor extends _$Cursor {
 
       if (processes.isEmpty) {
         debugPrint("未发现运行中的 Cursor 进程");
+        addOutput("未发现运行中的 Cursor 进程");
         return true;
       }
 
@@ -338,6 +337,7 @@ class Cursor extends _$Cursor {
           }
         } catch (e) {
           debugPrint('终止进程失败: ${e.toString()}');
+          addOutput('终止进程失败: ${e.toString()}');
           continue;
         }
       }
@@ -350,6 +350,7 @@ class Cursor extends _$Cursor {
         final stillRunning = await _checkRunningProcesses(processes);
         if (stillRunning.isEmpty) {
           debugPrint("所有 Cursor 进程已正常关闭");
+          addOutput("所有 Cursor 进程已正常关闭");
           return true;
         }
         await Future.delayed(const Duration(milliseconds: 500));
@@ -359,12 +360,14 @@ class Cursor extends _$Cursor {
       if (stillRunning.isNotEmpty) {
         final processList = stillRunning.map((p) => p.pid.toString()).join(', ');
         debugPrint("以下进程未能在规定时间内关闭: $processList");
+        addOutput("以下进程未能在规定时间内关闭: $processList");
         return false;
       }
 
       return true;
     } catch (e) {
       debugPrint('退出Cursor时发生错误: ${e.toString()}');
+      addOutput('退出Cursor时发生错误: ${e.toString()}');
       return false;
     }
   }
