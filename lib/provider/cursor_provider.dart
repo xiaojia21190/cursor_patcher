@@ -313,7 +313,7 @@ class Cursor extends _$Cursor {
   }
 
   Future<bool> exitCursor() async {
-    final List<String> cursorProcessNames = ['cursor', 'Cursor'];
+    final List<String> cursorProcessNames = ['cursor.exe', 'Cursor'];
     List<ProcessResult> processes = [];
 
     try {
@@ -780,47 +780,120 @@ class Cursor extends _$Cursor {
     return await file.length() == 0;
   }
 
+  Future<bool> checkNewAutoUpdateDisabled() async {
+    try {
+      final (_, mainJsPath) = await getCursorAppPaths();
+      final mainFile = File(mainJsPath);
+
+      if (!mainFile.existsSync()) {
+        debugPrint("无法找到main.js文件，无法检查自动更新状态");
+        addOutput("无法找到main.js文件，无法检查自动更新状态");
+        return false;
+      }
+
+      // 读取文件内容
+      final content = await mainFile.readAsString();
+      // 检查是否包含已禁用更新的标记（不包含表示已禁用）
+      return !content.contains('!!this.args["disable-updates"]');
+    } catch (e) {
+      debugPrint("检查新版自动更新状态时出错: $e");
+      addOutput("检查新版自动更新状态时出错: $e");
+      return false;
+    }
+  }
+
+  Future<bool> disableNewAutoUpdate() async {
+    try {
+      final (_, mainJsPath) = await getCursorAppPaths();
+      final mainFile = File(mainJsPath);
+
+      if (!mainFile.existsSync()) {
+        debugPrint("无法找到main.js文件，禁用自动更新失败");
+        addOutput("无法找到main.js文件，禁用自动更新失败");
+        return false;
+      }
+
+      // 读取文件内容
+      final content = await mainFile.readAsString();
+
+      // 更新内容，禁用自动更新
+      final updatedContent = content.replaceAll('!!this.args["disable-updates"]', 'true');
+
+      if (content == updatedContent) {
+        debugPrint("未找到需要替换的内容，可能不支持当前版本或已禁用");
+        addOutput("未找到需要替换的内容，可能不支持当前版本或已禁用");
+        return false;
+      }
+
+      // 修改文件权限并写入
+      await makeFileWritable(mainJsPath);
+      await mainFile.writeAsString(updatedContent);
+      await makeFileReadonly(mainJsPath);
+
+      debugPrint("已成功禁用新版自动更新");
+      addOutput("已成功禁用新版自动更新");
+      return true;
+    } catch (e) {
+      debugPrint("禁用新版自动更新时发生错误: $e");
+      addOutput("禁用新版自动更新时发生错误: $e");
+      return false;
+    }
+  }
+
   Future<void> disableAutoUpdate() async {
     try {
-      if (!await checkAutoUpdateFileEmpty()) {
-        throw Exception('更新配置文件不为空，无法禁用自动更新');
-      }
       addOutput("");
-      final updatePath = await getUpdateConfigPath();
-      final file = File(updatePath);
 
-      if (!file.existsSync()) {
-        debugPrint("无法获取更新配置文件路径");
-        addOutput("无法获取更新配置文件路径");
+      // 检查旧版和新版自动更新是否已禁用
+      final oldAutoUpdateDisabled = await checkAutoUpdateFileEmpty();
+      final newAutoUpdateDisabled = await checkNewAutoUpdateDisabled();
+
+      if (oldAutoUpdateDisabled && newAutoUpdateDisabled) {
+        debugPrint("自动更新已被完全禁用，无需重复操作");
+        addOutput("自动更新已被完全禁用，无需重复操作");
         return;
       }
 
-      if (await checkAutoUpdateFileEmpty()) {
-        debugPrint("更新配置文件已经为空，无需重复操作");
-        addOutput("更新配置文件已经为空，无需重复操作");
-        return;
+      // 禁用旧版自动更新
+      if (!oldAutoUpdateDisabled) {
+        final updatePath = await getUpdateConfigPath();
+        final file = File(updatePath);
+
+        if (!file.existsSync()) {
+          debugPrint("未找到旧版自动更新配置文件，可能已升级");
+          addOutput("未找到旧版自动更新配置文件，可能已升级");
+        } else {
+          // 创建备份
+          final backupPath = '$updatePath.bak';
+          if (!File(backupPath).existsSync()) {
+            await File(updatePath).copy(backupPath);
+            debugPrint("已创建配置文件备份: $backupPath");
+            addOutput("已创建配置文件备份: $backupPath");
+          }
+
+          // 清空文件内容
+          await makeFileWritable(updatePath);
+          await file.writeAsString('');
+          await makeFileReadonly(updatePath);
+
+          debugPrint("已成功禁用旧版自动更新");
+          addOutput("已成功禁用旧版自动更新");
+        }
       }
 
-      // 创建备份
-      final backupPath = '$updatePath.bak';
-      if (!File(backupPath).existsSync()) {
-        await File(updatePath).copy(backupPath);
-        debugPrint("已创建配置文件备份: $backupPath");
-        addOutput("已创建配置文件备份: $backupPath");
+      // 禁用新版自动更新
+      if (!newAutoUpdateDisabled) {
+        if (await disableNewAutoUpdate()) {
+          debugPrint("已成功禁用新版自动更新");
+          addOutput("已成功禁用新版自动更新");
+        }
       }
 
-      // 清空文件内容
-      await makeFileWritable(updatePath);
-      await file.writeAsString('');
-      await makeFileReadonly(updatePath);
-
-      debugPrint("已成功禁用自动更新");
-      addOutput("已成功禁用自动更新");
-      return;
+      debugPrint("自动更新禁用操作完成");
+      addOutput("自动更新禁用操作完成");
     } catch (e) {
       debugPrint("禁用自动更新时发生错误: $e");
       addOutput("禁用自动更新时发生错误: $e");
-      return;
     }
   }
 }
