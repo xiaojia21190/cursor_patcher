@@ -1,8 +1,8 @@
-import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cusor_patcher/i18n/strings.g.dart';
 import 'package:cusor_patcher/provider/settings_provider.dart';
 import 'package:cusor_patcher/widgets/pages/about_page.dart';
 import 'package:cusor_patcher/widgets/pages/language_page.dart';
+import 'package:cusor_patcher/widgets/pages/upgrade_page.dart';
 import 'package:cusor_patcher/widgets/responsive_builder.dart';
 import 'package:cusor_patcher/widgets/theme_tile.dart';
 import 'package:cusor_patcher/widgets/toggle_tile.dart';
@@ -92,11 +92,7 @@ class _SettingsTabState extends ConsumerState<SettingsTab> {
               ListTile(
                 title: Text(t.settings.others.checkForUpdates),
                 onTap: () {
-                  //TODO: implement update page
-                  CherryToast.info(
-                    title: Text("待更新"),
-                  );
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) => const UpgradePage()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const UpgradePage()));
                 },
               ),
               ListTile(

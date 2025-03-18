@@ -1,0 +1,9 @@
+{
+  "version": "v1.0.0",
+  "assets": [
+    {
+      "name": "cusor_patcher_boxed.exe",
+      "browser_download_url": "https://raw.githubusercontent.com/xiaojia21190/cursor_patcher/main/buildouput/cusor_patcher_boxed.exe"
+    }
+  ]
+}

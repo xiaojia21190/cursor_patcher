@@ -61,6 +61,11 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // 启动后检查更新
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(settingsProvider.notifier).startPeriodicUpdateCheck(context);
+    });
+
     final settings = ref.watch(settingsProvider);
     return TrayWatcher(
       child: WindowWatcher(
