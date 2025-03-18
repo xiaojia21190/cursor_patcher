@@ -734,9 +734,12 @@ class Cursor extends _$Cursor {
   Future<void> getNewVersion() async {
     final response = await http.get(Uri.parse('https://pool.ccursor.org/api/version/list.php'));
     if (response.statusCode == 200) {
-      var res = response.body as List<Map<String, String>>;
-      var versions = [] as List<String>;
-      res.map((item) => {versions.add("${item['version']}_${item['build']}")});
+      var res = jsonDecode(response.body) as List<dynamic>;
+
+      List<String> versions = [];
+      for (var item in res) {
+        versions.add("${item['version']}_${item['buildId']}");
+      }
 
       state = state.copyWith(cursorVersion: versions, filterCursorVersion: versions);
     } else {
