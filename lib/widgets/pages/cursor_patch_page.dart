@@ -3,7 +3,7 @@ import 'package:cherry_toast/resources/arrays.dart';
 import 'package:cusor_patcher/provider/cursor_provider.dart';
 import 'package:cusor_patcher/provider/persistence_provider.dart';
 import 'package:cusor_patcher/widgets/dialogs/cursor_version_new_dialog.dart';
-import 'package:cusor_patcher/widgets/logs_viewe.dart';
+import 'package:cusor_patcher/widgets/dialogs/log_dialog.dart';
 import 'package:cusor_patcher/widgets/responsive_builder.dart';
 import 'package:cusor_patcher/widgets/dialogs/cursor_version_dialog.dart';
 
@@ -270,37 +270,6 @@ class CursorPatcherPage extends ConsumerWidget {
 
   // 添加显示日志弹窗的方法
   void _showLogsDialog(BuildContext context, WidgetRef ref) {
-    showDialog(
-      context: context,
-      builder: (context) => Dialog(
-        child: Container(
-          width: 600,
-          height: 400,
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  const Text('操作日志', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                ],
-              ),
-              const Divider(),
-              Consumer(builder: (context, ref, child) {
-                return Expanded(
-                  child: LogsViewer(
-                    output: ref.watch(cursorProvider).output,
-                  ),
-                );
-              }),
-            ],
-          ),
-        ),
-      ),
-    );
+    showDialog(context: context, builder: (context) => LogDialog());
   }
 }

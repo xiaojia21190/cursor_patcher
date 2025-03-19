@@ -1,13 +1,15 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:cusor_patcher/provider/cursor_provider.dart';
-import 'package:cusor_patcher/widgets/logs_viewe.dart';
+import 'package:cusor_patcher/widgets/dialogs/log_dialog.dart';
+import 'package:cusor_patcher/widgets/responsive_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MyAccoutPage extends ConsumerStatefulWidget {
-  const MyAccoutPage({super.key});
+  const MyAccoutPage({super.key, required this.sizingInformation});
+  final SizingInformation sizingInformation;
 
   @override
   ConsumerState<MyAccoutPage> createState() => _MyAccoutPageState();
@@ -27,9 +29,11 @@ class _MyAccoutPageState extends ConsumerState<MyAccoutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('我的账户', style: TextStyle(fontWeight: FontWeight.bold)),
-      ),
+      appBar: (widget.sizingInformation.isDesktop
+          ? null
+          : AppBar(
+              title: const Text('我的账户', style: TextStyle(fontWeight: FontWeight.bold)),
+            )),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -172,33 +176,7 @@ class _MyAccoutPageState extends ConsumerState<MyAccoutPage> {
   void _showLogsDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => Dialog(
-        child: Container(
-          width: 600,
-          height: 400,
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  const Text('操作日志', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                ],
-              ),
-              const Divider(),
-              Expanded(
-                child: LogsViewer(
-                  output: ref.watch(cursorProvider).output,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      builder: (context) => const LogDialog(),
     );
   }
 }

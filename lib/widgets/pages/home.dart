@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cusor_patcher/widgets/pages/cursor_patch_page.dart';
+import 'package:cusor_patcher/widgets/pages/my_accout_page.dart';
 import 'package:cusor_patcher/widgets/pages/user_stage.dart';
 import 'package:cusor_patcher/widgets/responsive_builder.dart';
 import 'package:cusor_patcher/widgets/pages/settings_page.dart';
@@ -20,7 +21,8 @@ class CursorIcon extends StatelessWidget {
 }
 
 class Home extends ConsumerStatefulWidget {
-  const Home({super.key});
+  const Home({super.key, this.isAccount = false});
+  final bool isAccount;
 
   @override
   ConsumerState<Home> createState() => _HomeState();
@@ -80,7 +82,7 @@ class _HomeState extends ConsumerState<Home> {
                         controller: _pageController,
                         physics: const NeverScrollableScrollPhysics(),
                         children: [
-                          CursorPatcherPage(sizingInformation: sizingInformation),
+                          if (widget.isAccount) MyAccoutPage(sizingInformation: sizingInformation) else CursorPatcherPage(sizingInformation: sizingInformation),
                           UserStagePage(sizingInformation: sizingInformation),
                           SettingsPage(sizingInformation: sizingInformation),
                         ],

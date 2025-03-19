@@ -11,7 +11,6 @@ import 'package:cusor_patcher/utils/native/window_watcher.dart';
 import 'package:cusor_patcher/widgets/pages/choose_pool.dart';
 import 'package:cusor_patcher/widgets/pages/first_lanuch.dart';
 import 'package:cusor_patcher/widgets/pages/home.dart';
-import 'package:cusor_patcher/widgets/pages/my_accout_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -37,12 +36,6 @@ final GoRouter _router = GoRouter(
           path: 'cursorPool',
           builder: (BuildContext context, GoRouterState state) {
             return const FirstLaunchPage();
-          },
-        ),
-        GoRoute(
-          path: 'myAccount',
-          builder: (BuildContext context, GoRouterState state) {
-            return const MyAccoutPage();
           },
         ),
         GoRoute(
