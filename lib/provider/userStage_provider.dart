@@ -82,4 +82,57 @@ class UserStageHelper extends _$UserStageHelper {
       debugPrint("数据库错误: ${e.toString()}");
     }
   }
+
+  //找到自己的信息根据userid + token 获取
+  Future<bool> getUserInfo() async {
+    final userId = ref.read(persistenceProvider).getUserId();
+    if (userId == "") {
+      return false;
+    }
+
+    try {
+      final dbPath = await getDbPath();
+      final db = sqlite3.open(dbPath);
+
+      try {
+        final resultToken = db.select(
+          'SELECT * FROM itemTable WHERE key = ?',
+          ['cursorAuth/accessToken'],
+        );
+        final existsToken = resultToken.isNotEmpty;
+
+        if (existsToken) {
+          //https://www.cursor.com/api/auth/me
+          final resultEmail = db.select(
+            'SELECT * FROM itemTable WHERE key = ?',
+            ['cursorAuth/cachedEmail'],
+          );
+          final existsEmail = resultEmail.isNotEmpty;
+          if (existsEmail) {
+            final email = resultEmail.first['value'];
+            final usageResponse = await http.get(Uri.parse('https://www.cursor.com/api/usage?user=$userId'), headers: {
+              'Cookie': 'WorkosCursorSessionToken=$userId::${resultToken.first['value']}',
+            });
+            if (usageResponse.statusCode == 200) {
+              final usageData = jsonDecode(usageResponse.body) as Map<String, dynamic>;
+              state = state.copyWith(totalUsed: usageData["gpt-4"]["numRequests"], totalAvailable: usageData["gpt-4"]["maxRequestUsage"], email: email, contributor: "", status: 1, disableReason: "");
+              return true;
+            } else {
+              throw Exception('Failed to get cursor account info');
+            }
+          } else {
+            throw Exception('Failed to get cursor account info');
+          }
+        } else {
+          throw Exception('Failed to get cursor account info');
+        }
+      } finally {
+        db.dispose();
+      }
+    } catch (e) {
+      debugPrint("数据库错误: ${e.toString()}");
+    }
+
+    return true;
+  }
 }

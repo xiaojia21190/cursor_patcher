@@ -27,10 +27,7 @@ const _themeMode = 'ah_theme_mode';
 const _themeColor = 'ah_theme_color';
 const _proxy = 'ah_proxy';
 const _isFirstRun = 'ah_is_first_run';
-const _startAfterAlist = 'ah_start_after_alist';
-const _webdavAccount = 'ah_webdav_account';
-const _vdisks = 'ah_vdisks';
-
+const _userId = 'ah_user_id';
 const _token = 'ah_token';
 
 /// This service abstracts the persistence layer.
@@ -54,31 +51,6 @@ class PersistenceService {
       await prefs.setString(_version, currentcursorPatcherVersion);
     }
     return PersistenceService._(prefs);
-  }
-
-  Future<void> setVdisks(List<String> value) async {
-    await _prefs.setStringList(_vdisks, value);
-  }
-
-  List<String> getVdisks() {
-    return _prefs.getStringList(_vdisks) ?? [];
-  }
-
-  Future<void> setWebdavAccount(String? value) async {
-    await _prefs.setString(_webdavAccount, value ?? '');
-  }
-
-  String getWebdavAccount() {
-    return _prefs.getString(_webdavAccount) ?? '';
-  }
-
-  //startAfterAlist
-  bool isStartAfterAlist() {
-    return _prefs.getBool(_startAfterAlist) ?? false;
-  }
-
-  Future<void> setStartAfterAlist(bool value) async {
-    await _prefs.setBool(_startAfterAlist, value);
   }
 
   Future<void> setFirstRun(bool value) async {
@@ -204,5 +176,14 @@ class PersistenceService {
 
   String getToken() {
     return _prefs.getString(_token) ?? '';
+  }
+
+  //userId
+  Future<void> setUserId(String userId) async {
+    await _prefs.setString(_userId, userId);
+  }
+
+  String getUserId() {
+    return _prefs.getString(_userId) ?? '';
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cusor_patcher/model/token_data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'cursor_helper.freezed.dart';
 part 'cursor_helper.g.dart';
@@ -13,6 +14,7 @@ class CursorHelper with _$CursorHelper {
     @Default([]) List<String> output,
     @Default([]) List<String> cursorVersion,
     @Default([]) List<String> filterCursorVersion,
+    @Default(TokenData()) TokenData tokenData,
   }) = _CursorHelper;
 
   factory CursorHelper.fromJson(Map<String, Object?> json) => _$CursorHelperFromJson(json);

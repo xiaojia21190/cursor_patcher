@@ -138,15 +138,24 @@ class CursorPatcherPage extends ConsumerWidget {
                                   ],
                                 ),
                               ),
+                              //切换到choosePool
+                              const Divider(height: 1),
+                              ListTile(
+                                leading: const Icon(Icons.switch_account),
+                                title: const Text('选择池'),
+                                onTap: () async {
+                                  context.go('/');
+                                },
+                              ),
                               const Divider(height: 1),
                               ListTile(
                                 leading: const Icon(Icons.refresh),
-                                title: const Text('切换账号'),
+                                title: const Text('切换pool账号'),
                                 onTap: () async {
                                   try {
                                     await ref.watch(persistenceProvider).saveToken("");
                                     await cursorProviderNotifier.replaceAuthToken();
-                                    context.go('/');
+                                    context.go('/cursorPool');
                                   } catch (e) {
                                     CherryToast.error(
                                       title: Text("切换账号失败", style: TextStyle(color: Colors.black)),

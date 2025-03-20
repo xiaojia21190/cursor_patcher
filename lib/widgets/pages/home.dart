@@ -83,7 +83,7 @@ class _HomeState extends ConsumerState<Home> {
                         physics: const NeverScrollableScrollPhysics(),
                         children: [
                           if (widget.isAccount) MyAccoutPage(sizingInformation: sizingInformation) else CursorPatcherPage(sizingInformation: sizingInformation),
-                          UserStagePage(sizingInformation: sizingInformation),
+                          UserStagePage(isAccount: widget.isAccount, sizingInformation: sizingInformation),
                           SettingsPage(sizingInformation: sizingInformation),
                         ],
                       ),

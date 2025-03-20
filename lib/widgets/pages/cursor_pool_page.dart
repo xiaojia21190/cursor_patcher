@@ -6,14 +6,14 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/gestures.dart';
 
-class FirstLaunchPage extends ConsumerStatefulWidget {
-  const FirstLaunchPage({super.key});
+class CursorPoolPage extends ConsumerStatefulWidget {
+  const CursorPoolPage({super.key});
 
   @override
-  ConsumerState<FirstLaunchPage> createState() => _FirstLaunchPageState();
+  ConsumerState<CursorPoolPage> createState() => _CursorPoolPageState();
 }
 
-class _FirstLaunchPageState extends ConsumerState<FirstLaunchPage> {
+class _CursorPoolPageState extends ConsumerState<CursorPoolPage> {
   final TextEditingController _tokenController = TextEditingController();
   bool _isLoading = false;
 

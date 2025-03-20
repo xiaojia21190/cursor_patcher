@@ -9,7 +9,7 @@ import 'package:cusor_patcher/utils/native/tray_helper.dart';
 import 'package:cusor_patcher/utils/native/tray_manager.dart';
 import 'package:cusor_patcher/utils/native/window_watcher.dart';
 import 'package:cusor_patcher/widgets/pages/choose_pool.dart';
-import 'package:cusor_patcher/widgets/pages/first_lanuch.dart';
+import 'package:cusor_patcher/widgets/pages/cursor_pool_page.dart';
 import 'package:cusor_patcher/widgets/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,13 +35,14 @@ final GoRouter _router = GoRouter(
         GoRoute(
           path: 'cursorPool',
           builder: (BuildContext context, GoRouterState state) {
-            return const FirstLaunchPage();
+            return const CursorPoolPage();
           },
         ),
         GoRoute(
-          path: 'home',
+          path: 'home/:isAccount',
           builder: (BuildContext context, GoRouterState state) {
-            return const Home();
+            final query = state.pathParameters['isAccount'];
+            return Home(isAccount: query == '1');
           },
         ),
       ],

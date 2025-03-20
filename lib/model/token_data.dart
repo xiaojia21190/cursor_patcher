@@ -10,6 +10,7 @@ class TokenData with _$TokenData {
     @JsonKey(name: 'dev_device_id') String? devDeviceId,
     @JsonKey(name: 'email') String? email,
     @JsonKey(name: 'token') String? token,
+    @JsonKey(name: 'user_id') String? userId,
   }) = _TokenData;
 
   factory TokenData.fromJson(Map<String, Object?> json) => _$TokenDataFromJson(json);

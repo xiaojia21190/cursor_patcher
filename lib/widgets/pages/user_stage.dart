@@ -1,3 +1,5 @@
+import 'package:cherry_toast/cherry_toast.dart';
+import 'package:cherry_toast/resources/arrays.dart';
 import 'package:cusor_patcher/provider/userStage_provider.dart';
 import 'package:cusor_patcher/widgets/responsive_builder.dart';
 import 'package:flutter/material.dart';
@@ -5,12 +7,26 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UserStagePage extends ConsumerWidget {
   final SizingInformation sizingInformation;
-  const UserStagePage({super.key, required this.sizingInformation});
+  final bool isAccount;
+  const UserStagePage({super.key, required this.sizingInformation, required this.isAccount});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userStageHelper = ref.watch(userStageHelperProvider.notifier);
-    userStageHelper.getCursorAccountInfo();
+    if (!isAccount) {
+      userStageHelper.getCursorAccountInfo();
+    } else {
+      userStageHelper.getUserInfo().then((item) {
+        if (!item) {
+          CherryToast.error(
+            title: Text("获取用户信息失败", style: TextStyle(color: Colors.black)),
+            animationType: AnimationType.fromRight,
+            animationDuration: Duration(milliseconds: 1000),
+            autoDismiss: true,
+          ).show(context);
+        }
+      });
+    }
 
     return Scaffold(
       body: Padding(
@@ -90,12 +106,14 @@ class UserStagePage extends ConsumerWidget {
                               label: '邮箱',
                               value: userStage.email ?? '未设置',
                             ),
-                            _buildInfoTile(
-                              context,
-                              icon: Icons.star,
-                              label: '贡献者',
-                              value: userStage.contributor ?? '否',
-                            ),
+                            userStage.contributor == ""
+                                ? const SizedBox.shrink()
+                                : _buildInfoTile(
+                                    context,
+                                    icon: Icons.star,
+                                    label: '贡献者',
+                                    value: userStage.contributor ?? '否',
+                                  ),
                           ],
                         ),
                         const Divider(height: 32),

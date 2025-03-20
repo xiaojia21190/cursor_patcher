@@ -28,14 +28,8 @@ class SettingsNotifier extends Notifier<SettingsState> {
       saveWindowPlacement: _persistenceService.getSaveWindowPlacement(),
       proxy: _persistenceService.getProxy(),
       isFirstRun: _persistenceService.isFirstRun(),
-      webdavAccount: _persistenceService.getWebdavAccount(),
       currentVersion: _persistenceService.getCursorPatcherVersion(),
     );
-  }
-
-  Future<void> setWebdavAccount(String value) async {
-    await _persistenceService.setWebdavAccount(value);
-    state = state.copyWith(webdavAccount: value);
   }
 
   Future<void> setFirstRun(bool value) async {

@@ -38,9 +38,7 @@ class _ChoosePoolState extends ConsumerState<ChoosePool> {
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(80, 60),
               ),
-              onPressed: () => {
-                context.go("/cursorPool", extra: {"isAccount": false})
-              },
+              onPressed: () => {context.go("/cursorPool")},
               child: const Text('cursor pool '),
             ),
             const SizedBox(height: 50),
@@ -48,9 +46,7 @@ class _ChoosePoolState extends ConsumerState<ChoosePool> {
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(80, 60),
               ),
-              onPressed: () => {
-                context.go("/cursorPool", extra: {"isAccount": true})
-              },
+              onPressed: () => {context.go("/home/1")},
               child: const Text('自己账号切换'),
             )
           ],

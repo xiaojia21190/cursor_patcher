@@ -129,6 +129,7 @@ class Cursor extends _$Cursor {
         final resetCursorIdResult = await resetCursorId(tokenData);
         if (resetCursorIdResult) {
           await updateAuth(email: tokenData.email, accessToken: tokenData.token);
+          state = state.copyWith(tokenData: tokenData);
           debugPrint("成功更新 Cursor 认证信息! 邮箱: ${tokenData.email}");
           addOutput("成功更新 Cursor 认证信息! 邮箱: ${tokenData.email}");
           debugPrint("所有操作已完成，现在可以重新打开Cursor体验了");
@@ -192,6 +193,7 @@ class Cursor extends _$Cursor {
   Future<void> replaceCustomAccountInfo({
     required String email,
     required String token,
+    required String userId,
   }) async {
     try {
       addOutput("");
@@ -251,6 +253,9 @@ class Cursor extends _$Cursor {
 
           // 更新账户认证信息
           await updateAuth(email: email, accessToken: token);
+          state = state.copyWith(tokenData: TokenData(email: email, token: token, userId: userId));
+          // 保存用户ID
+          ref.read(persistenceProvider).setUserId(userId);
           debugPrint("成功更新 Cursor 认证信息! 邮箱: $email");
           addOutput("成功更新 Cursor 认证信息! 邮箱: $email");
 
@@ -511,6 +516,8 @@ class Cursor extends _$Cursor {
       final jsonData = jsonDecode(response.body) as Map<String, dynamic>;
       return TokenData.fromJson(jsonData["data"]);
     } else {
+      debugPrint('获取 Token 数据失败');
+      addOutput('获取 Token 数据失败');
       throw Exception('Failed to get token data');
     }
   }
