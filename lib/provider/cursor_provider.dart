@@ -255,7 +255,11 @@ class Cursor extends _$Cursor {
           await updateAuth(email: email, accessToken: token);
           state = state.copyWith(tokenData: TokenData(email: email, token: token, userId: userId));
           // 保存用户ID
-          ref.read(persistenceProvider).setUserId(userId);
+          ref.read(persistenceProvider).setUserData({
+            'userId': userId,
+            'email': email,
+            'token': token,
+          });
           debugPrint("成功更新 Cursor 认证信息! 邮箱: $email");
           addOutput("成功更新 Cursor 认证信息! 邮箱: $email");
 

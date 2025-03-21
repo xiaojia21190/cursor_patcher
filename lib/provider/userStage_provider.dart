@@ -85,8 +85,8 @@ class UserStageHelper extends _$UserStageHelper {
 
   //找到自己的信息根据userid + token 获取
   Future<bool> getUserInfo() async {
-    final userId = ref.read(persistenceProvider).getUserId();
-    if (userId == "") {
+    final userData = jsonDecode(ref.read(persistenceProvider).getUserData());
+    if (userData.userId == "") {
       return false;
     }
 
@@ -110,8 +110,8 @@ class UserStageHelper extends _$UserStageHelper {
           final existsEmail = resultEmail.isNotEmpty;
           if (existsEmail) {
             final email = resultEmail.first['value'];
-            final usageResponse = await http.get(Uri.parse('https://www.cursor.com/api/usage?user=$userId'), headers: {
-              'Cookie': 'WorkosCursorSessionToken=$userId::${resultToken.first['value']}',
+            final usageResponse = await http.get(Uri.parse('https://www.cursor.com/api/usage?user=${userData["userId"]}'), headers: {
+              'Cookie': 'WorkosCursorSessionToken=${userData["userId"]}::${resultToken.first['value']}',
             });
             if (usageResponse.statusCode == 200) {
               final usageData = jsonDecode(usageResponse.body) as Map<String, dynamic>;

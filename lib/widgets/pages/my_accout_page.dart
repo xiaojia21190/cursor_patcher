@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
+import 'package:cusor_patcher/model/token_data.dart';
 import 'package:cusor_patcher/provider/cursor_provider.dart';
+import 'package:cusor_patcher/provider/persistence_provider.dart';
 import 'package:cusor_patcher/widgets/dialogs/log_dialog.dart';
 import 'package:cusor_patcher/widgets/responsive_builder.dart';
 import 'package:flutter/material.dart';
@@ -46,62 +50,62 @@ class _MyAccoutPageState extends ConsumerState<MyAccoutPage> {
               margin: const EdgeInsets.only(bottom: 16),
               child: Padding(
                 padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.account_circle, size: 24),
-                        const SizedBox(width: 8),
-                        Text('Cursor账户配置', style: Theme.of(context).textTheme.titleLarge),
-                      ],
-                    ),
-                    const Divider(),
-                    const SizedBox(height: 8),
-                    const Text('请填写Cursor账户信息，配置文件将使用这些信息进行替换'),
-                    //sub
-                    const SizedBox(height: 16),
-                    _buildTextField(
-                      controller: _userIdController,
-                      label: '用户ID',
-                      icon: Icons.person,
-                      hintText: '请输入用户ID-user_01JPREZG***',
-                    ),
-                    const SizedBox(height: 16),
-                    _buildTextField(
-                      controller: _emailController,
-                      label: '邮箱地址',
-                      icon: Icons.email,
-                      hintText: '请输入邮箱地址-user@example.com',
-                    ),
-                    const SizedBox(height: 16),
-                    _buildTextField(
-                      controller: _tokenController,
-                      label: 'Token',
-                      icon: Icons.token,
-                      hintText: '请输入Token-eyJhbGciOi***',
-                      maxLines: 3,
-                    ),
-                    const SizedBox(height: 24),
-                    Row(
-                      children: [
-                        Consumer(builder: (context, ref, child) {
-                          ref.watch(cursorProvider).output;
-                          return Expanded(
-                            child: FilledButton.icon(
-                              onPressed: () => _replaceAccountInfo(context),
-                              icon: const Icon(Icons.sync),
-                              label: const Text('替换账户信息'),
-                              style: FilledButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Consumer(builder: (context, ref, child) {
+                  var userData = {
+                    'userId': "",
+                    'email': "",
+                    'token': "",
+                  };
+                  if (ref.read(persistenceProvider).getUserData().isNotEmpty) {
+                    userData = jsonDecode(ref.read(persistenceProvider).getUserData());
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(Icons.account_circle, size: 24),
+                          const SizedBox(width: 8),
+                          Text('Cursor账户配置', style: Theme.of(context).textTheme.titleLarge),
+                        ],
+                      ),
+                      const Divider(),
+                      const SizedBox(height: 8),
+                      const Text('请填写Cursor账户信息，配置文件将使用这些信息进行替换'),
+                      //sub
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                        controller: _userIdController,
+                        label: '用户ID',
+                        icon: Icons.person,
+                        hintText: '请输入用户ID-user_01JPREZG***',
+                        defaultVa: userData["userId"] ?? "",
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(controller: _emailController, label: '邮箱地址', icon: Icons.email, hintText: '请输入邮箱地址-user@example.com', defaultVa: userData["userId"] ?? ""),
+                      const SizedBox(height: 16),
+                      _buildTextField(controller: _tokenController, label: 'Token', icon: Icons.token, hintText: '请输入Token-eyJhbGciOi***', maxLines: 3, defaultVa: userData['token'] ?? ""),
+                      const SizedBox(height: 24),
+                      Row(
+                        children: [
+                          Consumer(builder: (context, ref, child) {
+                            ref.watch(cursorProvider).output;
+                            return Expanded(
+                              child: FilledButton.icon(
+                                onPressed: () => _replaceAccountInfo(context),
+                                icon: const Icon(Icons.sync),
+                                label: const Text('替换账户信息'),
+                                style: FilledButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(vertical: 16),
+                                ),
                               ),
-                            ),
-                          );
-                        }),
-                      ],
-                    ),
-                  ],
-                ),
+                            );
+                          }),
+                        ],
+                      ),
+                    ],
+                  );
+                }),
               ),
             ),
             Card(
@@ -155,7 +159,9 @@ class _MyAccoutPageState extends ConsumerState<MyAccoutPage> {
     required IconData icon,
     int maxLines = 1,
     String hintText = '',
+    String defaultVa = '',
   }) {
+    controller.text = defaultVa;
     return TextField(
       controller: controller,
       decoration: InputDecoration(

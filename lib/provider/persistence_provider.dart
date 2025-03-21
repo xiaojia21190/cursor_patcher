@@ -27,7 +27,7 @@ const _themeMode = 'ah_theme_mode';
 const _themeColor = 'ah_theme_color';
 const _proxy = 'ah_proxy';
 const _isFirstRun = 'ah_is_first_run';
-const _userId = 'ah_user_id';
+const _userData = 'ah_user_data';
 const _token = 'ah_token';
 
 /// This service abstracts the persistence layer.
@@ -179,11 +179,11 @@ class PersistenceService {
   }
 
   //userId
-  Future<void> setUserId(String userId) async {
-    await _prefs.setString(_userId, userId);
+  Future<void> setUserData(Object json) async {
+    await _prefs.setString(_userData, json.toString());
   }
 
-  String getUserId() {
-    return _prefs.getString(_userId) ?? '';
+  String getUserData() {
+    return _prefs.getString(_userData) ?? '';
   }
 }
