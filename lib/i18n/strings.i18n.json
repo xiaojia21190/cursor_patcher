@@ -77,6 +77,18 @@
       "title": "Others",
       "checkForUpdates": "Check for updates",
       "about": "About"
+    },
+    "update": {
+      "currentVersion": "Current Version",
+      "latestVersion": "Latest Version",
+      "newVersionAvailable": "New Version Available!",
+      "alreadyLatest": "You are already using the latest version",
+      "downloadOptions": "Please choose a download method:",
+      "downloading": "Downloading...",
+      "installUpdate": "Install Update",
+      "downloadFailed": "Download Failed",
+      "updateNotification": "Update Notification",
+      "updatePrompt": "A new version is available, would you like to go to the update page?"
     }
   }
 }

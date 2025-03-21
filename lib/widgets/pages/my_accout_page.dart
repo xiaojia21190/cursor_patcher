@@ -85,16 +85,19 @@ class _MyAccoutPageState extends ConsumerState<MyAccoutPage> {
                     const SizedBox(height: 24),
                     Row(
                       children: [
-                        Expanded(
-                          child: FilledButton.icon(
-                            onPressed: () => _replaceAccountInfo(context),
-                            icon: const Icon(Icons.sync),
-                            label: const Text('替换账户信息'),
-                            style: FilledButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
+                        Consumer(builder: (context, ref, child) {
+                          ref.watch(cursorProvider).output;
+                          return Expanded(
+                            child: FilledButton.icon(
+                              onPressed: () => _replaceAccountInfo(context),
+                              icon: const Icon(Icons.sync),
+                              label: const Text('替换账户信息'),
+                              style: FilledButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(vertical: 16),
+                              ),
                             ),
-                          ),
-                        ),
+                          );
+                        }),
                       ],
                     ),
                   ],
@@ -202,10 +205,8 @@ class _MyAccoutPageState extends ConsumerState<MyAccoutPage> {
     }
   }
 
+  // 添加显示日志弹窗的方法
   void _showLogsDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => const LogDialog(),
-    );
+    showDialog(context: context, builder: (context) => LogDialog());
   }
 }

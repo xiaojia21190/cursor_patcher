@@ -24,7 +24,7 @@ class _CursorPoolPageState extends ConsumerState<CursorPoolPage> {
       final token = ref.read(persistenceProvider).getToken();
       debugPrint('token: $token');
       if (token.isNotEmpty && mounted) {
-        context.go('/home');
+        context.go('/home/0');
       }
     });
   }
