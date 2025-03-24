@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:cusor_patcher/model/token_data.dart';
 import 'package:cusor_patcher/provider/cursor_provider.dart';
-import 'package:cusor_patcher/provider/persistence_provider.dart';
 import 'package:cusor_patcher/widgets/dialogs/log_dialog.dart';
 import 'package:cusor_patcher/widgets/responsive_builder.dart';
 import 'package:flutter/material.dart';
@@ -51,14 +48,8 @@ class _MyAccoutPageState extends ConsumerState<MyAccoutPage> {
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Consumer(builder: (context, ref, child) {
-                  var userData = {
-                    'userId': "",
-                    'email': "",
-                    'token': "",
-                  };
-                  if (ref.read(persistenceProvider).getUserData().isNotEmpty) {
-                    userData = jsonDecode(ref.read(persistenceProvider).getUserData());
-                  }
+                  TokenData userData = ref.read(cursorProvider).tokenData;
+
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -79,12 +70,12 @@ class _MyAccoutPageState extends ConsumerState<MyAccoutPage> {
                         label: '用户ID',
                         icon: Icons.person,
                         hintText: '请输入用户ID-user_01JPREZG***',
-                        defaultVa: userData["userId"] ?? "",
+                        defaultVa: userData.userId ?? "",
                       ),
                       const SizedBox(height: 16),
-                      _buildTextField(controller: _emailController, label: '邮箱地址', icon: Icons.email, hintText: '请输入邮箱地址-user@example.com', defaultVa: userData["userId"] ?? ""),
+                      _buildTextField(controller: _emailController, label: '邮箱地址', icon: Icons.email, hintText: '请输入邮箱地址-user@example.com', defaultVa: userData.email ?? ""),
                       const SizedBox(height: 16),
-                      _buildTextField(controller: _tokenController, label: 'Token', icon: Icons.token, hintText: '请输入Token-eyJhbGciOi***', maxLines: 3, defaultVa: userData['token'] ?? ""),
+                      _buildTextField(controller: _tokenController, label: 'Token', icon: Icons.token, hintText: '请输入Token-eyJhbGciOi***', maxLines: 3, defaultVa: userData.token ?? ""),
                       const SizedBox(height: 24),
                       Row(
                         children: [

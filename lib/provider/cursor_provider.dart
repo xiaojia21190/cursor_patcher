@@ -27,9 +27,12 @@ class Cursor extends _$Cursor {
   CursorHelper build() {
     _persistenceService = ref.watch(persistenceProvider);
     // 内部获得
-    return CursorHelper(
-      token: _persistenceService.getToken(),
-    );
+    if (_persistenceService.getUserData().isNotEmpty) {
+      var userData = jsonDecode(_persistenceService.getUserData());
+      return CursorHelper(token: _persistenceService.getToken(), tokenData: TokenData(email: userData['email'], userId: userData['userId'], token: userData['token']));
+    } else {
+      return CursorHelper(token: _persistenceService.getToken());
+    }
   }
 
   Future<void> replaceAuthToken() async {
