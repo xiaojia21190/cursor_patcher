@@ -9,15 +9,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class MyAccoutPage extends ConsumerStatefulWidget {
-  const MyAccoutPage({super.key, required this.sizingInformation});
+class MyAccountPage extends ConsumerStatefulWidget {
+  const MyAccountPage({super.key, required this.sizingInformation});
   final SizingInformation sizingInformation;
 
   @override
-  ConsumerState<MyAccoutPage> createState() => _MyAccoutPageState();
+  ConsumerState<MyAccountPage> createState() => _MyAccountPageState();
 }
 
-class _MyAccoutPageState extends ConsumerState<MyAccoutPage> {
+class _MyAccountPageState extends ConsumerState<MyAccountPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _tokenController = TextEditingController();
   final TextEditingController _userIdController = TextEditingController();
@@ -80,7 +80,6 @@ class _MyAccoutPageState extends ConsumerState<MyAccoutPage> {
                       Row(
                         children: [
                           Consumer(builder: (context, ref, child) {
-                            ref.watch(cursorProvider).output;
                             return Expanded(
                               child: FilledButton.icon(
                                 onPressed: () => _replaceAccountInfo(context),

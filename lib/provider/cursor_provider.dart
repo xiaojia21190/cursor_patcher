@@ -721,19 +721,24 @@ class Cursor extends _$Cursor {
   void addOutput(String text) {
     if (text.isEmpty) {
       stdOut = [];
-      state = state.copyWith(output: stdOut);
+      state = state.copyWith(output: []);
       return;
     }
+
+    List<String> newStdOut = [...stdOut];
+
     if (text.contains('\n') && text.contains('[')) {
       List<String> lines = text.split('\n');
       for (String line in lines) {
         if (line.isNotEmpty) {
-          stdOut.add(line);
+          newStdOut.add(line);
         }
       }
     } else {
-      stdOut.add(text);
+      newStdOut.add(text);
     }
+
+    stdOut = newStdOut;
     state = state.copyWith(output: stdOut);
   }
 

@@ -32,8 +32,7 @@ class TextUtils {
     // Compare each component of the version number, starting from the major version
     for (int i = 0; i < currentVersionNumbers.length; i++) {
       int currentComponent = currentVersionNumbers[i];
-      int comparedComponent =
-          i < comparedVersionNumbers.length ? comparedVersionNumbers[i] : 0;
+      int comparedComponent = i < comparedVersionNumbers.length ? comparedVersionNumbers[i] : 0;
 
       if (currentComponent < comparedComponent) {
         return true;
@@ -52,9 +51,12 @@ class TextUtils {
       versionString = versionString.split('-')[0];
     }
 
-    // Remove the leading "v" character and split the version string into components
+    // if version String like v1.2.3, remove v
+    if (versionString.contains("v")) {
+      versionString = versionString.split('v')[1];
+    }
 
-    List<String> versionComponents = versionString.substring(1).split('.');
+    List<String> versionComponents = versionString.split('.');
 
     // Convert each component to an integer and return the list of numbers
     return versionComponents.map((component) => int.parse(component)).toList();

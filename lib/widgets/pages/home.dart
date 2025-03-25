@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:cusor_patcher/widgets/pages/cursor_patch_page.dart';
-import 'package:cusor_patcher/widgets/pages/my_accout_page.dart';
+import 'package:cusor_patcher/widgets/pages/my_account_page.dart';
 import 'package:cusor_patcher/widgets/pages/user_stage.dart';
 import 'package:cusor_patcher/widgets/responsive_builder.dart';
 import 'package:cusor_patcher/widgets/pages/settings_page.dart';
@@ -82,7 +82,7 @@ class _HomeState extends ConsumerState<Home> {
                         controller: _pageController,
                         physics: const NeverScrollableScrollPhysics(),
                         children: [
-                          if (widget.isAccount) MyAccoutPage(sizingInformation: sizingInformation) else CursorPatcherPage(sizingInformation: sizingInformation),
+                          if (widget.isAccount) MyAccountPage(sizingInformation: sizingInformation) else CursorPatcherPage(sizingInformation: sizingInformation),
                           UserStagePage(isAccount: widget.isAccount, sizingInformation: sizingInformation),
                           SettingsPage(sizingInformation: sizingInformation),
                         ],

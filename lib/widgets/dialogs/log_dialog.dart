@@ -27,9 +27,10 @@ class LogDialog extends ConsumerWidget {
             ),
             const Divider(),
             Consumer(builder: (context, ref, child) {
+              final output = ref.watch(cursorProvider.select((state) => state.output));
               return Expanded(
                 child: LogsViewer(
-                  output: ref.watch(cursorProvider).output,
+                  output: output,
                 ),
               );
             }),
