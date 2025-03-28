@@ -42,7 +42,7 @@ class Cursor extends _$Cursor {
   }
 
   emptyToken() {
-    state = state.copyWith(tokenData: TokenData(email: ""));
+    state = state.copyWith(tokenData: TokenData(email: null, userId: null, token: null));
   }
 
   void _log(String message) {
@@ -628,8 +628,7 @@ class Cursor extends _$Cursor {
       final file = File(mainPath);
       String content = await file.readAsString();
 
-      // 定义需要替换的模式
-      final patterns = {RegExp(r'async getMachineId\(\)\{return [^??]+\?\?([^}]+)\}'): (Match m) => 'async getMachineId(){return ${m[1]}}', RegExp(r'async getMacMachineId\(\)\{return [^??]+\?\?([^}]+)\}'): (Match m) => 'async getMacMachineId(){return ${m[1]}}'};
+      final patterns = {RegExp(r"async getMachineId\(\)\{return [^??]+\?\?([^}]+)\}"): (Match m) => "async getMachineId(){return ${m[1]}}", RegExp(r"async getMacMachineId\(\)\{return [^??]+\?\?([^}]+)\}"): (Match m) => "async getMacMachineId(){return ${m[1]}}"};
 
       // 检查是否存在需要修复的代码
       bool foundPatterns = false;
@@ -641,7 +640,7 @@ class Cursor extends _$Cursor {
       }
 
       if (!foundPatterns) {
-        _log('未发现需要修复的代码，可能已经修复或不支持当前版本');
+        _log("未发现需要修复的代码，可能已经修复或不支持当前版本");
         return true;
       }
 
