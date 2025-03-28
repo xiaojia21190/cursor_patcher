@@ -2,7 +2,7 @@ import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 // import 'package:cusor_patcher/model/token_data.dart';
 import 'package:cusor_patcher/provider/cursor_provider.dart';
-import 'package:cusor_patcher/widgets/dialogs/cursor_version_dialog.dart';
+import 'package:cusor_patcher/widgets/dialogs/cursor_version_new_dialog.dart';
 import 'package:cusor_patcher/widgets/dialogs/log_dialog.dart';
 import 'package:cusor_patcher/widgets/responsive_builder.dart';
 import 'package:flutter/material.dart';
@@ -143,11 +143,11 @@ class _MyAccountPageState extends ConsumerState<MyAccountPage> {
                             onPressed: () => {
                               showDialog(
                                 context: context,
-                                builder: (context) => const CursorVersionDialog(),
+                                builder: (context) => const CursorVersionNewDialog(),
                               )
                             },
                             icon: const Icon(Icons.history),
-                            label: const Text('Cursor 历史版本下载'),
+                            label: const Text('Cursor 历史版本下载(0.45.14以后)'),
                             style: FilledButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 16),
                             ),

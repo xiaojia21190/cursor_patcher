@@ -5,7 +5,6 @@ import 'package:cusor_patcher/provider/persistence_provider.dart';
 import 'package:cusor_patcher/widgets/dialogs/cursor_version_new_dialog.dart';
 import 'package:cusor_patcher/widgets/dialogs/log_dialog.dart';
 import 'package:cusor_patcher/widgets/responsive_builder.dart';
-import 'package:cusor_patcher/widgets/dialogs/cursor_version_dialog.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -225,16 +224,6 @@ class CursorPatcherPage extends ConsumerWidget {
                                   showDialog(
                                     context: context,
                                     builder: (context) => const CursorVersionNewDialog(),
-                                  );
-                                },
-                              ),
-                              ListTile(
-                                leading: const Icon(Icons.history),
-                                title: const Text('Cursor 历史版本下载'),
-                                onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => const CursorVersionDialog(),
                                   );
                                 },
                               ),
