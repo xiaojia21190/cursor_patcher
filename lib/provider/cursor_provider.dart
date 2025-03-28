@@ -28,11 +28,21 @@ class Cursor extends _$Cursor {
     _persistenceService = ref.read(persistenceProvider);
     // 内部获得
     var cursorHelper = CursorHelper();
-    _persistenceService.getUserData().then((item) => {
-          if (item != null) {cursorHelper = cursorHelper.copyWith(token: _persistenceService.getToken(), tokenData: TokenData(email: item['email'], userId: item['userId'], token: item['token']))} else {cursorHelper = cursorHelper.copyWith(token: _persistenceService.getToken())}
-        });
+    // Initialize with token immediately
+    cursorHelper = cursorHelper.copyWith(token: _persistenceService.getToken());
+
+    // Asynchronously update with user data if available
+    _persistenceService.getUserData().then((item) {
+      if (item != null) {
+        state = state.copyWith(tokenData: TokenData(email: item['email'], userId: item['userId'], token: item['token']));
+      }
+    });
 
     return cursorHelper;
+  }
+
+  emptyToken() {
+    state = state.copyWith(tokenData: TokenData(email: ""));
   }
 
   void _log(String message) {
