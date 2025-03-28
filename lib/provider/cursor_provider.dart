@@ -25,14 +25,14 @@ class Cursor extends _$Cursor {
 
   @override
   CursorHelper build() {
-    _persistenceService = ref.watch(persistenceProvider);
+    _persistenceService = ref.read(persistenceProvider);
     // 内部获得
-    if (_persistenceService.getUserData().isNotEmpty) {
-      var userData = jsonDecode(_persistenceService.getUserData());
-      return CursorHelper(token: _persistenceService.getToken(), tokenData: TokenData(email: userData['email'], userId: userData['userId'], token: userData['token']));
-    } else {
-      return CursorHelper(token: _persistenceService.getToken());
-    }
+    var cursorHelper = CursorHelper();
+    _persistenceService.getUserData().then((item) => {
+          if (item != null) {cursorHelper = cursorHelper.copyWith(token: _persistenceService.getToken(), tokenData: TokenData(email: item['email'], userId: item['userId'], token: item['token']))} else {cursorHelper = cursorHelper.copyWith(token: _persistenceService.getToken())}
+        });
+
+    return cursorHelper;
   }
 
   void _log(String message) {

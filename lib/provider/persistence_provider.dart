@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cusor_patcher/provider/window_dimensions_provider.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -179,11 +181,23 @@ class PersistenceService {
   }
 
   //userId
-  Future<void> setUserData(Object json) async {
-    await _prefs.setString(_userData, json.toString());
+  Future<void> setUserData(Map<String, dynamic> jsonData) async {
+    String jsonString = jsonEncode(jsonData);
+    await _prefs.setString(_userData, jsonString);
   }
 
-  String getUserData() {
-    return _prefs.getString(_userData) ?? '';
+  Future<Map<String, dynamic>?> getUserData() async {
+    String? jsonString = _prefs.getString(_userData);
+    if (jsonString != null && jsonString.isNotEmpty) {
+      Map<String, dynamic> jsonData = jsonDecode(jsonString) as Map<String, dynamic>;
+      return jsonData;
+    } else {
+      return null;
+    }
+  }
+
+  //clear
+  void clearStorage() {
+    _prefs.clear();
   }
 }

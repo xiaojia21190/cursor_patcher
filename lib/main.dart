@@ -61,6 +61,9 @@ class MyApp extends ConsumerWidget {
     });
 
     final settings = ref.watch(settingsProvider);
+    //删除provider
+    // final per = ref.read(persistenceProvider);
+    // per.clearStorage();
     return TrayWatcher(
       child: WindowWatcher(
         onClose: () async {

@@ -48,8 +48,7 @@ class _MyAccountPageState extends ConsumerState<MyAccountPage> {
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Consumer(builder: (context, ref, child) {
-                  TokenData userData = ref.read(cursorProvider).tokenData;
-
+                  final cursor = ref.read(cursorProvider).tokenData;
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -70,16 +69,17 @@ class _MyAccountPageState extends ConsumerState<MyAccountPage> {
                         label: '用户ID',
                         icon: Icons.person,
                         hintText: '请输入用户ID-user_01JPREZG***',
-                        defaultVa: userData.userId ?? "",
+                        defaultVa: cursor.userId ?? "",
                       ),
                       const SizedBox(height: 16),
-                      _buildTextField(controller: _emailController, label: '邮箱地址', icon: Icons.email, hintText: '请输入邮箱地址-user@example.com', defaultVa: userData.email ?? ""),
+                      _buildTextField(controller: _emailController, label: '邮箱地址', icon: Icons.email, hintText: '请输入邮箱地址-user@example.com', defaultVa: cursor.email ?? ""),
                       const SizedBox(height: 16),
-                      _buildTextField(controller: _tokenController, label: 'Token', icon: Icons.token, hintText: '请输入Token-eyJhbGciOi***', maxLines: 3, defaultVa: userData.token ?? ""),
+                      _buildTextField(controller: _tokenController, label: 'Token', icon: Icons.token, hintText: '请输入Token-eyJhbGciOi***', maxLines: 3, defaultVa: cursor.token ?? ""),
                       const SizedBox(height: 24),
                       Row(
                         children: [
                           Consumer(builder: (context, ref, child) {
+                            ref.watch(cursorProvider);
                             return Expanded(
                               child: FilledButton.icon(
                                 onPressed: () => _replaceAccountInfo(context),
