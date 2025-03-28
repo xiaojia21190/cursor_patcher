@@ -1,13 +1,14 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
-import 'package:cusor_patcher/model/token_data.dart';
+// import 'package:cusor_patcher/model/token_data.dart';
 import 'package:cusor_patcher/provider/cursor_provider.dart';
+import 'package:cusor_patcher/widgets/dialogs/cursor_version_dialog.dart';
 import 'package:cusor_patcher/widgets/dialogs/log_dialog.dart';
 import 'package:cusor_patcher/widgets/responsive_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+// import 'package:go_router/go_router.dart';
 
 class MyAccountPage extends ConsumerStatefulWidget {
   const MyAccountPage({super.key, required this.sizingInformation});
@@ -32,6 +33,7 @@ class _MyAccountPageState extends ConsumerState<MyAccountPage> {
 
   @override
   Widget build(BuildContext context) {
+    final cursorProviderNotifier = ref.read(cursorProvider.notifier);
     return Scaffold(
       appBar: (widget.sizingInformation.isDesktop
           ? null
@@ -100,21 +102,58 @@ class _MyAccountPageState extends ConsumerState<MyAccountPage> {
             ),
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // 增加返回按钮
-                    SizedBox(
-                      width: double.infinity,
-                      child: FilledButton.icon(
-                        onPressed: () => context.go('/'),
-                        icon: const Icon(Icons.arrow_back),
-                        label: const Text('选择池'),
-                        style: FilledButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                    // SizedBox(
+                    //   width: double.infinity,
+                    //   child: FilledButton.icon(
+                    //     onPressed: () => context.go('/'),
+                    //     label: const Text('选择池'),
+                    //     style: FilledButton.styleFrom(
+                    //       padding: const EdgeInsets.symmetric(vertical: 16),
+                    //     ),
+                    //   ),
+                    // ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      spacing: 30,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          //禁用更新
+                          child: FilledButton.icon(
+                            onPressed: () {
+                              _showLogsDialog(context);
+                              cursorProviderNotifier.disableAutoUpdate();
+                            },
+                            label: const Text('禁用更新'),
+                            icon: const Icon(Icons.update_disabled),
+                            style: FilledButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                            ),
+                          ),
                         ),
-                      ),
+                        Expanded(
+                          flex: 2,
+                          //禁用更新
+                          child: FilledButton.icon(
+                            onPressed: () => {
+                              showDialog(
+                                context: context,
+                                builder: (context) => const CursorVersionDialog(),
+                              )
+                            },
+                            icon: const Icon(Icons.history),
+                            label: const Text('Cursor 历史版本下载'),
+                            style: FilledButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 16),
                     const Row(
@@ -124,6 +163,7 @@ class _MyAccountPageState extends ConsumerState<MyAccountPage> {
                         Text('使用说明', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       ],
                     ),
+                    const SizedBox(height: 16),
                     const Divider(),
                     const SizedBox(height: 8),
                     const Text('1. 填写完整的Cursor账户信息，包括邮箱、Token和设备ID'),
