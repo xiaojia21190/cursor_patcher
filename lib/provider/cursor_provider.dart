@@ -302,7 +302,7 @@ class Cursor extends _$Cursor {
   }
 
   Future<bool> exitCursor() async {
-    final List<String> cursorProcessNames = ['cursor.exe', 'Cursor'];
+    final List<String> cursorProcessNames = ['Cursor.exe', 'Cursor'];
     List<ProcessResult> processes = [];
 
     try {
@@ -540,13 +540,13 @@ class Cursor extends _$Cursor {
   Future<String> getStoragePath() async {
     if (Platform.isWindows) {
       final appData = Platform.environment['APPDATA'];
-      return path.join(appData!, 'cursor', 'User', 'globalStorage', 'storage.json');
+      return path.join(appData!, 'Cursor', 'User', 'globalStorage', 'storage.json');
     } else if (Platform.isMacOS) {
       final home = Platform.environment['HOME'];
-      return path.join(home!, 'Library', 'Application Support', 'cursor', 'User', 'globalStorage', 'storage.json');
+      return path.join(home!, 'Library', 'Application Support', 'Cursor', 'User', 'globalStorage', 'storage.json');
     } else {
       final home = Platform.environment['HOME'];
-      return path.join(home!, '.config', 'cursor', 'User', 'globalStorage', 'storage.json');
+      return path.join(home!, '.config', 'Cursor', 'User', 'globalStorage', 'storage.json');
     }
   }
 
